@@ -1,7 +1,6 @@
 import {
   Button,
   ClickAwayListener,
-  IconButton,
   MenuItem,
   MenuList,
   Popper,
@@ -9,7 +8,6 @@ import {
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
-
 import { CgMenuRightAlt } from 'react-icons/cg';
 import { IoPersonCircle } from 'react-icons/io5';
 
@@ -82,12 +80,12 @@ export const NavBar = () => {
                       <MenuItem onClick={handleClose}>List1</MenuItem>
                     </Link>
 
-                    <MenuItem onClick={() => console.log('d')}>List11</MenuItem>
-                    <MenuItem onClick={() => console.log('d')}>List11</MenuItem>
+                    <MenuItem>List11</MenuItem>
+                    <MenuItem>List11</MenuItem>
 
-                    <MenuItem onClick={() => console.log('d')}>List11</MenuItem>
+                    <MenuItem>List11</MenuItem>
 
-                    <MenuItem onClick={() => console.log('d')}>List11</MenuItem>
+                    <MenuItem>List11</MenuItem>
                   </MenuList>
                 </ClickAwayListener>
               </Popper>
