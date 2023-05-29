@@ -1,16 +1,60 @@
+import { EmotionCache } from '@emotion/react';
+import CssBaseline from '@mui/material/CssBaseline';
+import { ThemeProvider } from '@mui/material/styles';
+import { StyledEngineProvider } from '@mui/material/styles';
+import { NextPage } from 'next';
 import { AppProps } from 'next/app';
+// import Head from 'next/head';
+import React from 'react';
+import { ReactElement, ReactNode } from 'react';
 
-import '@/styles/globals.css';
-// !STARTERCONF This is for demo purposes, remove @/styles/colors.css import immediately
-import '@/styles/colors.css';
+import '../styles/global1.css';
 
-/**
- * !STARTERCONF info
- * ? `Layout` component is called in every page using `np` snippets. If you have consistent layout across all page, you can add it here too
- */
+import muiTheme from '@/theme';
 
-function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />;
+interface MyAppProps extends AppProps {
+  emotionCache?: EmotionCache;
 }
 
-export default MyApp;
+// eslint-disable-next-line @typescript-eslint/ban-types
+export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
+  getLayout?: (page: ReactElement) => ReactNode;
+};
+type AppPropsWithLayout = AppProps &
+  MyAppProps & {
+    Component: NextPageWithLayout;
+  };
+
+export default function MyApp(props: AppPropsWithLayout) {
+  const { Component, pageProps } = props;
+
+  return (
+    <StyledEngineProvider injectFirst>
+      <ThemeProvider theme={muiTheme}>
+        <CssBaseline />
+
+        <Pages Component={Component} {...pageProps} />
+      </ThemeProvider>
+    </StyledEngineProvider>
+  );
+}
+
+interface IPages {
+  Component: NextPageWithLayout;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  pageProps: any;
+}
+
+function Pages({ Component, pageProps }: IPages) {
+  const getLayout = Component.getLayout || ((page: ReactElement) => page);
+
+  return (
+    <>
+      {getLayout(
+        <>
+          <Component {...pageProps} />
+        </>
+      )}
+    </>
+  );
+}
