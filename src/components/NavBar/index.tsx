@@ -11,7 +11,10 @@ import { useState } from 'react';
 import { CgMenuRightAlt } from 'react-icons/cg';
 import { IoPersonCircle } from 'react-icons/io5';
 
+import useAuthStore from '@/store/useAuthStore';
+
 export const NavBar = () => {
+  const { isAuthenticated } = useAuthStore();
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
@@ -21,6 +24,7 @@ export const NavBar = () => {
   const handleClose = () => {
     setOpen(false);
   };
+
   return (
     <>
       <div className='flex h-[100px] w-full bg-slate-300 px-5'>
@@ -30,21 +34,25 @@ export const NavBar = () => {
           </div>
         </div>
         <div className='flex h-full flex-shrink justify-center  gap-5 align-middle'>
-          <div className=' flex h-full flex-col justify-center align-middle'>
-            <Link href='/login'>
-              <span className=' text-[16px] font-semibold'>Log In</span>
-            </Link>
-          </div>
-          <div className='flex h-full flex-col justify-center  align-middle'>
-            <Link href='/register'>
-              <Button
-                variant='contained'
-                className='text-[16px] font-semibold capitalize'
-              >
-                Sign Up
-              </Button>
-            </Link>
-          </div>
+          {!isAuthenticated && (
+            <>
+              <div className=' flex h-full flex-col justify-center align-middle'>
+                <Link href='/auth/login'>
+                  <span className=' text-[16px] font-semibold'>Log In</span>
+                </Link>
+              </div>
+              <div className='flex h-full flex-col justify-center  align-middle'>
+                <Link href='/auth/register'>
+                  <Button
+                    variant='contained'
+                    className='text-[16px] font-semibold capitalize'
+                  >
+                    Sign Up
+                  </Button>
+                </Link>
+              </div>
+            </>
+          )}
           <div className='relative flex h-full flex-col  justify-center align-middle'>
             <div
               className='flex cursor-pointer rounded-[25%] border p-2 text-[25px]'
