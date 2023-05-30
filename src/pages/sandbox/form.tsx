@@ -1,9 +1,9 @@
+import { Button } from '@mui/material';
 import * as React from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 
 import logger from '@/lib/logger';
 
-import Button from '@/components/buttons/Button';
 import DatePicker from '@/components/forms/DatePicker';
 import DropzoneInput from '@/components/forms/DropzoneInput';
 import Input from '@/components/forms/Input';
@@ -90,7 +90,7 @@ export default function FormSandbox() {
                 validation={{ required: 'Address must be filled' }}
               />
               <div className='flex flex-wrap gap-4'>
-                <Button variant='outline'>Not Submit</Button>
+                <Button variant='outlined'>Not Submit</Button>
                 <Button type='submit'>Submit</Button>
               </div>
               <p className='text-sm text-gray-800'>
