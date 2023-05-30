@@ -7,22 +7,27 @@ import Seo from '@/components/Seo';
 import useAuthStore from '@/store/useAuthStore';
 
 import withAuth, { WithAuthProps } from '@/hoc/withAuth';
+import { Video } from '@/features/Video';
+import { Header } from '@/features/Header';
+import { SearchResults } from '@/features/SearchResults';
 export default function HomePage() {
   const { user, logout } = useAuthStore();
   return (
     <>
       {/* <Seo templateTitle='Home' /> */}
       <Seo />
-
-      <main>
-        {user && (
-          <>
-            Hi, {user?.name} <br />
-            <Button onClick={logout}>Logout</Button>
-          </>
-        )}
-        Home page
+      {/* main header part */}
+      <main className=' relative h-[85vh] w-full'>
+        <div className='absolute h-full w-full'>
+          <Video url='/videos/bg.mp4' />
+        </div>
+        <div className='-h-full relative z-10 w-full'>
+          <Header />
+        </div>
       </main>
+      <div>
+        <SearchResults />
+      </div>
     </>
   );
 }
