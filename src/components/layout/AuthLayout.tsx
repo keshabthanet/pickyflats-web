@@ -30,7 +30,7 @@ function AuthLayout(props: Iprops) {
   useEffect(() => {
     changeBackgroundImage();
 
-    const interval = setInterval(changeBackgroundImage, 3000);
+    const interval = setInterval(changeBackgroundImage, 10000);
 
     return () => clearInterval(interval);
   }, []);
