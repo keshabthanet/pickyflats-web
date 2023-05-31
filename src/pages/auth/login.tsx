@@ -18,6 +18,8 @@ import { ImSpinner2 } from 'react-icons/im';
 import { account } from '@/lib/client';
 import clsxm from '@/lib/clsxm';
 
+import Link from 'next/link';
+
 import useAuthStore from '@/store/useAuthStore';
 
 import withAuth from '@/hoc/withAuth';
@@ -204,9 +206,17 @@ function LoginPage() {
                   </form>
                 </FormProvider>
               </div>
+<<<<<<< HEAD
               <p className='text-primary-main mt-3 text-center text-sm font-medium leading-[150%]'>
                 <Link href='/auth/forgot-password'>Forgot Password ?</Link>
               </p>
+=======
+              <Link href='/auth/forgotpassword'>
+                <p className='text-primary-main mt-2 cursor-pointer text-center text-sm font-medium leading-[150%]'>
+                  Forgot Password ?
+                </p>
+              </Link>
+>>>>>>> 89f4f4e (feat :add auth services)
               <p className='mt-4 text-center text-sm text-gray-500'>
                 Don't have an account?
                 <Link

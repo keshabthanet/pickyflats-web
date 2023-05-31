@@ -12,7 +12,7 @@ import {
 import { BiShow } from 'react-icons/bi';
 import { HiOutlineMail } from 'react-icons/hi';
 import { MdOutlinePersonOutline } from 'react-icons/md';
-
+import Link from 'next/link';
 import AuthLayout from '@/components/layout/AuthLayout';
 
 type formData = {
