@@ -34,21 +34,25 @@ export const NavBar = () => {
           </div>
         </div>
         <div className='flex h-full flex-shrink justify-center  gap-5 align-middle  '>
-          <div className=' hidden h-full flex-col justify-center align-middle md:flex'>
-            <Link href='/login'>
-              <span className=' text-[16px] font-semibold'>Log In</span>
-            </Link>
-          </div>
-          <div className='hidden h-full flex-col justify-center  align-middle md:flex'>
-            <Link href='/register'>
-              <Button
-                variant='contained'
-                className='text-[16px] font-semibold capitalize'
-              >
-                Sign Up
-              </Button>
-            </Link>
-          </div>
+          {!isAuthenticated && (
+            <>
+              <div className=' hidden h-full flex-col justify-center align-middle md:flex'>
+                <Link href='/auth/login'>
+                  <span className=' text-[16px] font-semibold'>Log In</span>
+                </Link>
+              </div>
+              <div className='hidden h-full flex-col justify-center  align-middle md:flex'>
+                <Link href='/auth/register'>
+                  <Button
+                    variant='contained'
+                    className='text-[16px] font-semibold capitalize'
+                  >
+                    Sign Up
+                  </Button>
+                </Link>
+              </div>
+            </>
+          )}
           <div className='relative box-border flex h-full  flex-col justify-center  align-middle'>
             <div
               className='flex cursor-pointer rounded-[15%] border bg-slate-100 p-1 text-[21px] shadow-sm md:p-2 md:text-[25px] '

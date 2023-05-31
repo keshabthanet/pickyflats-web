@@ -2,6 +2,7 @@ import { Button as MUIButton } from '@mui/material';
 import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
 import Image from 'next/image';
+import Link from 'next/link';
 import React, { useState } from 'react';
 import {
   Controller,
@@ -183,9 +184,9 @@ function LoginPage() {
                     <div>
                       <MUIButton
                         type='submit'
-                        variant='contained'
+                        // variant='contained'
                         className={clsxm(
-                          'w-full text-[16px] font-semibold capitalize',
+                          'bg-primary-main hover:bg-primary-light w-full text-[16px] font-semibold capitalize text-white',
                           isLoading
                             ? 'relative text-transparent transition-none hover:text-transparent disabled:cursor-wait'
                             : ''
@@ -203,17 +204,17 @@ function LoginPage() {
                   </form>
                 </FormProvider>
               </div>
-              <p className='text-primary-main mt-2 text-center text-sm font-medium leading-[150%]'>
-                Forgot Password ?
+              <p className='text-primary-main mt-3 text-center text-sm font-medium leading-[150%]'>
+                <Link href='/auth/forgot-password'>Forgot Password ?</Link>
               </p>
               <p className='mt-4 text-center text-sm text-gray-500'>
                 Don't have an account?
-                <a
-                  href='#'
+                <Link
+                  href='/auth/register'
                   className='text-primary-main hover:text-primary-light ml-1 font-semibold leading-6'
                 >
                   Sign Up
-                </a>
+                </Link>
               </p>
             </div>
           </div>

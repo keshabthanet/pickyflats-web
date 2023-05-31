@@ -1,6 +1,7 @@
 import { Button } from '@mui/material';
 import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
+import Link from 'next/link';
 import React, { ReactElement } from 'react';
 import {
   Controller,
@@ -215,12 +216,12 @@ const Register = () => {
       <div className='my-4 flex flex-col items-center justify-center'>
         <p className='text-center text-sm text-gray-500'>
           Already have an account?
-          <a
-            href='#'
+          <Link
+            href='/auth/login'
             className='text-primary-main hover:text-primary-light ml-1 font-semibold leading-6'
           >
             Login
-          </a>
+          </Link>
         </p>
       </div>
     </div>

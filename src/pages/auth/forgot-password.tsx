@@ -1,6 +1,7 @@
 import { Button } from '@mui/material';
 import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
+import Link from 'next/link';
 import React, { ReactElement } from 'react';
 import {
   Controller,
@@ -14,23 +15,13 @@ import AuthLayout from '@/components/layout/AuthLayout';
 
 type formData = {
   email: string;
-  password: string;
-  firstName: string;
-  lastName: string;
-  address: string;
-  confirmPassword: string;
 };
 
-const Register = () => {
+const ForgotPasswordPage = () => {
   const methods = useForm<formData>({
     mode: 'onTouched',
     defaultValues: {
       email: '',
-      password: '',
-      firstName: '',
-      lastName: '',
-      address: '',
-      confirmPassword: '',
     },
   });
   const { handleSubmit, control } = methods;
@@ -93,21 +84,20 @@ const Register = () => {
       </div>
       <div className='my-4 flex flex-col items-center justify-center'>
         <p className='text-center text-sm text-gray-500'>
-          No account?
-          <a
-            href='#'
+          <Link
+            href='/auth/login'
             className='text-primary-main hover:text-primary-light ml-1 font-semibold leading-6'
           >
-            Register
-          </a>
+            Back to Log In
+          </Link>
         </p>
       </div>
     </div>
   );
 };
 
-export default Register;
+export default ForgotPasswordPage;
 
-Register.getLayout = function getLayout(page: ReactElement) {
+ForgotPasswordPage.getLayout = function getLayout(page: ReactElement) {
   return <AuthLayout>{page}</AuthLayout>;
 };
