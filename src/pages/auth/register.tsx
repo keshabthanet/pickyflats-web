@@ -12,7 +12,7 @@ import {
 import { BiShow } from 'react-icons/bi';
 import { HiOutlineMail } from 'react-icons/hi';
 import { MdOutlinePersonOutline } from 'react-icons/md';
-import Link from 'next/link';
+
 import AuthLayout from '@/components/layout/AuthLayout';
 
 type formData = {
@@ -42,23 +42,24 @@ const Register = () => {
   };
 
   return (
-    <div className='flex  max-w-[470px] flex-col rounded-lg bg-white p-4 shadow-lg'>
-      <h1 className='mt-4 text-center text-2xl font-bold leading-[150%]'>
+    <div className='flex  max-w-[375px] flex-col  p-4 '>
+      <h1 className='text-primary-main mt-4 text-center text-2xl font-bold leading-[150%]'>
         Register
       </h1>
 
       <div className='flex  '>
         <FormProvider {...methods}>
           <form onSubmit={handleSubmit(onSubmit)} className='w-full'>
-            <label className='mb-2 text-sm font-medium leading-[150%]'>
+            {/* <label className='mb-2 text-sm font-medium leading-[150%]'>
               Email
-            </label>
+            </label> */}
             <Controller
               name='email'
               control={control}
               render={({ field }) => (
                 <TextField
                   {...field}
+                  variant='standard'
                   className='mt-2 w-full'
                   id='email'
                   placeholder='Email'
@@ -80,14 +81,15 @@ const Register = () => {
             />
             <div className='my-4 flex flex-col gap-4 sm:flex-row'>
               <div className='flex w-full flex-col'>
-                <label className='mb-2 text-sm font-medium leading-[150%]'>
+                {/* <label className='mb-2 text-sm font-medium leading-[150%]'>
                   First Name
-                </label>
+                </label> */}
                 <Controller
                   name='firstName'
                   control={control}
                   render={({ field }) => (
                     <TextField
+                      variant='standard'
                       {...field}
                       className='mt-2 '
                       id='firstName'
@@ -110,14 +112,15 @@ const Register = () => {
                 />
               </div>
               <div className='flex w-full flex-col'>
-                <label className='mb-2 text-sm font-medium leading-[150%]'>
+                {/* <label className='mb-2 text-sm font-medium leading-[150%]'>
                   Last Name
-                </label>
+                </label> */}
                 <Controller
                   name='lastName'
                   control={control}
                   render={({ field }) => (
                     <TextField
+                      variant='standard'
                       {...field}
                       className='mt-2 '
                       id='lastName'
@@ -141,15 +144,16 @@ const Register = () => {
               </div>
             </div>
 
-            <label className='my-2 text-sm font-medium leading-[150%]'>
+            {/* <label className='my-2 text-sm font-medium leading-[150%]'>
               Password
-            </label>
+            </label> */}
 
             <Controller
               name='password'
               control={control}
               render={({ field }) => (
                 <TextField
+                  variant='standard'
                   {...field}
                   className='mt-2 w-full'
                   id='password'
@@ -172,14 +176,15 @@ const Register = () => {
             />
 
             <div className='mt-4'>
-              <label className=' text-sm font-medium leading-[150%]'>
+              {/* <label className=' text-sm font-medium leading-[150%]'>
                 Confirm Password
-              </label>
+              </label> */}
               <Controller
                 name='confirmPassword'
                 control={control}
                 render={({ field }) => (
                   <TextField
+                    variant='standard'
                     {...field}
                     className='w-full'
                     id='confirmPassword'

@@ -30,8 +30,8 @@ const ForgotPasswordPage = () => {
   };
 
   return (
-    <div className='mt-20   flex max-w-[400px] flex-col rounded-lg bg-white p-4 shadow-lg'>
-      <h1 className='mt-4 text-center text-2xl font-bold leading-[150%]'>
+    <div className='  flex max-w-[400px] flex-col  p-4 '>
+      <h1 className='text-primary-main mt-4 text-center text-2xl font-bold leading-[150%]'>
         Forgot Password
       </h1>
 
@@ -42,9 +42,9 @@ const ForgotPasswordPage = () => {
       <div className='mt-4 flex '>
         <FormProvider {...methods}>
           <form onSubmit={handleSubmit(onSubmit)} className='w-full'>
-            <label className='mb-2 text-sm font-medium leading-[150%]'>
+            {/* <label className='mb-2 text-sm font-medium leading-[150%]'>
               Email
-            </label>
+            </label> */}
             <Controller
               name='email'
               control={control}
@@ -52,6 +52,7 @@ const ForgotPasswordPage = () => {
                 <TextField
                   {...field}
                   className='mt-2 w-full'
+                  variant='standard'
                   id='email'
                   placeholder='Email'
                   type='email'
