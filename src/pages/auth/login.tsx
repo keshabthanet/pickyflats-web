@@ -1,9 +1,8 @@
 import { Button as MUIButton } from '@mui/material';
 import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
-import Image from 'next/image';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import {
   Controller,
   FormProvider,
@@ -18,17 +17,17 @@ import { ImSpinner2 } from 'react-icons/im';
 import { account } from '@/lib/client';
 import clsxm from '@/lib/clsxm';
 
-import useAuthStore from '@/store/useAuthStore';
+import AuthLayout from '@/components/layout/AuthLayout';
 
-import withAuth from '@/hoc/withAuth';
+import useAuthStore from '@/store/useAuthStore';
 
 type LoginData = {
   email: string;
   password: string;
 };
 
-export default withAuth(LoginPage, 'auth');
-function LoginPage() {
+/* export default withAuth(LoginPage, 'auth');
+ */ export default function LoginPage() {
   const { login } = useAuthStore();
   const [isLoading, setIsLoading] = React.useState(false);
   const [loginError, setLoginError] = React.useState('');
@@ -61,18 +60,12 @@ function LoginPage() {
   };
 
   return (
-    <div className='min-h-screen bg-[#f3f4f6]'>
-      <div className='d-flex container mx-auto h-[50px] pt-5'>
-        <div className='relative mr-auto h-full w-[200px] object-scale-down'>
-          <Image src='/logo.svg' alt='logo' fill />
-        </div>
-      </div>
-
-      <main className='mt-10 sm:px-4 sm:pb-4'>
+    <div className='max-w-[400px] p-4'>
+      <main className=''>
         <div className='flex'>
-          <div className='mx-auto mt-5 rounded-lg bg-white px-6 py-10 shadow-lg sm:w-full md:w-[450px]'>
+          <div className='mx-auto p-4 sm:w-full '>
             <div>
-              <h1 className=' text-center text-2xl font-bold leading-[150%]'>
+              <h1 className=' text-primary-main text-center text-2xl font-bold leading-[150%]'>
                 Sign In to your account
               </h1>
               <p className='mt-4 text-center text-sm font-medium leading-[150%] text-gray-500'>
@@ -93,15 +86,16 @@ function LoginPage() {
                 <FormProvider {...methods}>
                   <form onSubmit={handleSubmit(onSubmit)} className='space-y-6'>
                     <div>
-                      <label className='text-sm font-medium leading-[150%]'>
+                      {/* <label className='text-sm font-medium leading-[150%]'>
                         Email
-                      </label>
+                      </label> */}
                       <Controller
                         name='email'
                         control={control}
                         render={({ field }) => (
                           <TextField
                             {...field}
+                            variant='standard'
                             className=' mt-2 w-full'
                             id='email'
                             placeholder='Email'
@@ -137,15 +131,16 @@ function LoginPage() {
                     )}
 
                     <div>
-                      <label className='text-sm font-medium leading-[150%]'>
+                      {/* <label className='text-sm font-medium leading-[150%]'>
                         Password
-                      </label>
+                      </label> */}
                       <Controller
                         name='password'
                         control={control}
                         render={({ field }) => (
                           <TextField
                             {...field}
+                            variant='standard'
                             className='mt-2 w-full'
                             id='password'
                             placeholder='Password'
@@ -223,3 +218,7 @@ function LoginPage() {
     </div>
   );
 }
+
+LoginPage.getLayout = function getLayout(page: ReactElement) {
+  return <AuthLayout>{page}</AuthLayout>;
+};

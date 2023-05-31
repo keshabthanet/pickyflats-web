@@ -1,21 +1,64 @@
 import Image from 'next/image';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 interface Iprops {
   children: React.ReactNode;
 }
 
+const backgroundImages = [
+  '/images/room1.jpg',
+  '/images/room2.jpg',
+  '/images/room3.jpg',
+  '/images/room4.jpg',
+  '/images/room5.jpg',
+  '/images/room6.jpg',
+  '/images/room7.jpg',
+  '/images/room8.jpg',
+  '/images/room9.jpg',
+  '/images/room10.jpg',
+];
+
 function AuthLayout(props: Iprops) {
+  const [bgImage, setBgImage] = useState('');
+
+  const changeBackgroundImage = () => {
+    const randomIndex = Math.floor(Math.random() * backgroundImages.length);
+    const randomImage = backgroundImages[randomIndex];
+    setBgImage(`${randomImage}`);
+  };
+
+  useEffect(() => {
+    changeBackgroundImage();
+
+    const interval = setInterval(changeBackgroundImage, 3000);
+
+    return () => clearInterval(interval);
+  }, []);
   const { children } = props;
   return (
-    <div className='min-h-screen bg-[#f3f4f6]'>
-      <div className=' container  h-[50px]  pt-5'>
-        <div className='relative mr-auto h-full w-[200px] object-scale-down'>
-          <Image src='/logo.svg' alt='logo' fill />
+    <div
+      className='login-page flex h-full items-center justify-center bg-cover bg-center px-10 py-4 md:h-screen md:flex-row lg:px-24'
+      style={{
+        backgroundImage: `url(${bgImage})`,
+      }}
+    >
+      <div className='flex flex-col rounded-lg bg-white  shadow-lg md:flex-row'>
+        <div className=' bg-primary-main relative flex  min-w-[350px] flex-col items-center justify-center rounded-l-lg p-4'>
+          <div className=' relative  h-[150px] w-[150px] rounded-full bg-white object-scale-down shadow-2xl'>
+            <Image src='/logo.svg' alt='logo' fill className='' />
+          </div>
+          <div className=''>
+            <h1 className=' mt-6 max-w-[350px] p-4 text-sm font-medium leading-[150%] text-white'>
+              "Celebrate the joy of finding your perfect home online. Discover a
+              world of possibilities with PickyFlats, where buying, selling, and
+              searching for flats has never been easier. We empower you to
+              navigate the real estate market effortlessly, connecting you with
+              the ideal place to call your own. Your dream home awaits, just a
+              click away."
+            </h1>
+          </div>
         </div>
-      </div>
-      <div className=' mt-15 flex h-full items-center justify-center p-6  sm:p-6'>
-        {children}
+        <div className=''>{children}</div>
       </div>
     </div>
   );
