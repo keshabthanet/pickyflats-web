@@ -1,4 +1,5 @@
 import { EmotionCache } from '@emotion/react';
+import { Alert, Snackbar } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
 import { StyledEngineProvider } from '@mui/material/styles';
@@ -9,6 +10,8 @@ import React from 'react';
 import { ReactElement, ReactNode } from 'react';
 
 import '../styles/global1.css';
+
+import useSnackbarStore from '@/store/useSnackbarStore';
 
 import muiTheme from '@/theme';
 
@@ -28,12 +31,34 @@ type AppPropsWithLayout = AppProps &
 export default function MyApp(props: AppPropsWithLayout) {
   const { Component, pageProps } = props;
 
+  const { snackbarOpen, snackbarContent, snackbarSeverity, setSnackbarOpen } =
+    useSnackbarStore();
+
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
+  };
+
   return (
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={muiTheme}>
         <CssBaseline />
 
         <Pages Component={Component} {...pageProps} />
+        {/*  */}
+        <Snackbar
+          anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+          open={snackbarOpen}
+          autoHideDuration={3000}
+          onClose={handleSnackbarClose}
+        >
+          <Alert
+            onClose={handleSnackbarClose}
+            severity={snackbarSeverity}
+            sx={{ width: '100%' }}
+          >
+            {snackbarContent}
+          </Alert>
+        </Snackbar>
       </ThemeProvider>
     </StyledEngineProvider>
   );
