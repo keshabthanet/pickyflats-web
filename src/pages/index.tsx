@@ -1,4 +1,3 @@
-import { Button } from '@mui/material';
 import * as React from 'react';
 
 import MainLayout from '@/components/layout/MainLayout';
@@ -6,10 +5,10 @@ import Seo from '@/components/Seo';
 
 import useAuthStore from '@/store/useAuthStore';
 
-import withAuth, { WithAuthProps } from '@/hoc/withAuth';
-import { Video } from '@/features/Video';
 import { Header } from '@/features/Header';
 import { SearchResults } from '@/features/SearchResults';
+import { Video } from '@/features/Video';
+import withAuth, { WithAuthProps } from '@/hoc/withAuth';
 export default function HomePage() {
   const { user, logout } = useAuthStore();
   return (
@@ -32,14 +31,14 @@ export default function HomePage() {
   );
 }
 
-function Hello(props: WithAuthProps) {
+function LayoutWrapper(props: WithAuthProps) {
   return <MainLayout>{props.page}</MainLayout>;
 }
 
-const HomePageWrapper: React.FC<{ page: React.ReactElement }> = withAuth(
-  Hello,
+const PageWrapper: React.FC<{ page: React.ReactElement }> = withAuth(
+  LayoutWrapper,
   'optional'
 );
 HomePage.getLayout = function getLayout(page: React.ReactElement) {
-  return <HomePageWrapper page={page} />;
+  return <PageWrapper page={page} />;
 };
