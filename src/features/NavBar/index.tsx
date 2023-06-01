@@ -14,7 +14,7 @@ import { IoPersonCircle } from 'react-icons/io5';
 import useAuthStore from '@/store/useAuthStore';
 
 export const NavBar = () => {
-  const { isAuthenticated } = useAuthStore();
+  const { isAuthenticated, logout } = useAuthStore();
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
@@ -23,6 +23,11 @@ export const NavBar = () => {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleLogout = () => {
+    logout();
+    handleClose();
   };
 
   return (
@@ -83,9 +88,10 @@ export const NavBar = () => {
                     id='composition-menu'
                     aria-labelledby='composition-button'
                   >
-                    <Link href='/'>
-                      {' '}
-                      <MenuItem onClick={handleClose}>List1</MenuItem>
+                    <Link href='/dashboard/listing/new'>
+                      <MenuItem onClick={handleClose}>
+                        List Flat/Apartment
+                      </MenuItem>
                     </Link>
 
                     <MenuItem>List11</MenuItem>
@@ -94,6 +100,9 @@ export const NavBar = () => {
                     <MenuItem>List11</MenuItem>
 
                     <MenuItem>List11</MenuItem>
+                    {isAuthenticated && (
+                      <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                    )}
                   </MenuList>
                 </ClickAwayListener>
               </Popper>
