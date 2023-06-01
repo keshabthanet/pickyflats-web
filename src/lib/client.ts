@@ -19,3 +19,8 @@ export const DATABASE_ID =
 export const PROFILES_ID = '6477ecf5129aa58806e1';
 export const LISTINGS_ID =
   appwriteConfig[ENV_MODE].collections.LISTINGS_ID || 'listings';
+
+export const APP_URL =
+  process.env.NODE_ENV == 'development'
+    ? 'http://localhost:3000'
+    : 'https://pickyflats.vercel.app';
