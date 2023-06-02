@@ -1,3 +1,4 @@
+import { Button } from '@mui/material';
 import * as React from 'react';
 import { IconType } from 'react-icons';
 import { ImSpinner2 } from 'react-icons/im';
@@ -37,7 +38,7 @@ const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
     const disabled = isLoading || buttonDisabled;
 
     return (
-      <button
+      <Button
         ref={ref}
         type='button'
         disabled={disabled}
@@ -88,7 +89,7 @@ const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
             'relative text-transparent transition-none hover:text-transparent disabled:cursor-wait',
           className
         )}
-        {...rest}
+        // {...rest}
       >
         {isLoading && (
           <div
@@ -105,7 +106,7 @@ const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
           </div>
         )}
         {Icon && <Icon className={clsxm(iconClassName)} />}
-      </button>
+      </Button>
     );
   }
 );
