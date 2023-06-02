@@ -1,6 +1,6 @@
 import React from 'react';
 
-import MainLayout from '@/components/layout/MainLayout';
+import DashboardLayout from '@/components/layout/DashboardLayout';
 
 import useAuthStore from '@/store/useAuthStore';
 
@@ -12,7 +12,7 @@ export default function DashboardPage() {
 }
 
 function LayoutWrapper(props: WithAuthProps) {
-  return <MainLayout>{props.page}</MainLayout>;
+  return <DashboardLayout>{props.page}</DashboardLayout>;
 }
 
 const HomePageWrapper: React.FC<{ page: React.ReactElement }> = withAuth(
