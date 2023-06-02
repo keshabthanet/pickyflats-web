@@ -28,7 +28,7 @@ export default function NotificationsPopover() {
         }}
       >
         <div className='flex h-[400px] w-[350px] flex-col overflow-hidden py-2'>
-          <div className='text-text-secondary-default px-2 text-sm font-medium'>
+          <div className='text-text-secondary-default px-2 text-xl font-medium'>
             Notifications
           </div>
         </div>
