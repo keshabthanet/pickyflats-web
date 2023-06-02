@@ -61,10 +61,10 @@ function SidebarDrawerContainer() {
       <ul className='w-full list-none space-y-2 p-0'>
         <li>
           <Link
-            href='/'
+            href='/dashboard'
             className={`flex items-center rounded-lg p-2 text-sm font-normal text-gray-500 no-underline hover:bg-[#F2F2FE] 
                 ${
-                  isActiveRoute('/')
+                  isActiveRoute('/dashboard')
                     ? 'bg-[#F2F2FF] !font-medium text-[#6D67E4]'
                     : ''
                 }
