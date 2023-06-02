@@ -6,16 +6,16 @@ interface Iprops {
 }
 
 const backgroundImages = [
-  '/images/room1.jpg',
+  '/images/room1.webp',
   '/images/room2.jpg',
   '/images/room3.jpg',
   '/images/room4.jpg',
-  '/images/room5.jpg',
-  '/images/room6.jpg',
-  '/images/room7.jpg',
-  '/images/room8.jpg',
-  '/images/room9.jpg',
-  '/images/room10.jpg',
+  // '/images/room5.jpg',
+  // '/images/room6.jpg',
+  // '/images/room7.jpg',
+  // '/images/room8.jpg',
+  // '/images/room9.jpg',
+  // '/images/room10.jpg',
 ];
 
 function AuthLayout(props: Iprops) {
@@ -30,7 +30,7 @@ function AuthLayout(props: Iprops) {
   useEffect(() => {
     changeBackgroundImage();
 
-    const interval = setInterval(changeBackgroundImage, 10000);
+    const interval = setInterval(changeBackgroundImage, 3000);
 
     return () => clearInterval(interval);
   }, []);
