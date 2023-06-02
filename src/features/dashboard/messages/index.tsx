@@ -29,7 +29,7 @@ export default function MessagesPopover() {
         }}
       >
         <div className='flex h-[400px] w-[350px] flex-col overflow-hidden py-2'>
-          <div className='text-text-secondary-default text-smd px-2 font-medium'>
+          <div className='text-text-secondary-default px-2 text-xl font-medium'>
             Messages
           </div>
           <div className='flex-1'></div>
