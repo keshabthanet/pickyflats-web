@@ -36,12 +36,7 @@ function AuthLayout(props: Iprops) {
   }, []);
   const { children } = props;
   return (
-    <div
-      className='login-page flex h-full items-center justify-center bg-cover bg-center px-10 py-4 md:h-screen md:flex-row lg:px-24'
-      style={{
-        backgroundImage: `url(${bgImage})`,
-      }}
-    >
+    <div className='login-page relative flex h-full items-center justify-center bg-cover bg-center px-10 py-4 md:h-screen md:flex-row lg:px-24'>
       <div className='flex flex-col rounded-lg bg-white  shadow-lg md:flex-row'>
         <div className=' bg-primary-main relative flex  min-w-[350px] flex-col items-center justify-center rounded-l-lg p-4'>
           <div className=' relative  h-[150px] w-[150px] rounded-full bg-white object-scale-down shadow-2xl'>
@@ -59,6 +54,15 @@ function AuthLayout(props: Iprops) {
           </div>
         </div>
         <div className=''>{children}</div>
+      </div>
+      <div>
+        <Image
+          fill
+          src={bgImage}
+          alt=' background image'
+          className='z-[-8] transition-all'
+          loading='eager'
+        />
       </div>
     </div>
   );

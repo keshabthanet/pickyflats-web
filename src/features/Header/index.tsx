@@ -12,6 +12,8 @@ export const Header = () => {
     { active: false, text: 'Office Space' },
     { active: false, text: 'Luxury Apartment' },
   ];
+
+  // comment
   return (
     <div className=' flex h-[85vh] w-full flex-col text-center'>
       {/* <div>top filters</div> */}
