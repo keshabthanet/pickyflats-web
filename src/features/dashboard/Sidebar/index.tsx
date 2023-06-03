@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import { BsBuildingCheck, BsBuildings } from 'react-icons/bs';
+import { FiMessageCircle } from 'react-icons/fi';
 import { RxDashboard } from 'react-icons/rx';
 import { TbBuildingCarousel } from 'react-icons/tb';
 
@@ -33,7 +34,7 @@ export default function DashboardSidebar() {
           boxSizing: 'border-box',
           position: 'absolute',
           // marginTop: '60px',
-          marginTop: '102px',
+          marginTop: '72px',
           // height: `calc(100vh - ${isMediumScreen ? '50' : '100'}px)`,
           height: `calc(100vh - 100px)`,
         },
@@ -100,7 +101,7 @@ function SidebarDrawerContainer() {
             `}
           >
             <BsBuildingCheck className='h-5 w-5' />
-            <span className='ml-3'>Saved</span>
+            <span className='ml-3'>Saved List</span>
           </Link>
         </li>
         <li>
@@ -116,6 +117,21 @@ function SidebarDrawerContainer() {
           >
             <TbBuildingCarousel className='h-5 w-5' />
             <span className='ml-3'>Tour Request</span>
+          </Link>
+        </li>
+        <li>
+          <Link
+            href='/messages'
+            className={`flex items-center rounded-lg p-2 text-sm font-normal text-gray-500 no-underline hover:bg-[#F2F2FE] 
+                ${
+                  isActiveRoute('/messages')
+                    ? 'bg-[#F2F2FF] !font-medium text-[#6D67E4]'
+                    : ''
+                }
+            `}
+          >
+            <FiMessageCircle className='h-5 w-5' />
+            <span className='ml-3'>Messages</span>
           </Link>
         </li>
       </ul>

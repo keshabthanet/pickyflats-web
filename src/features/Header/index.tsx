@@ -1,18 +1,9 @@
 import InputBase from '@mui/material/InputBase';
 import { FiSearch } from 'react-icons/fi';
 
-export const Header = () => {
-  const tabs = [
-    { active: true, text: '1BHK' },
-    { active: false, text: '2BHK' },
-    { active: false, text: 'PenthHouse' },
-    { active: true, text: 'Duplex' },
-    { active: false, text: 'Garden Apartment' },
-    { active: false, text: 'Micro Apartment' },
-    { active: false, text: 'Office Space' },
-    { active: false, text: 'Luxury Apartment' },
-  ];
+import FlatTypeSelectorOptions from '@/features/home/FlatTypeSelectorOptions';
 
+export const Header = () => {
   // comment
   return (
     <div className=' flex h-[85vh] w-full flex-col text-center'>
@@ -31,20 +22,7 @@ export const Header = () => {
         </div>
       </div>
       <div className='min-h-[80px] flex-shrink'>
-        <div className='flex w-full flex-wrap justify-center gap-4 text-center'>
-          {tabs.map((d, index) => {
-            return (
-              <div
-                key={index}
-                className={`${
-                  d.active ? 'bg-[#101820]' : 'bg-primary-light'
-                } flex  h-[25px] w-auto cursor-pointer flex-col justify-center rounded-[20px] px-4 text-center align-middle text-xs text-white hover:bg-[#101820] md:h-[36px] md:text-sm`}
-              >
-                {d.text}
-              </div>
-            );
-          })}
-        </div>
+        <FlatTypeSelectorOptions />
       </div>
     </div>
   );

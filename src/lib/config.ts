@@ -10,6 +10,9 @@ export const appwriteConfig = {
       MESSAGES_ID: '6478c731211f0492f811',
       COMMENTS_ID: '6478c835e366e8980dcb',
     },
+    buckets: {
+      listings: '',
+    },
   },
   LOCAL: {
     API_ENDPOINT: 'https://localhost/v1',
@@ -20,6 +23,9 @@ export const appwriteConfig = {
       LISTINGS_ID: 'listings',
       MESSAGES_ID: 'messages',
       COMMENTS_ID: 'comments',
+    },
+    buckets: {
+      listings: 'listings',
     },
   },
 };
