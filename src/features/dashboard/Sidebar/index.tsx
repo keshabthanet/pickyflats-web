@@ -90,7 +90,7 @@ function SidebarDrawerContainer() {
         </li>
         <li>
           <Link
-            href='dashboard/saved'
+            href='/dashboard/saved'
             className={`flex items-center rounded-lg p-2 text-sm font-normal text-gray-500 no-underline hover:bg-[#F2F2FE] 
                 ${
                   isActiveRoute('/saved')
