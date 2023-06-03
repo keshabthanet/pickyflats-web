@@ -1,7 +1,7 @@
-import React from 'react';
-import { MuiTelInput } from 'mui-tel-input';
-import { Controller } from 'react-hook-form';
 import { FormLabel } from '@mui/material';
+import { MuiTelInput } from 'mui-tel-input';
+import React from 'react';
+import { Controller } from 'react-hook-form';
 
 interface Iprops {
   label: string;
