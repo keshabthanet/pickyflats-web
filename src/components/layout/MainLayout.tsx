@@ -12,11 +12,11 @@ function MainLayout(props: Props) {
   const { children } = props;
   return (
     <div>
-      <div>
+      <div className='fixed top-0 z-[100] w-full'>
         <NavBar />
       </div>
-      <div>{children}</div>
-      <div>footer</div>
+      <div className='mt-[50px] md:mt-[70px]'>{children}</div>
+      {/* <div>footer</div> */}
     </div>
   );
 }

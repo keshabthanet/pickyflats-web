@@ -1,6 +1,7 @@
 import {
   Button,
   ClickAwayListener,
+  Divider,
   MenuItem,
   MenuList,
   Popper,
@@ -35,7 +36,7 @@ export const NavBar = () => {
 
   return (
     <>
-      <div className='flex h-[50px] w-full bg-white px-5 md:h-[100px]'>
+      <div className='flex h-[50px] w-full border-b border-solid bg-white px-5 shadow-sm md:h-[70px]'>
         <div className='flex-grow'>
           <Link href='/'>
             <div className='relative h-full  w-[150px] object-scale-down md:w-[200px]'>
@@ -101,20 +102,23 @@ export const NavBar = () => {
                     id='composition-menu'
                     aria-labelledby='composition-button'
                   >
-                    <Link href='/dashboard/listing/new'>
-                      <MenuItem onClick={handleClose}>
-                        List Flat/Apartment
-                      </MenuItem>
-                    </Link>
+                    <div className='py-2'>
+                      <Link href='/dashboard/listing/new'>
+                        <MenuItem onClick={handleClose}>
+                          List Flat/Apartment
+                        </MenuItem>
+                      </Link>
+                      <Link href='/saved-lists'>
+                        <MenuItem>Saved Lists</MenuItem>
+                      </Link>
+                    </div>
 
-                    <MenuItem>List11</MenuItem>
-                    <MenuItem>List11</MenuItem>
-
-                    <MenuItem>List11</MenuItem>
-
-                    <MenuItem>List11</MenuItem>
+                    <Divider />
                     {isAuthenticated && (
-                      <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                      <div className='py-2'>
+                        <MenuItem>Account</MenuItem>
+                        <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                      </div>
                     )}
                   </MenuList>
                 </ClickAwayListener>

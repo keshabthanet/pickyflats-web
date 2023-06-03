@@ -8,7 +8,7 @@ interface SnackbarStore {
   snackbarContent: string;
   snackbarSeverity: SnackbarSeverity;
   setSnackbarOpen: (isOpen: boolean) => void;
-  openSnackbar: (content: string, severity: SnackbarSeverity) => void;
+  openSnackbar: (content: string, severity?: SnackbarSeverity) => void;
 }
 
 const useSnackbarStoreBase = create<SnackbarStore>((set) => ({
@@ -16,7 +16,7 @@ const useSnackbarStoreBase = create<SnackbarStore>((set) => ({
   snackbarContent: '',
   snackbarSeverity: 'success',
   setSnackbarOpen: (isOpen) => set(() => ({ snackbarOpen: isOpen })),
-  openSnackbar: (content, severity) => {
+  openSnackbar: (content, severity = 'success') => {
     set(() => ({
       snackbarContent: content,
       snackbarSeverity: severity,

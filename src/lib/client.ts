@@ -1,4 +1,4 @@
-import { Account, Client, Databases } from 'appwrite';
+import { Account, Client, Databases, Storage } from 'appwrite';
 
 import { APPWRITE_ENV_MODE, appwriteConfig } from '@/lib/config';
 
@@ -20,6 +20,11 @@ export const PROFILES_ID =
   appwriteConfig[ENV_MODE].collections.PROFILES_ID || '6477ecf5129aa58806e1';
 export const LISTINGS_ID =
   appwriteConfig[ENV_MODE].collections.LISTINGS_ID || 'listings';
+
+export const storage = new Storage(client);
+
+export const LISTINGS_BUCKET =
+  appwriteConfig[ENV_MODE].buckets.listings || 'listings';
 
 export const APP_URL =
   process.env.NODE_ENV == 'development'
