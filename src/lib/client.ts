@@ -16,7 +16,8 @@ export const DATABASE_ID =
   appwriteConfig[ENV_MODE].DATABASE_ID || 'pickyflats_web';
 
 //table IDs
-export const PROFILES_ID = '6477ecf5129aa58806e1';
+export const PROFILES_ID =
+  appwriteConfig[ENV_MODE].collections.PROFILES_ID || '6477ecf5129aa58806e1';
 export const LISTINGS_ID =
   appwriteConfig[ENV_MODE].collections.LISTINGS_ID || 'listings';
 

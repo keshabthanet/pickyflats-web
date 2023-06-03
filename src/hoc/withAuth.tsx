@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import * as React from 'react';
 import { ImSpinner8 } from 'react-icons/im';
 
-import { account } from '@/lib/client';
+import { account, DATABASE_ID, databases, PROFILES_ID } from '@/lib/client';
 import { getFromLocalStorage } from '@/lib/helper';
 
 import useAuthStore from '@/store/useAuthStore';
@@ -70,7 +70,15 @@ export default function withAuth<T extends WithAuthProps = WithAuthProps>(
       const loadUser = async () => {
         try {
           const user = await account.get();
-          login(user, token);
+          // fetch user profile data from db
+          const userProfile = await databases.getDocument(
+            DATABASE_ID,
+            PROFILES_ID,
+            user.$id
+          );
+          const { role, profile_img } = userProfile;
+
+          login({ ...user, ...{ role, profile_img } }, token);
         } catch (err) {
           localStorage.removeItem('token');
         } finally {
