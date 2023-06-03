@@ -11,22 +11,20 @@ const Step2Component = dynamic(() => import('@/pages/onboarding/Step2'));
 
 const Step3Component = dynamic(() => import('@/pages/onboarding/Step3'));
 
+const AllDoneComponent = dynamic(() => import('@/pages/onboarding/Allcaught'));
+
 const steps = [
   {
     title: 'What are you looking for?',
     step: 1,
   },
   {
-    title: 'Who are you?',
+    title: 'How do you know us?',
     step: 2,
   },
   {
     title: 'Where are you from?',
     step: 3,
-  },
-  {
-    title: 'What are you looking for?',
-    step: 4,
   },
 ];
 
@@ -35,6 +33,12 @@ type FormData = {
   sellFlat: boolean;
   findRomMate: boolean;
   rentFlates: boolean;
+  google: boolean;
+  facebook: boolean;
+  instagram: boolean;
+  twitter: boolean;
+  country: string;
+  city: string;
 };
 
 const Onboarding = () => {
@@ -46,11 +50,18 @@ const Onboarding = () => {
       sellFlat: false,
       findRomMate: false,
       rentFlates: false,
+      google: false,
+      facebook: false,
+      instagram: false,
+      twitter: false,
+      country: '',
+      city: 'kathmandu',
     },
   });
 
   const SubmitForm = (data: FormData) => {
     console.log(data);
+    //step==3 submit data to the api endpoint
   };
 
   const { control, handleSubmit } = method;
@@ -58,12 +69,15 @@ const Onboarding = () => {
     <div className='bg-flex  h-screen flex-col   p-8'>
       <div className='mt-4 flex w-full items-center  justify-evenly'>
         {steps.map((item, index) => {
+          if (step == 4) return null;
           return (
-            <StepsCard
+            <div
               key={index}
-              title={item.title}
-              isActive={item.step === step}
-            />
+              onClick={() => setStep(item.step)}
+              className='cursor-pointer'
+            >
+              <StepsCard title={item.title} isActive={item.step === step} />
+            </div>
           );
         })}
       </div>
@@ -77,25 +91,28 @@ const Onboarding = () => {
               {step === 1 && <Step1Component />}
               {step === 2 && <Step2Component />}
               {step === 3 && <Step3Component />}
+              {step === 4 && <AllDoneComponent />}
             </div>
-            <div className=' flex w-full items-center justify-end gap-4'>
-              <Button
-                variant='outlined'
-                className='w-[150px]'
-                onClick={() => setStep(step - 1)}
-                disabled={step === 1 ? true : false}
-              >
-                Back
-              </Button>
-              <Button
-                variant='contained'
-                className='w-[150px]'
-                onClick={() => setStep(step + 1)}
-                type='submit'
-              >
-                {step == 4 ? 'Go to Feed' : 'Next'}
-              </Button>
-            </div>
+            {step !== 4 && (
+              <div className=' flex w-full items-center justify-end gap-4'>
+                <Button
+                  variant='outlined'
+                  className='w-[150px]'
+                  onClick={() => setStep(step - 1)}
+                  disabled={step === 1 ? true : false}
+                >
+                  Back
+                </Button>
+                <Button
+                  variant='contained'
+                  className='w-[150px]'
+                  onClick={() => setStep(step + 1)}
+                  type='submit'
+                >
+                  {step == 3 ? 'Submit' : 'Next'}
+                </Button>
+              </div>
+            )}
           </form>
         </FormProvider>
       </div>

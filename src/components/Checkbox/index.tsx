@@ -18,6 +18,7 @@ const Checkbox = (props: Iprops) => {
         control={control}
         render={({ field }) => (
           <FormControlLabel
+            className='flex items-center '
             control={<MuiCheckbox {...field} />}
             label={label}
           />
