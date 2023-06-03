@@ -15,14 +15,13 @@ export default function DashboardSidebar() {
   const theme = useTheme();
   const isMediumScreen = useMediaQuery(theme.breakpoints.down('md'));
 
-  const updateSidebarView = () => {
-    !isMediumScreen && open();
-    isMediumScreen && close();
-  };
-
   useEffect(() => {
+    const updateSidebarView = () => {
+      !isMediumScreen && open();
+      isMediumScreen && close();
+    };
     updateSidebarView();
-  }, [isMediumScreen]);
+  }, [close, isMediumScreen, open]);
 
   return (
     <Drawer
@@ -76,7 +75,7 @@ function SidebarDrawerContainer() {
         </li>{' '}
         <li>
           <Link
-            href='/'
+            href='/dashboard/my-flats'
             className={`flex items-center rounded-lg p-2 text-sm font-normal text-gray-500 no-underline hover:bg-[#F2F2FE] 
                 ${
                   isActiveRoute('/my-flats')
@@ -91,7 +90,7 @@ function SidebarDrawerContainer() {
         </li>
         <li>
           <Link
-            href='/'
+            href='dashboard/saved'
             className={`flex items-center rounded-lg p-2 text-sm font-normal text-gray-500 no-underline hover:bg-[#F2F2FE] 
                 ${
                   isActiveRoute('/saved')
@@ -106,7 +105,7 @@ function SidebarDrawerContainer() {
         </li>
         <li>
           <Link
-            href='/'
+            href='/dashboard/tour-requests'
             className={`flex items-center rounded-lg p-2 text-sm font-normal text-gray-500 no-underline hover:bg-[#F2F2FE] 
                 ${
                   isActiveRoute('/tour-requests')
