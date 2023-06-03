@@ -15,7 +15,7 @@ import { HiOutlineMail } from 'react-icons/hi';
 import { ImSpinner2 } from 'react-icons/im';
 import { MdOutlinePersonOutline } from 'react-icons/md';
 
-import { account } from '@/lib/client';
+import { account, DATABASE_ID, databases, PROFILES_ID } from '@/lib/client';
 import clsxm from '@/lib/clsxm';
 
 import AuthLayout from '@/components/layout/AuthLayout';
@@ -63,17 +63,23 @@ const RegisterPage = () => {
 
     try {
       setIsLoading(true);
-      const newUser = await account.create(
+      await account.create(
         ID.unique(),
         data.email,
         data.password,
         `${data.firstName} ${data.lastName}`
       );
+      await account.createEmailSession(data.email, data.password);
+      const user = await account.get();
       const tokenRes = await account.createJWT();
-      login(newUser as any, tokenRes.jwt);
+      // save role to profiles data
+      await databases.createDocument(DATABASE_ID, PROFILES_ID, user.$id, {
+        role: 'user',
+      });
 
-      // TODO: save if extra profile info needed
-      // databases.createDocument(DATABASE_ID, PROFILES_ID, ID.unique(), {})
+      localStorage.setItem('token', tokenRes.jwt);
+      // hard refresh for register successfull
+      window.location.href = '/';
     } catch (error: any) {
       setFormError(error?.message);
     } finally {

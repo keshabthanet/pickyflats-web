@@ -51,9 +51,10 @@ export default function LoginPage() {
       setLoginError('');
       setIsLoading(true);
       await account.createEmailSession(data.email, data.password);
-      const user = await account.get();
       const tokenRes = await account.createJWT();
-      login(user as any, tokenRes.jwt);
+      localStorage.setItem('token', tokenRes.jwt);
+      // hard refresh for login
+      window.location.href = '/';
     } catch (error: any) {
       setLoginError(error?.message);
     } finally {
