@@ -76,7 +76,7 @@ function SidebarDrawerContainer() {
         </li>{' '}
         <li>
           <Link
-            href='/dashboard/my-flats'
+            href='/my-flats'
             className={`flex items-center rounded-lg p-2 text-sm font-normal text-gray-500 no-underline hover:bg-[#F2F2FE] 
                 ${
                   isActiveRoute('/my-flats')
@@ -91,10 +91,10 @@ function SidebarDrawerContainer() {
         </li>
         <li>
           <Link
-            href='/dashboard/saved'
+            href='/saved-lists'
             className={`flex items-center rounded-lg p-2 text-sm font-normal text-gray-500 no-underline hover:bg-[#F2F2FE] 
                 ${
-                  isActiveRoute('/saved')
+                  isActiveRoute('/saved-lists')
                     ? 'bg-[#F2F2FF] !font-medium text-[#6D67E4]'
                     : ''
                 }
@@ -106,7 +106,7 @@ function SidebarDrawerContainer() {
         </li>
         <li>
           <Link
-            href='/dashboard/tour-requests'
+            href='/tour-requests'
             className={`flex items-center rounded-lg p-2 text-sm font-normal text-gray-500 no-underline hover:bg-[#F2F2FE] 
                 ${
                   isActiveRoute('/tour-requests')
