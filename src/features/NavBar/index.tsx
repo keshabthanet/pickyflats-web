@@ -108,17 +108,19 @@ export const NavBar = () => {
                           List Flat/Apartment
                         </MenuItem>
                       </Link>
-                      <Link href='/saved-lists'>
-                        <MenuItem>Saved Lists</MenuItem>
-                      </Link>
                     </div>
 
-                    <Divider />
                     {isAuthenticated && (
-                      <div className='py-2'>
-                        <MenuItem>Account</MenuItem>
-                        <MenuItem onClick={handleLogout}>Logout</MenuItem>
-                      </div>
+                      <>
+                        <Divider />
+                        <div className='py-2'>
+                          <Link href='/saved-lists'>
+                            <MenuItem>Saved Lists</MenuItem>
+                          </Link>
+                          <MenuItem>Account</MenuItem>
+                          <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                        </div>
+                      </>
                     )}
                   </MenuList>
                 </ClickAwayListener>
