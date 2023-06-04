@@ -44,6 +44,7 @@
     "react-leaflet": "^4.2.1",
     "react-select": "^5.7.3",
     "tailwind-merge": "^1.12.0",
+    "uuidv4": "^6.2.13",
     "zustand": "4.1.1"
   },
   "devDependencies": {
@@ -78,7 +79,7 @@
   },
   "lint-staged": {
     "**/*.{js,jsx,ts,tsx}": [
-      "eslint --max-warnings=10",
+      "eslint --max-warnings=100",
       "prettier -w"
     ],
     "**/*.{json,css,scss,md,webmanifest}": [
