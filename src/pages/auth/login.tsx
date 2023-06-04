@@ -1,6 +1,7 @@
 import { Button as MUIButton } from '@mui/material';
 import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
+import Cookies from 'js-cookie';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import {
@@ -20,8 +21,6 @@ import clsxm from '@/lib/clsxm';
 import AuthLayout from '@/components/layout/AuthLayout';
 import Seo from '@/components/Seo';
 
-import useAuthStore from '@/store/useAuthStore';
-
 import withAuth, { WithAuthProps } from '@/hoc/withAuth';
 
 type LoginData = {
@@ -30,7 +29,6 @@ type LoginData = {
 };
 
 export default function LoginPage() {
-  const { login } = useAuthStore();
   const [isLoading, setIsLoading] = React.useState(false);
   const [loginError, setLoginError] = React.useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -51,9 +49,9 @@ export default function LoginPage() {
       setLoginError('');
       setIsLoading(true);
       await account.createEmailSession(data.email, data.password);
-      const tokenRes = await account.createJWT();
-      localStorage.setItem('token', tokenRes.jwt);
-      // hard refresh for login
+      const token = (await account.createJWT()).jwt;
+      Cookies.set('token', token);
+      // hard refresh on login
       window.location.href = '/';
     } catch (error: any) {
       setLoginError(error?.message);
