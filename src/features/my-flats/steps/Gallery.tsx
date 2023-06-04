@@ -1,8 +1,9 @@
-import { Rooms } from '@/features/my-flats/Rooms';
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import { useState } from 'react';
+
+import { Rooms } from '@/features/my-flats/Rooms';
 
 export const Gallery = () => {
   const [value, setValue] = useState('one');
