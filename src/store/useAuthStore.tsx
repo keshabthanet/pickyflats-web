@@ -1,5 +1,6 @@
 import { createSelectorHooks } from 'auto-zustand-selectors-hook';
 import produce from 'immer';
+import Cookies from 'js-cookie';
 import create from 'zustand';
 
 // import { User } from '@/types/auth';
@@ -10,7 +11,7 @@ type AuthStoreType = {
   user: User | null | any;
   isAuthenticated: boolean;
   isLoading: boolean;
-  login: (user: User | any, token: string) => void;
+  login: (user: User | any) => void;
   logout: () => void;
   stopLoading: () => void;
 };
@@ -19,8 +20,7 @@ const useAuthStoreBase = create<AuthStoreType>((set) => ({
   user: null,
   isAuthenticated: false,
   isLoading: true,
-  login: (user, token) => {
-    localStorage.setItem('token', token);
+  login: (user) => {
     set(
       produce<AuthStoreType>((state) => {
         state.isAuthenticated = true;
@@ -29,7 +29,7 @@ const useAuthStoreBase = create<AuthStoreType>((set) => ({
     );
   },
   logout: () => {
-    localStorage.removeItem('token');
+    Cookies.remove('token');
     set(
       produce<AuthStoreType>((state) => {
         state.isAuthenticated = false;

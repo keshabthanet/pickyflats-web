@@ -1,14 +1,13 @@
+// import { User } from '@/types/auth';
+import Cookies from 'js-cookie';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { ImSpinner8 } from 'react-icons/im';
 
 import { account, DATABASE_ID, databases, PROFILES_ID } from '@/lib/client';
-import { getFromLocalStorage } from '@/lib/helper';
 
 import useAuthStore from '@/store/useAuthStore';
-
-// import { User } from '@/types/auth';
 
 export interface WithAuthProps {
   // user: User;
@@ -61,7 +60,8 @@ export default function withAuth<T extends WithAuthProps = WithAuthProps>(
     //#endregion  //*======== STORE ===========
 
     const checkAuth = React.useCallback(() => {
-      const token = getFromLocalStorage('token');
+      // const token = getFromLocalStorage('token');
+      const token = Cookies.get('token');
       if (!token) {
         isAuthenticated && logout();
         stopLoading();
@@ -78,7 +78,7 @@ export default function withAuth<T extends WithAuthProps = WithAuthProps>(
           );
           const { role, profile_img } = userProfile;
 
-          login({ ...user, ...{ role, profile_img } }, token);
+          login({ ...user, ...{ role, profile_img } });
         } catch (err) {
           localStorage.removeItem('token');
         } finally {
@@ -112,6 +112,7 @@ export default function withAuth<T extends WithAuthProps = WithAuthProps>(
             } else {
               router.replace(HOME_ROUTE);
             }
+            window.location.reload();
           }
         } else {
           // Prevent unauthenticated user from accessing protected pages

@@ -2,6 +2,7 @@ import { Button } from '@mui/material';
 import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
 import { ID } from 'appwrite';
+import Cookies from 'js-cookie';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import {
@@ -21,8 +22,6 @@ import clsxm from '@/lib/clsxm';
 import AuthLayout from '@/components/layout/AuthLayout';
 import Seo from '@/components/Seo';
 
-import useAuthStore from '@/store/useAuthStore';
-
 import withAuth, { WithAuthProps } from '@/hoc/withAuth';
 
 type formData = {
@@ -35,7 +34,6 @@ type formData = {
 };
 
 const RegisterPage = () => {
-  const { login } = useAuthStore();
   const [isLoading, setIsLoading] = useState(false);
   const [formError, setFormError] = useState('');
 
@@ -71,14 +69,14 @@ const RegisterPage = () => {
       );
       await account.createEmailSession(data.email, data.password);
       const user = await account.get();
-      const tokenRes = await account.createJWT();
+      const token = (await account.createJWT()).jwt;
+      Cookies.set('token', token);
       // save role to profiles data
       await databases.createDocument(DATABASE_ID, PROFILES_ID, user.$id, {
         role: 'user',
       });
 
-      localStorage.setItem('token', tokenRes.jwt);
-      // hard refresh for register successfull
+      // hard refresh
       window.location.href = '/';
     } catch (error: any) {
       setFormError(error?.message);
