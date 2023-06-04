@@ -1,4 +1,5 @@
 import { Button } from '@mui/material';
+import { Query } from 'appwrite';
 import dynamic from 'next/dynamic';
 import * as React from 'react';
 import { BsFillGridFill, BsMapFill } from 'react-icons/bs';
@@ -22,17 +23,19 @@ const ListingsMapView = dynamic(
 );
 
 export default function HomePage() {
-  const { listings, setListings } = useListingsStore();
+  const { listings, setListings, activeTypeFilter } = useListingsStore();
   const [mapModeActive, setMapModeActive] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
   const fetchData = async () => {
-    const listings = await databases.listDocuments(DATABASE_ID, LISTINGS_ID);
+    const listings = await databases.listDocuments(DATABASE_ID, LISTINGS_ID, [
+      ...(activeTypeFilter ? [Query.equal('type', activeTypeFilter)] : []),
+    ]);
     setListings(listings.documents);
     setLoading(false);
   };
   React.useEffect(() => {
     fetchData();
-  }, []);
+  }, [activeTypeFilter]);
   return (
     <>
       {/* <Seo templateTitle='Home' /> */}
@@ -50,7 +53,7 @@ export default function HomePage() {
           </main>
           {!loading && (
             <div>
-              <SearchResults />
+              <SearchResults listings={listings} />
             </div>
           )}
         </>

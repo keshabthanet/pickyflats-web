@@ -4,8 +4,6 @@ import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
 
 import 'leaflet/dist/leaflet.css';
 
-import useListingsStore from '@/store/useListingsStore';
-
 import { MapFlatCard } from '@/features/FlatCard/MapFlatCard';
 
 export default function ListingsMapView({
@@ -13,20 +11,6 @@ export default function ListingsMapView({
 }: {
   listings: any[];
 }) {
-  const [listingsData, setListingsData] = React.useState(listings);
-  const { activeTypeFilter } = useListingsStore();
-  React.useEffect(() => {
-    // filter if active
-    if (activeTypeFilter) {
-      const filteredData = listings.filter(
-        (item) => item?.type?.toLowerCase() === activeTypeFilter?.toLowerCase()
-      );
-      setListingsData(filteredData);
-    } else {
-      setListingsData(listings);
-    }
-  }, [activeTypeFilter]);
-
   // ! TODO: center cord according to user prefs location
   const kathmanduCoords: any = [27.7172, 85.324]; // Kathmandu coordinates
 
@@ -39,7 +23,7 @@ export default function ListingsMapView({
       >
         <TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
 
-        {listingsData.map((item, index) => (
+        {listings.map((item, index) => (
           <Marker
             key={index}
             position={item.geo as any}
