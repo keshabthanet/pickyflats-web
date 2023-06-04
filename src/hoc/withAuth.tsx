@@ -78,9 +78,9 @@ export default function withAuth<T extends WithAuthProps = WithAuthProps>(
           );
           const { role, profile_img } = userProfile;
 
-          login({ ...user, ...{ role, profile_img } });
+          login({ ...user, ...{ role, profile_img } } as any);
         } catch (err) {
-          localStorage.removeItem('token');
+          Cookies.remove('token');
         } finally {
           stopLoading();
         }
