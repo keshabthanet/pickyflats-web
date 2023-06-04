@@ -23,9 +23,9 @@ export const Purpose = () => {
         return (
           <div key={p.id} onClick={() => setPurpose(p.value)}>
             <div
-              className={` hover:bg-primary-main duration-400 h-[350px] w-[300px]  cursor-pointer rounded-lg ${
-                purpose == p.value ? 'bg-primary-main' : 'bg-slate-100'
-              } text-center shadow-md transition-colors hover:opacity-80`}
+              className={` duration-400 h-[350px] w-[300px] cursor-pointer  rounded-lg hover:bg-slate-200 ${
+                purpose == p.value ? 'bg-slate-200' : 'bg-slate-100'
+              } text-center shadow-md transition-colors `}
             >
               <div className='relative h-[300px] w-full object-cover'>
                 <Image src={p.src} fill alt={p.label} />

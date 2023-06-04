@@ -35,7 +35,7 @@ export function ReactSelect<T extends FieldValues>(props: IProps<T>) {
     <>
       <section>
         <div>
-          <FormLabel className=' text-text-secondary-default text-[14px] font-medium leading-[150%]'>
+          <FormLabel className=' text-primary-main text-[14px] font-semibold leading-[150%]'>
             {props.label}
           </FormLabel>
         </div>
@@ -56,8 +56,9 @@ export function ReactSelect<T extends FieldValues>(props: IProps<T>) {
                     styles={{
                       control: (baseStyles) => ({
                         ...baseStyles,
-                        height: '41px',
-                        border: '1.5px solid #B6C2E2',
+                        minHeight: '41px',
+                        border: '2px solid #B6C2E2',
+                        borderRadius: '6px',
                       }),
                     }}
                     instanceId='long-value-select'

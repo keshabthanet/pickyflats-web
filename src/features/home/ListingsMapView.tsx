@@ -16,7 +16,7 @@ export default function ListingsMapView({
 
   return (
     <div>
-      <MapContainer
+      {/* <MapContainer
         center={kathmanduCoords}
         zoom={13}
         style={{ height: 'calc(100vh - 70px)', width: '100%' }}
@@ -38,7 +38,7 @@ export default function ListingsMapView({
             </Popup>
           </Marker>
         ))}
-      </MapContainer>
+      </MapContainer> */}
     </div>
   );
 }

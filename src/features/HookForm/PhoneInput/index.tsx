@@ -1,7 +1,7 @@
-import React from 'react';
-import { MuiTelInput } from 'mui-tel-input';
-import { Controller } from 'react-hook-form';
 import { FormLabel } from '@mui/material';
+import { MuiTelInput } from 'mui-tel-input';
+import React from 'react';
+import { Controller } from 'react-hook-form';
 
 interface Iprops {
   label: string;
@@ -19,7 +19,7 @@ const PhoneInput = (props: Iprops) => {
   return (
     <>
       <div>
-        <FormLabel className=' text-text-secondary-default text-[14px] font-medium leading-[150%]'>
+        <FormLabel className=' text-primary-main text-[14px] font-semibold leading-[150%]'>
           {label}
         </FormLabel>
       </div>
@@ -31,6 +31,7 @@ const PhoneInput = (props: Iprops) => {
             <MuiTelInput
               size='small'
               defaultCountry='NP'
+              sx={{ border: '2px solid #B6C2E2', borderRadius: '6px' }}
               fullWidth
               {...field}
             />
