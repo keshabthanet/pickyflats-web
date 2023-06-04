@@ -29,7 +29,7 @@ export default function MessagesPopover() {
         <Popper
           anchorEl={anchorRef.current}
           open={panelOpen}
-          className='z-[100] rounded bg-white'
+          className='z-[402] rounded bg-white'
         >
           <Box
             boxShadow={3}
