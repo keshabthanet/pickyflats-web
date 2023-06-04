@@ -16,10 +16,10 @@ function LayoutWrapper(props: WithAuthProps) {
   return <DashboardLayout>{props.page}</DashboardLayout>;
 }
 
-const HomePageWrapper: React.FC<{ page: React.ReactElement }> = withAuth(
+const PageWrapper: React.FC<{ page: React.ReactElement }> = withAuth(
   LayoutWrapper,
   'all'
 );
 DashboardPage.getLayout = function getLayout(page: React.ReactElement) {
-  return <HomePageWrapper page={page} />;
+  return <PageWrapper page={page} />;
 };

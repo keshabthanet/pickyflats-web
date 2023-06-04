@@ -95,7 +95,7 @@ export const NavBar = () => {
                 transition
                 placement='left-start'
                 disablePortal
-                className='absolute rounded-md bg-white shadow-md'
+                className='absolute z-[200] rounded-md bg-white shadow-md'
               >
                 <ClickAwayListener onClickAway={handleClose}>
                   <MenuList

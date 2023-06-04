@@ -1,24 +1,13 @@
-import { FlatCard } from '@/features/FlatCard';
+import { FlatCardV1 } from '@/features/FlatCard/FlatCard';
 
-export const SearchResults = () => {
+export const SearchResults = ({ listings }: { listings: any[] }) => {
   return (
     <div className=' relative grid w-full gap-5 p-3  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>
-      <FlatCard />
-      <FlatCard />
-
-      <FlatCard />
-
-      <FlatCard />
-
-      <FlatCard />
-
-      <FlatCard />
-      <FlatCard />
-
-      <FlatCard />
-
-      <FlatCard />
-      <FlatCard />
+      {listings.map((item, i) => (
+        <FlatCardV1 key={i} item={item} />
+      ))}
+      {/* <FlatCard /> */}
+      {listings.length < 1 && <p>No any flats available</p>}
     </div>
   );
 };

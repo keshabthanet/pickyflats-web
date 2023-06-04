@@ -2,21 +2,13 @@ import React from 'react';
 
 import useListingsStore from '@/store/useListingsStore';
 
+import { typeOfFlats } from '@/constant/app';
+
 export default function FlatTypeSelectorOptions() {
   const { activeTypeFilter, setTypeFilter } = useListingsStore();
-  const flatTypes = [
-    '1BHK',
-    '2BHK',
-    'PenthHouse',
-    'Duplex',
-    'Garden Apartment',
-    'Micro Apartment',
-    'Office Space',
-    'Luxury Apartment',
-  ];
   return (
     <div className='flex w-full flex-wrap justify-center gap-4 text-center'>
-      {flatTypes.map((type, index) => {
+      {typeOfFlats.map((type, index) => {
         return (
           <div
             onClick={() => {
