@@ -1,54 +1,33 @@
-import Image from 'next/image';
-import React, { useState } from 'react';
-import { BsFillBookmarkFill } from 'react-icons/bs';
+import { Query } from 'appwrite';
+import React, { useEffect, useState } from 'react';
+
+import { DATABASE_ID, databases, LISTINGS_ID } from '@/lib/client';
 
 import DashboardLayout from '@/components/layout/DashboardLayout';
 
+import useAuthStore from '@/store/useAuthStore';
+
+import { SavedFlatCard } from '@/features/FlatCard/SavedFlatCard';
 import withAuth, { WithAuthProps } from '@/hoc/withAuth';
 
-const SaveItems = [
-  {
-    id: 1,
-    title: 'Flat 1',
-    description: 'description 1',
-    image: '/images/room3.jpg',
-  },
-  {
-    id: 2,
-    title: 'Flat  2',
-    description: 'description 2',
-    image: '/images/room4.jpg',
-  },
-  {
-    id: 3,
-    title: 'Flat 3',
-    description: 'description 3',
-    image: '/images/room1.jpg',
-  },
-  {
-    id: 4,
-    title: 'Flat4 1',
-    description: 'description 1',
-    image: '/images/room6.jpg',
-  },
-  {
-    id: 5,
-    title: 'Flat 4',
-    description: 'description 2',
-    image: '/images/room7.jpg',
-  },
-  {
-    id: 6,
-    title: 'Flat 4',
-    description: 'description 3',
-    image: '/images/room9.jpg',
-  },
-];
+import { Listing } from '@/types/listing';
 
 export default function SavedPage() {
-  const [savedItems, setSavedItems] = useState(SaveItems);
-  const [save, setSave] = useState(true);
+  const { user } = useAuthStore();
+  const [savedListings, setSavedListings] = useState<Listing[]>([]);
   const [search, setSearch] = useState('');
+
+  useEffect(() => {
+    const fetchSaved = async () => {
+      const _savedListings = await databases.listDocuments<Listing>(
+        DATABASE_ID,
+        LISTINGS_ID,
+        [Query.search('saved_by', user!.$id)]
+      );
+      setSavedListings(_savedListings.documents);
+    };
+    fetchSaved();
+  }, []);
 
   return (
     <div className=' p-5'>
@@ -77,7 +56,15 @@ export default function SavedPage() {
 
       <div className=''>
         <div className='mt-5 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3'>
-          {SaveItems.filter((item) =>
+          {savedListings
+            .filter((item) =>
+              item.address?.toLowerCase().includes(search.toLowerCase())
+            )
+            .map((item, i) => (
+              <SavedFlatCard key={i} item={item} />
+            ))}
+
+          {/* {SaveItems.filter((item) =>
             item.title.toLowerCase().includes(search.toLowerCase())
           ).map((item) => (
             <div
@@ -111,7 +98,7 @@ export default function SavedPage() {
                 <Image fill src={item.image} alt='' className=' object-cover' />
               </div>
             </div>
-          ))}
+          ))} */}
         </div>
       </div>
     </div>

@@ -11,7 +11,7 @@ import { DATABASE_ID, databases, LISTINGS_ID } from '@/lib/client';
 import useAuthStore from '@/store/useAuthStore';
 import useSnackbarStore from '@/store/useSnackbarStore';
 
-export const FlatCardV1 = ({ item }: { item }) => {
+export const SavedFlatCard = ({ item }: { item }) => {
   const { user } = useAuthStore();
   const { openSnackbar } = useSnackbarStore();
   const [inSavedList, setInSavedList] = React.useState(false);
