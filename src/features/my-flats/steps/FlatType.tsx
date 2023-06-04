@@ -24,7 +24,7 @@ export const FlatTypes = () => {
   return (
     <div className='m-auto  h-full  w-[80%]'>
       <div className='h-auto w-full pb-9 '>
-        <h2 className=' text-primary-main text-[30px] font-bold'>Flat Type</h2>
+        {/* <h2 className=' text-primary-main text-[30px] font-bold'>Flat Type</h2> */}
         <h3 className=' text-[18px] font-semibold '>
           You Can Select Multiple Flat Types That Best Describe Your Flat
         </h3>

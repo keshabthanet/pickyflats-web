@@ -20,14 +20,14 @@ export default function MyFlats() {
   );
 }
 
-function LayoutWrapper(props: WithAuthProps) {
-  return <DashboardLayout>{props.page}</DashboardLayout>;
-}
+// function LayoutWrapper(props: WithAuthProps) {
+//   return <DashboardLayout>{props.page}</DashboardLayout>;
+// }
 
-const HomePageWrapper: React.FC<{ page: React.ReactElement }> = withAuth(
-  LayoutWrapper,
-  'all'
-);
-MyFlats.getLayout = function getLayout(page: React.ReactElement) {
-  return <HomePageWrapper page={page} />;
-};
+// const HomePageWrapper: React.FC<{ page: React.ReactElement }> = withAuth(
+//   LayoutWrapper,
+//   'all'
+// );
+// MyFlats.getLayout = function getLayout(page: React.ReactElement) {
+//   return <HomePageWrapper page={page} />;
+// };

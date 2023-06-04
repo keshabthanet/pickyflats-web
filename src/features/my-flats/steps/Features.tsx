@@ -60,9 +60,9 @@ export const FeaturesAndPolicies = () => {
   return (
     <div className='m-auto  h-full  w-[80%] '>
       <div>
-        <h2 className=' text-primary-main text-[30px] font-bold'>
+        {/* <h2 className=' text-primary-main text-[30px] font-bold'>
           Features & Policies
-        </h2>
+        </h2> */}
       </div>
       <div>
         <h3 className='  text-[18px] font-semibold '>Building Amenities</h3>

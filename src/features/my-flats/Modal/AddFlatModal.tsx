@@ -35,10 +35,45 @@ export const AddFlatModal = () => {
         Add Flats
       </Button>
       <div>
-        <Dialog open={open} onClose={() => setOpen(false)} fullScreen>
-          <div className='flex h-full w-full flex-col  '>
-            <div className='flex max-h-[60px] min-h-[60px] w-full border-b-2 border-b-[#fee] p-3 pr-9'>
-              <div className='flex-grow'></div>
+        <Dialog
+          open={open}
+          onClose={() => setOpen(false)}
+          fullScreen
+          sx={{ marginTop: '40px' }}
+          className=''
+        >
+          <div className='flex h-full w-full flex-col   '>
+            <div className='m-auto flex  max-h-[70px] min-h-[70px] w-[80%] border-b-2 border-b-[#fee] py-3'>
+              <div className='flex-grow'>
+                {steps == 1 && <></>}
+                {steps == 2 && (
+                  <h2 className=' text-primary-main text-[30px] font-bold'>
+                    Flat Type
+                  </h2>
+                )}
+                {steps == 3 && (
+                  <h2 className=' text-primary-main text-[30px] font-bold'>
+                    Features & Policies
+                  </h2>
+                )}
+
+                {steps == 4 && (
+                  <h2 className=' text-primary-main text-[30px] font-bold'>
+                    Galleries
+                  </h2>
+                )}
+                {steps == 5 && (
+                  <h2 className=' text-primary-main text-[30px] font-bold'>
+                    Contact & Location
+                  </h2>
+                )}
+
+                {steps == 6 && (
+                  <h2 className=' text-primary-main text-[30px] font-bold'>
+                    Pricing
+                  </h2>
+                )}
+              </div>
               <div>
                 <IconButton onClick={() => handleClose()}>
                   <CgClose />

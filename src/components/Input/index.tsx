@@ -28,7 +28,7 @@ const Input = React.forwardRef(function CustomInput(
           // {...slotProps}
           slotProps={{
             root: {
-              className: `border-[1.5px] border-[#B6C2E2] ${
+              className: `border-[2px] border-primary-main ${
                 label ? 'mt-5' : 'mt-0'
               } peer border-solid rounded focus:border-primary-light-main flex focus:border-primary-light-main focus:outline-primary-light-main placeholder-shown:bg-white-default hover:border-primary-light-main hover:bg-white focus-within:border-primary-light-main focus-within:outline-primary-light-main focus-within:bg-white-default relative w-full ${
                 error ? 'border-error-light-200' : ''
