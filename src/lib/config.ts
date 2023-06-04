@@ -5,7 +5,7 @@ export const appwriteConfig = {
     PROJECT_ID: process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID,
     DATABASE_ID: process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
     collections: {
-      PROFILES_ID: '',
+      PROFILES_ID: '647c063d490ee20fd175',
       LISTINGS_ID: '6478c70cd7fda33eac70',
       MESSAGES_ID: '6478c731211f0492f811',
       COMMENTS_ID: '6478c835e366e8980dcb',
