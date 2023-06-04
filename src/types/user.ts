@@ -11,4 +11,8 @@ export type User = {
   emailVerification: boolean;
   phoneVerification: boolean;
   prefs: [key: string];
+
+  // profiles data
+  role: 'user' | 'seller' | 'admin';
+  profile_img: string;
 };
