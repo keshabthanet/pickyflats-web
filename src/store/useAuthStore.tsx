@@ -3,10 +3,12 @@ import produce from 'immer';
 import Cookies from 'js-cookie';
 import create from 'zustand';
 
-import { User } from '@/types/user';
+// import { User } from '@/types/auth';
+
+type User = [key: string];
 
 type AuthStoreType = {
-  user: User | null;
+  user: User | null | any;
   isAuthenticated: boolean;
   isLoading: boolean;
   login: (user: User | any) => void;
