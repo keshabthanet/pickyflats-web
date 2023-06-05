@@ -12,6 +12,7 @@ export const appwriteConfig = {
     },
     buckets: {
       listings: '',
+      profiles: '',
     },
   },
   LOCAL: {
@@ -26,6 +27,7 @@ export const appwriteConfig = {
     },
     buckets: {
       listings: 'listings',
+      profiles: 'profiles',
     },
   },
 };
