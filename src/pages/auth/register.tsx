@@ -77,7 +77,7 @@ const RegisterPage = () => {
       });
 
       // hard refresh
-      window.location.href = '/';
+      window.location.href = '/onboarding';
     } catch (error: any) {
       setFormError(error?.message);
     } finally {
