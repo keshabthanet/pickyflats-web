@@ -1,5 +1,8 @@
+type Flat = {};
+
 export type Listing = {
-  type: string;
+  type: 'sell' | 'rent';
+  flatType: string;
   address: string;
   gallery: any[];
   rate: number;

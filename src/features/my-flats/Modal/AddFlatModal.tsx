@@ -1,5 +1,6 @@
 import { Button, Dialog, IconButton } from '@mui/material';
 import { useState } from 'react';
+import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { BsBuildingFillAdd } from 'react-icons/bs';
 import { CgClose } from 'react-icons/cg';
 
@@ -10,19 +11,60 @@ import { ContactAndLocation } from '@/features/my-flats/steps/Location';
 import { Pricing } from '@/features/my-flats/steps/Pricing';
 import { Purpose } from '@/features/my-flats/steps/Purpose';
 
+type Step = { key: string; title: string; component: React.ReactNode };
+
+const steps: Step[] = [
+  { key: 'choose', title: '', component: <Purpose /> },
+  { key: 'type', title: 'Flat Type', component: <FlatTypes /> },
+  {
+    key: 'feature-policies',
+    title: 'Features & Policies',
+    component: <FeaturesAndPolicies />,
+  },
+  { key: 'galleries', title: 'Galleries', component: <Gallery /> },
+  {
+    key: 'contact-location',
+    title: 'Contact & Location',
+    component: <ContactAndLocation />,
+  },
+  { key: 'pricing', title: 'Pricing', component: <Pricing /> },
+];
+
+type FormData = {
+  type: string;
+  rate: number;
+};
+
 export const AddFlatModal = () => {
   const [open, setOpen] = useState(false);
-  const [steps, setSteps] = useState(1);
+  const [activeStep, setActiveStep] = useState(0);
 
   const plusStep = () => {
-    if (steps < 6) setSteps((step) => step + 1);
+    if (activeStep < 5) setActiveStep((step) => step + 1);
   };
   const minusStep = () => {
-    if (steps > 1) setSteps((step) => step - 1);
+    if (activeStep > 0) setActiveStep((step) => step - 1);
   };
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const step = () => steps.find((item, i) => i === activeStep);
+  const isLastStep = activeStep + 1 === steps.length;
+
+  const methods = useForm<FormData>({
+    mode: 'onTouched',
+    defaultValues: {},
+  });
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = methods;
+
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
+    console.log('save flat ', data);
   };
 
   return (
@@ -45,34 +87,9 @@ export const AddFlatModal = () => {
           <div className='flex h-full w-full flex-col   '>
             <div className='m-auto flex  max-h-[70px] min-h-[70px] w-[80%] border-b-2 border-b-[#fee] py-3'>
               <div className='flex-grow'>
-                {steps == 1 && <></>}
-                {steps == 2 && (
-                  <h2 className=' text-primary-main text-[30px] font-bold'>
-                    Flat Type
-                  </h2>
-                )}
-                {steps == 3 && (
-                  <h2 className=' text-primary-main text-[30px] font-bold'>
-                    Features & Policies
-                  </h2>
-                )}
-
-                {steps == 4 && (
-                  <h2 className=' text-primary-main text-[30px] font-bold'>
-                    Galleries
-                  </h2>
-                )}
-                {steps == 5 && (
-                  <h2 className=' text-primary-main text-[30px] font-bold'>
-                    Contact & Location
-                  </h2>
-                )}
-
-                {steps == 6 && (
-                  <h2 className=' text-primary-main text-[30px] font-bold'>
-                    Pricing
-                  </h2>
-                )}
+                <h2 className=' text-primary-main text-[30px] font-bold'>
+                  {step()?.title}
+                </h2>
               </div>
               <div>
                 <IconButton onClick={() => handleClose()}>
@@ -80,18 +97,14 @@ export const AddFlatModal = () => {
                 </IconButton>
               </div>
             </div>
-            <div className='flex  w-full  flex-grow flex-col  overflow-y-scroll  '>
-              {steps == 1 && <Purpose />}
-              {steps == 2 && <FlatTypes />}
-
-              {steps == 3 && <FeaturesAndPolicies />}
-
-              {steps == 4 && <Gallery />}
-              {steps == 5 && <ContactAndLocation />}
-              {steps == 6 && <Pricing />}
-            </div>
-
-            {/* bottom part */}
+            <FormProvider {...methods}>
+              <form
+                onSubmit={handleSubmit(onSubmit)}
+                className='flex  w-full flex-grow flex-col  overflow-y-scroll  '
+              >
+                {step()?.component}
+              </form>
+            </FormProvider>
             <div className='flex min-h-[100px] w-full   border-t-2  '>
               <div className='m-auto flex gap-5'>
                 <Button
@@ -104,9 +117,9 @@ export const AddFlatModal = () => {
                 <Button
                   variant='contained'
                   className=' m-auto h-[40px] w-[150px] rounded-[20px]'
-                  onClick={() => plusStep()}
+                  onClick={isLastStep ? handleSubmit(onSubmit) : plusStep}
                 >
-                  Continue
+                  {isLastStep ? 'Save' : 'Continue'}
                 </Button>
               </div>
             </div>

@@ -28,6 +28,7 @@ function Uploader({ onSuccess }: IFileUploader) {
       setImage((prev) => [[...(prev ? prev : [])], toUploadImage]);
 
       const ff = Array.from(toUploadImage);
+      // !TODO: upload image to appwrite storage and call onSucess with image IDs
     }
   };
 
