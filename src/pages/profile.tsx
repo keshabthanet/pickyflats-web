@@ -5,14 +5,26 @@ import Seo from '@/components/Seo';
 
 import useAuthStore from '@/store/useAuthStore';
 
+import ProfileImage from '@/features/Profile/ProfileImage';
 import withAuth, { WithAuthProps } from '@/hoc/withAuth';
 export default function ProfilePage() {
   const { user, logout } = useAuthStore();
   return (
     <>
-      {/* <Seo templateTitle='Home' /> */}
-      <Seo />
-      <div>profile page</div>
+      <Seo templateTitle='Profile' />
+      <div>
+        <div className='flex flex-col border-b border-gray-200 px-4 py-2'>
+          <h2 className='text-2xl font-semibold'>Profile Settings</h2>
+          <div className='text-secondary-main'>
+            Update your photo and personal details here.{' '}
+          </div>
+        </div>
+        {/* profile upload area */}
+        <div className='flex items-center space-x-2 border-b border-gray-200  px-4 py-2 pb-4'>
+          <ProfileImage />
+        </div>
+        <div>profile data update form ... </div>
+      </div>
     </>
   );
 }

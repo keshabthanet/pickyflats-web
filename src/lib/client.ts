@@ -25,6 +25,8 @@ export const storage = new Storage(client);
 
 export const LISTINGS_BUCKET =
   appwriteConfig[ENV_MODE].buckets.listings || 'listings';
+export const PROFILES_BUCKET =
+  appwriteConfig[ENV_MODE].buckets.profiles || 'profiles';
 
 export const APP_URL =
   process.env.NODE_ENV == 'development'
