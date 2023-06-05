@@ -23,10 +23,7 @@ export const ContactAndLocation = () => {
   const {
     handleSubmit,
     control,
-    getValues,
-    setValue,
-    watch,
-    reset,
+
     formState: { errors, isDirty },
   } = useForm<FormData>({
     defaultValues: {
@@ -163,6 +160,9 @@ export const ContactAndLocation = () => {
             error={!!errors.flatStreet2}
           />
         </div>
+      </div>
+      <div className='py-5'>
+        <h3 className=' text-[18px] font-semibold '>Pin On Map</h3>
       </div>
     </div>
   );
