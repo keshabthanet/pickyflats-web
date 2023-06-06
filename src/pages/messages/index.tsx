@@ -3,27 +3,11 @@ import React from 'react';
 
 import DashboardLayout from '@/components/layout/DashboardLayout';
 
+import ChatSidebar from '@/features/chat/ChatSidebar';
 import withAuth, { WithAuthProps } from '@/hoc/withAuth';
 
-const messagesList = [
-  {
-    from: 'John',
-    to: 'Arad',
-    message: 'Hello how are you',
-  },
-  {
-    from: 'John',
-    to: 'Arad',
-    message: 'Whatsapp',
-  },
-  {
-    from: 'John',
-    to: 'Arad',
-    message: 'All clear?',
-  },
-];
 export default function MessagesPage() {
-  const [messages, setMessages] = React.useState([]);
+  const [messages, setMessages] = React.useState<string[]>([]);
   const [inputText, setInputText] = React.useState('');
 
   const handleSendMessage = () => {
@@ -35,35 +19,7 @@ export default function MessagesPage() {
 
   return (
     <div className='flex h-full'>
-      <div className='h-full w-1/4 border-r border-solid p-1'>
-        <div className='text-text-secondary-default px-2 text-xl font-medium'>
-          Messages
-        </div>
-        <div className='pt-2'>
-          <ul className='divide-y divide-gray-300'>
-            {messagesList.map((item, i) => (
-              <li key={i} className='hover:bg-slate-100'>
-                <div className='flex items-start p-2'>
-                  <div className='flex-shrink-0'>
-                    <img
-                      src='https://images.unsplash.com/photo-1494790108377-be9c29b29330'
-                      alt='User Avatar'
-                      className='h-8 w-8 rounded-full'
-                    />
-                  </div>
-                  <div className='ml-4'>
-                    <p className='font-bold'>John Doe</p>
-                    <p className='text-gray-600'>Hello, how are you?</p>
-                  </div>
-                  <div className='ml-auto text-sm text-gray-500'>
-                    {formatDistanceToNow(new Date(), { addSuffix: true })}
-                  </div>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
+      <ChatSidebar />
       <div className='relative flex w-full flex-col'>
         <div className='mb-4 flex items-center border-b border-gray-200 p-4'>
           <img
@@ -93,16 +49,16 @@ export default function MessagesPage() {
             </>
           ))}
         </div>
-        <div className='flex py-2'>
+        <div className='flex border border-gray-300 py-2'>
           <input
             type='text'
-            className='flex-1 border border-gray-300 px-4 py-2'
+            className='flex-1 px-4 py-2'
             placeholder='Type your message...'
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
           />
           <button
-            className='bg-blue-500 px-4 py-2 text-white'
+            className='rounded bg-blue-500 px-4 py-2 text-white'
             onClick={handleSendMessage}
           >
             Send

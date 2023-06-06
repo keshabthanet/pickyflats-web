@@ -2,22 +2,42 @@ import {
   Button,
   ClickAwayListener,
   Divider,
+  IconButton,
   MenuItem,
   MenuList,
   Popper,
 } from '@mui/material';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import { CgMenuRightAlt } from 'react-icons/cg';
+import { GiHamburgerMenu } from 'react-icons/gi';
 import { IoPersonCircle } from 'react-icons/io5';
 
 import useAuthStore from '@/store/useAuthStore';
+import useDrawerStore from '@/store/useDrawerStore';
 
 import MessagesPopover from '@/features/dashboard/messages';
 import NotificationsPopover from '@/features/dashboard/notification';
 
+const topSideControlMenuPages = [
+  '/dashboard',
+  '/my-flats',
+  '/saved-lists',
+  '/tour-requests',
+  '/messages',
+  '/messages/[conversationId]',
+];
+
 export const NavBar = () => {
+  const [sideControlMenu, setSideControlMenu] = useState(false);
+  const { pathname } = useRouter();
+  const {
+    isOpen: isSidebarOpen,
+    open: openSidebar,
+    close: closeSidebar,
+  } = useDrawerStore();
   const { isAuthenticated, logout } = useAuthStore();
   const [open, setOpen] = useState(false);
 
@@ -34,9 +54,22 @@ export const NavBar = () => {
     handleClose();
   };
 
+  const toggleSidebar = isSidebarOpen ? closeSidebar : openSidebar;
+
+  useEffect(() => {
+    setSideControlMenu(topSideControlMenuPages.includes(pathname));
+  }, [pathname]);
+
   return (
     <>
       <div className='flex h-[50px] w-full border-b border-solid bg-white px-5 shadow-sm md:h-[70px]'>
+        {sideControlMenu && (
+          <div className='my-auto mr-1'>
+            <IconButton onClick={toggleSidebar}>
+              <GiHamburgerMenu />
+            </IconButton>
+          </div>
+        )}
         <div className='flex-grow'>
           <Link href='/'>
             <div className='relative h-full  w-[150px] object-scale-down md:w-[200px]'>
@@ -117,7 +150,9 @@ export const NavBar = () => {
                           <Link href='/saved-lists'>
                             <MenuItem>Saved Lists</MenuItem>
                           </Link>
-                          <MenuItem>Account</MenuItem>
+                          <Link href='/profile'>
+                            <MenuItem>Account</MenuItem>
+                          </Link>
                           <MenuItem onClick={handleLogout}>Logout</MenuItem>
                         </div>
                       </>
