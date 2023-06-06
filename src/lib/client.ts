@@ -21,6 +21,12 @@ export const PROFILES_ID =
 export const LISTINGS_ID =
   appwriteConfig[ENV_MODE].collections.LISTINGS_ID || 'listings';
 
+export const CONVERSATIONS_ID =
+  appwriteConfig[ENV_MODE].collections.CONVERSATIONS_ID || 'conversations';
+
+export const MESSAGES_ID =
+  appwriteConfig[ENV_MODE].collections.MESSAGES_ID || 'messages';
+
 export const storage = new Storage(client);
 
 export const LISTINGS_BUCKET =
