@@ -1,5 +1,6 @@
 import Image from 'next/image';
-import { useState } from 'react';
+
+import { useFlatStore } from '@/store/flatStore';
 
 const purposes = [
   {
@@ -15,13 +16,18 @@ const purposes = [
     src: '/illustrators/rent.svg',
   },
 ];
+
 export const Purpose = () => {
-  const [purpose, setPurpose] = useState('');
+  const { purpose, setPurpose } = useFlatStore();
+
+  const handlePurpose = (purpose) => {
+    setPurpose(purpose);
+  };
   return (
     <div className='m-auto flex h-auto  w-auto gap-9'>
       {purposes.map((p) => {
         return (
-          <div key={p.id} onClick={() => setPurpose(p.value)}>
+          <div key={p.id} onClick={() => handlePurpose(p.value)}>
             <div
               className={` duration-400 h-[350px] w-[300px] cursor-pointer  rounded-lg hover:bg-slate-200 ${
                 purpose == p.value ? 'bg-slate-200' : 'bg-slate-100'

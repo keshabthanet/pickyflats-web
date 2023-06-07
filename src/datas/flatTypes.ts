@@ -1,4 +1,4 @@
-export const flatTypes = [
+export const AllFlatTypes = [
   {
     id: 1,
     label: '1 BHK',

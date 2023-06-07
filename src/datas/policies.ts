@@ -1,5 +1,5 @@
 //rent policies without descriptions
-export const flatPolicies = [
+export const AllFlatPolicies = [
   {
     id: 1,
     name: 'Pets Allowed',
