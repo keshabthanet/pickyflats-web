@@ -29,6 +29,7 @@ export default {
         },
         secondary: {
           main: '#F4A460',
+          light: '#FFE8D1',
         },
       },
       keyframes: {

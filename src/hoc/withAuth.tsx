@@ -7,6 +7,8 @@ import { ImSpinner8 } from 'react-icons/im';
 
 import { account, DATABASE_ID, databases, PROFILES_ID } from '@/lib/client';
 
+import { updateUserProfileById } from '@/database/user';
+
 import useAuthStore from '@/store/useAuthStore';
 
 export interface WithAuthProps {
@@ -90,6 +92,18 @@ export default function withAuth<T extends WithAuthProps = WithAuthProps>(
         loadUser();
       }
     }, [isAuthenticated, login, logout, stopLoading]);
+
+    // update user activity to track status activity for chats
+    React.useEffect(() => {
+      if (!isAuthenticated) return;
+      const updateLastActivity = async () => {
+        await updateUserProfileById(user?.$id, { lastActivity: new Date() });
+      };
+      // update immediatly on state change detected from
+      updateLastActivity();
+      const interval = setInterval(updateLastActivity, 60000);
+      return () => clearInterval(interval);
+    }, [isAuthenticated]);
 
     React.useEffect(() => {
       // run checkAuth every page visit

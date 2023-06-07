@@ -1,8 +1,6 @@
-import { IconButton } from '@mui/material';
-import { AppwriteException, ID, Query } from 'appwrite';
+import { AppwriteException, Query } from 'appwrite';
 import { useRouter } from 'next/router';
-import React from 'react';
-import { BiImage } from 'react-icons/bi';
+import React, { useEffect, useRef } from 'react';
 
 import {
   CONVERSATIONS_ID,
@@ -11,15 +9,19 @@ import {
   MESSAGES_ID,
   PROFILES_ID,
 } from '@/lib/client';
+import { iterateObject } from '@/lib/object';
 
 import DashboardLayout from '@/components/layout/DashboardLayout';
 import Loader from '@/components/Loader';
 
 import useAuthStore from '@/store/useAuthStore';
+import useChatStore from '@/store/useChatStore';
+import useSnackbarStore from '@/store/useSnackbarStore';
 
 import ChatActiveHeader from '@/features/chat/ChatActiveHeader';
 import ChatMessages from '@/features/chat/ChatMessages';
 import ChatSidebar from '@/features/chat/ChatSidebar';
+import ChatInputMessage from '@/features/chat/InputMessage';
 import withAuth, { WithAuthProps } from '@/hoc/withAuth';
 
 export default function UserMessagePage() {
@@ -29,14 +31,13 @@ export default function UserMessagePage() {
   } = useRouter();
   const conversationId = rawConvId!.toString();
   const { user } = useAuthStore();
-  const [conversation, setConversation] = React.useState<any>();
-  const [chatUserId, setChatUserId] = React.useState('');
+  const { openSnackbar } = useSnackbarStore();
+
   const [chatUser, setChatUser] = React.useState<any>();
   const [loading, setLoading] = React.useState(true);
   const [messageLoading, setMessageLoading] = React.useState(true);
 
-  const [messages, setMessages] = React.useState<any[]>([]);
-  const [inputText, setInputText] = React.useState('');
+  const { messages, setMessages } = useChatStore();
 
   const fetchConversation = async () => {
     const _conversation = await databases.getDocument(
@@ -55,15 +56,13 @@ export default function UserMessagePage() {
     if (!validConversation) {
       throw new AppwriteException('Invalid conversation attempt', 404);
     }
-    setConversation(_conversation);
-    setChatUserId(_chatUserId);
 
     // fetch chat user
     const _chatUser = await databases.getDocument(
       DATABASE_ID,
       PROFILES_ID,
       _chatUserId,
-      [Query.select(['name', 'profile_img'])]
+      [Query.select(['name', 'profile_img', 'lastActivity'])]
     );
     setChatUser(_chatUser);
     setLoading(false);
@@ -73,47 +72,30 @@ export default function UserMessagePage() {
       Query.equal('conversationID', conversationId),
     ]);
     setMessages(_messages.documents);
-    setMessageLoading(false);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     const loadConversation = async () => {
       try {
+        setMessageLoading(true);
         await fetchConversation();
+        setMessageLoading(false);
       } catch (error) {
         if (error instanceof AppwriteException) {
           if (error.code == 404) push('/messages');
         }
-        console.log('Failed to load conversation ', error);
+        openSnackbar('Failed to load conversation', 'error');
       }
     };
     loadConversation();
   }, [conversationId]);
 
-  const handleSendMessage = async () => {
-    const newMessage = await databases.createDocument(
-      DATABASE_ID,
-      MESSAGES_ID,
-      ID.unique(),
-      {
-        conversationID: conversationId,
-        senderID: user?.$id,
-        message: inputText,
-      }
-    );
-    // update timestamp in conversation id for conversation listeners
-    await databases.updateDocument(
-      DATABASE_ID,
-      CONVERSATIONS_ID,
-      conversationId,
-      {
-        lastMessageID: newMessage.$id,
-        lastUpdated: new Date(),
-      }
-    );
-    if (inputText.trim() !== '') {
-      // setMessages([...messages, inputText]);
-      setInputText('');
+  const messagesContainer = useRef<HTMLDivElement>(null);
+
+  const handleOnNewMessage = () => {
+    if (messagesContainer.current) {
+      messagesContainer.current.scrollTop =
+        messagesContainer.current.scrollHeight;
     }
   };
 
@@ -122,37 +104,22 @@ export default function UserMessagePage() {
       <ChatSidebar />
       <div className='relative flex w-full flex-col'>
         {chatUser && <ChatActiveHeader user={chatUser} />}
-        <div className='flex flex-1 flex-col space-y-4 overflow-y-auto px-4 py-2'>
+        <div
+          className='flex flex-1 flex-col overflow-y-auto px-4 py-2'
+          ref={messagesContainer}
+        >
           {messageLoading && <Loader className='my-auto' />}
           {!messageLoading && (
             <ChatMessages
               conversationId={conversationId}
               chatUser={chatUser}
-              messages={messages}
+              messages={iterateObject(messages.byId)}
+              onNewMessage={handleOnNewMessage}
             />
           )}
         </div>
-        <div className='flex flex-col border border-gray-300 py-2'>
-          <div>
-            <input
-              type='text'
-              className='flex-1 px-4 py-2'
-              placeholder='Type a message...'
-              value={inputText}
-              onChange={(e) => setInputText(e.target.value)}
-            />
-          </div>
-          <div className='flex justify-between space-x-1 px-2'>
-            <IconButton>
-              <BiImage className='' />
-            </IconButton>
-            <button
-              className='rounded bg-blue-500 px-4 py-2 text-white'
-              onClick={handleSendMessage}
-            >
-              Send
-            </button>
-          </div>
+        <div className='border border-gray-300 py-2'>
+          <ChatInputMessage conversationID={conversationId} />
         </div>
       </div>
     </div>
