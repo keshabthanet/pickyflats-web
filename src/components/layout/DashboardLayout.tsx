@@ -9,6 +9,7 @@ import { NavBar } from '../../features/NavBar';
 
 interface IProps {
   children: React.ReactNode;
+  footer?: boolean;
 }
 
 type Props = IProps;
@@ -26,7 +27,7 @@ function DashboardLayout(props: Props) {
   return (
     <div className='flex flex-col'>
       <div>
-        <div className='border border-b'>
+        <div className=''>
           <NavBar />
         </div>
         <DashboardSidebar />
@@ -36,7 +37,7 @@ function DashboardLayout(props: Props) {
         className='relative flex flex-col'
         style={{
           marginLeft: !isMediumScreen && isOpen && native ? 240 : 0,
-          height: isMediumScreen ? '100%' : 'calc(100vh - 60px)',
+          height: isMediumScreen ? '100%' : 'calc(100vh - 70px)',
         }}
       >
         {children}
@@ -47,7 +48,7 @@ function DashboardLayout(props: Props) {
           ></div>
         )}
       </div>
-      <div>footer</div>
+      {props.footer && <div>footer</div>}
     </div>
   );
 }

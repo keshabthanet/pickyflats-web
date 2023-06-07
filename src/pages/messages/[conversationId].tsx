@@ -13,6 +13,7 @@ import {
 } from '@/lib/client';
 
 import DashboardLayout from '@/components/layout/DashboardLayout';
+import Loader from '@/components/Loader';
 
 import useAuthStore from '@/store/useAuthStore';
 
@@ -49,6 +50,11 @@ export default function UserMessagePage() {
       return;
     }
     const _chatUserId = _conversation.participants.find((i) => i !== user?.$id);
+    const validConversation = _conversation.participants.includes(user?.$id);
+    // invalidate the conversation if session user is not in the list
+    if (!validConversation) {
+      throw new AppwriteException('Invalid conversation attempt', 404);
+    }
     setConversation(_conversation);
     setChatUserId(_chatUserId);
 
@@ -82,9 +88,7 @@ export default function UserMessagePage() {
       }
     };
     loadConversation();
-  }, []);
-
-  console.log('hey ? chat with chatUserId ', chatUserId);
+  }, [conversationId]);
 
   const handleSendMessage = async () => {
     const newMessage = await databases.createDocument(
@@ -119,6 +123,7 @@ export default function UserMessagePage() {
       <div className='relative flex w-full flex-col'>
         {chatUser && <ChatActiveHeader user={chatUser} />}
         <div className='flex flex-1 flex-col space-y-4 overflow-y-auto px-4 py-2'>
+          {messageLoading && <Loader className='my-auto' />}
           {!messageLoading && (
             <ChatMessages
               conversationId={conversationId}

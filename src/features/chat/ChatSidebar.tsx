@@ -1,5 +1,11 @@
-import { formatDistanceToNow } from 'date-fns';
+import { AppwriteException } from 'appwrite';
+import Link from 'next/link';
 import React from 'react';
+
+import useAuthStore from '@/store/useAuthStore';
+
+import ConversationItem from '@/features/chat/ConversationItem';
+import { fetchConversationsForUser } from '@/features/chat/get';
 
 const messagesList = [
   {
@@ -20,6 +26,28 @@ const messagesList = [
 ];
 
 export default function ChatSidebar() {
+  const { user } = useAuthStore();
+  const [conversations, setConversations] = React.useState<any>([]);
+  const [loading, setLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    const loadConversations = async () => {
+      try {
+        const _conversations = await fetchConversationsForUser(user?.$id);
+        // console.log('conversationsWithProfiles ?', _conversations);
+        setConversations(_conversations);
+      } catch (error) {
+        if (error instanceof AppwriteException) {
+          // if (error.code == 404) push('/messages');
+        }
+        console.log('Failed to load conversation ', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadConversations();
+  }, []);
+  console.log('conversations ? ', conversations);
   return (
     <div className='h-full w-1/4 border-r border-solid p-1'>
       <div className='text-text-secondary-default px-2 text-xl font-medium'>
@@ -28,24 +56,11 @@ export default function ChatSidebar() {
 
       <div className='pt-2'>
         <ul className='divide-y divide-gray-300'>
-          {messagesList.map((item, i) => (
+          {conversations.map((item, i) => (
             <li key={i} className='hover:bg-slate-100'>
-              <div className='flex items-start p-2'>
-                <div className='flex-shrink-0'>
-                  <img
-                    src='https://images.unsplash.com/photo-1494790108377-be9c29b29330'
-                    alt='User Avatar'
-                    className='h-8 w-8 rounded-full'
-                  />
-                </div>
-                <div className='ml-4'>
-                  <p className='font-bold'>John Doe</p>
-                  <p className='text-gray-600'>Hello, how are you?</p>
-                </div>
-                <div className='ml-auto text-sm text-gray-500'>
-                  {formatDistanceToNow(new Date(), { addSuffix: true })}
-                </div>
-              </div>
+              <Link href={`/messages/${item.$id}`}>
+                <ConversationItem item={item} />
+              </Link>
             </li>
           ))}
         </ul>
