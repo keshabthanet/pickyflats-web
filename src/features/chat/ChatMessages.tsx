@@ -1,6 +1,8 @@
+import { IconButton } from '@mui/material';
 import clsx from 'clsx';
 import { formatDistanceToNow } from 'date-fns';
 import React from 'react';
+import { BsTrash } from 'react-icons/bs';
 
 import {
   client,
@@ -12,12 +14,17 @@ import {
   storage,
 } from '@/lib/client';
 
+import { deleteMessageById } from '@/database/message';
+
 import useAuthStore from '@/store/useAuthStore';
+import useSnackbarStore from '@/store/useSnackbarStore';
 
 interface Message {
   conversationID: string;
   senderID: string;
   message: string;
+
+  // read/delivered !FEATURE UPDATE
   isRead: boolean;
   isDelivered: boolean;
   attachments: any[];
@@ -33,16 +40,17 @@ export default function ChatMessages({
   conversationId,
   messages: chatMessage,
   chatUser,
+  onNewMessage,
 }: {
   conversationId;
   messages: Message[];
   chatUser?;
+  onNewMessage?: () => void;
 }) {
   const { user } = useAuthStore();
 
   const [messages, setMessages] = React.useState<any>([...chatMessage]);
 
-  console.log('conversationId? ?? ', conversationId);
   React.useEffect(() => {
     const unsubscribe = client.subscribe(
       // ['collections.messages.documents', conversationId],
@@ -50,7 +58,6 @@ export default function ChatMessages({
       (chat) => {
         const chatPayload: any = chat.payload;
         const newMessageId = chatPayload?.lastMessageID;
-        console.log('Got new message ...');
 
         const loadNewMessage = async () => {
           const newMessage = await databases.getDocument(
@@ -61,14 +68,26 @@ export default function ChatMessages({
           setMessages((prevMessages) => [...prevMessages, newMessage]);
         };
         loadNewMessage();
+        // cb for on new message
+        onNewMessage?.();
       }
     );
 
     return () => unsubscribe();
   }, [conversationId]);
 
+  const { openSnackbar } = useSnackbarStore();
+
+  const handleDeleteMessage = async (id) => {
+    try {
+      await deleteMessageById(id);
+    } catch (error) {
+      openSnackbar('Message failed to delete', 'error');
+    }
+  };
+
   return (
-    <>
+    <div className='flex flex-col space-y-4'>
       {messages.map((message, index) => {
         const messageUser = message.senderID === user?.$id ? user : chatUser;
         const isSenderMe = message.senderID === user?.$id;
@@ -84,7 +103,7 @@ export default function ChatMessages({
           >
             <div
               className={clsx(
-                'flex space-x-2 pt-3',
+                'group flex space-x-2 pt-3',
                 isSenderMe ? 'ml-auto' : ''
               )}
             >
@@ -103,6 +122,16 @@ export default function ChatMessages({
                       </span>
                     )}
                   </div>
+                </div>
+              )}
+              {isSenderMe && (
+                <div className='my-auto'>
+                  <IconButton
+                    className='hidden h-8 w-8 text-sm text-red-500 hover:text-red-700 focus:outline-none group-hover:block'
+                    onClick={() => handleDeleteMessage(message.$id)}
+                  >
+                    <BsTrash />
+                  </IconButton>
                 </div>
               )}
               <div
@@ -132,6 +161,6 @@ export default function ChatMessages({
           </div>
         );
       })}
-    </>
+    </div>
   );
 }

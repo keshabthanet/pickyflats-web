@@ -8,13 +8,20 @@ import {
   PROFILES_ID,
 } from '@/lib/client';
 
+interface IProps {
+  limit?: number;
+}
+
 // fetch user conversations
-export const fetchConversationsForUser = async (userId) => {
+export const fetchConversationsForUser = async (userId, props?: IProps) => {
   const _listConversations = await databases.listDocuments(
     DATABASE_ID,
-    CONVERSATIONS_ID,
-    []
+    CONVERSATIONS_ID
+    // [Query.equal('participants', [userId])]
+    // [Query.search('participants', userId)] // ! try on production
   );
+  console.log('getting convs  for  ? ', _listConversations);
+  console.log('hi convs ? ', _listConversations);
   const _conversations = _listConversations.documents;
   // filters all participants from conversations for profile fetching
   const participantIds = [
@@ -29,7 +36,7 @@ export const fetchConversationsForUser = async (userId) => {
 
   const _profiles = await databases.listDocuments(DATABASE_ID, PROFILES_ID, [
     Query.equal('$id', participantIds),
-    Query.select(['name', 'profile_img', 'profileVerified']),
+    Query.select(['name', 'profile_img', 'profileVerified', 'lastActivity']),
   ]);
 
   const lastMessageIds: string[] = [];

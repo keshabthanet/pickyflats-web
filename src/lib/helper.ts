@@ -39,3 +39,8 @@ export function getFromSessionStorage(key: string): string | null {
   }
   return null;
 }
+
+// function to check if an array is empty
+export function isEmptyArray(arr: any[]) {
+  return Array.isArray(arr) && arr.length === 0;
+}

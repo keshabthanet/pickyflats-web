@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import {
   Button,
   ClickAwayListener,
@@ -10,10 +11,12 @@ import {
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { CgMenuRightAlt } from 'react-icons/cg';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { IoPersonCircle } from 'react-icons/io5';
+
+import { PROFILES_BUCKET, storage } from '@/lib/client';
 
 import useAuthStore from '@/store/useAuthStore';
 import useDrawerStore from '@/store/useDrawerStore';
@@ -31,6 +34,7 @@ const topSideControlMenuPages = [
 ];
 
 export const NavBar = () => {
+  const { user } = useAuthStore();
   const [sideControlMenu, setSideControlMenu] = useState(false);
   const { pathname } = useRouter();
   const {
@@ -59,6 +63,12 @@ export const NavBar = () => {
   useEffect(() => {
     setSideControlMenu(topSideControlMenuPages.includes(pathname));
   }, [pathname]);
+
+  const accountAnchorRef = useRef<HTMLDivElement>(null);
+
+  const userAvatar = isAuthenticated
+    ? storage.getFilePreview(PROFILES_BUCKET, user!.profile_img)
+    : null;
 
   return (
     <>
@@ -105,30 +115,41 @@ export const NavBar = () => {
             </div>
           )}
 
-          <div className='relative box-border flex h-full  flex-col justify-center  align-middle'>
+          <div className='relative box-border flex h-full  flex-col justify-center align-middle'>
             <div
-              className='flex cursor-pointer rounded-[15%] border bg-slate-100 p-1 text-[21px] shadow-sm md:p-2 md:text-[25px] '
+              className='hover:bg-secondary-light flex cursor-pointer rounded-full border bg-slate-100 p-1 text-[21px] shadow-sm md:p-2 md:text-[25px] '
               onClick={handleOpen}
+              ref={accountAnchorRef}
             >
               <CgMenuRightAlt />
-
-              <IoPersonCircle />
+              {isAuthenticated && (
+                <div className='my-auto px-2 text-base'>
+                  Hi,
+                  <span className='text-primary-main pl-1 font-medium'>
+                    {user?.name}
+                  </span>
+                </div>
+              )}
+              {user?.profile_img ? (
+                <img
+                  src={userAvatar?.href}
+                  alt='Avatar'
+                  className='inline-flex h-6 w-6 items-center justify-center rounded-full'
+                />
+              ) : (
+                <IoPersonCircle />
+              )}
             </div>
-            <div className='relative z-50  bg-slate-300'>
+            <div className='z-50  bg-slate-300'>
               <Popper
+                anchorEl={accountAnchorRef.current}
                 open={open}
                 style={{
-                  position: 'absolute',
-
                   minWidth: '150px',
-                  left: '-100px',
-
-                  top: '10px',
                 }}
-                transition
-                placement='left-start'
                 disablePortal
-                className='absolute z-[200] rounded-md bg-white shadow-md'
+                className='z-[200] rounded-md bg-white shadow-md'
+                placement='bottom-end'
               >
                 <ClickAwayListener onClickAway={handleClose}>
                   <MenuList
@@ -136,10 +157,8 @@ export const NavBar = () => {
                     aria-labelledby='composition-button'
                   >
                     <div className='py-2'>
-                      <Link href='/dashboard/listing/new'>
-                        <MenuItem onClick={handleClose}>
-                          List Flat/Apartment
-                        </MenuItem>
+                      <Link href='/dashboard/listing/new' onClick={handleClose}>
+                        <MenuItem>List Flat/Apartment</MenuItem>
                       </Link>
                     </div>
 
@@ -147,10 +166,10 @@ export const NavBar = () => {
                       <>
                         <Divider />
                         <div className='py-2'>
-                          <Link href='/saved-lists'>
+                          <Link href='/saved-lists' onClick={handleClose}>
                             <MenuItem>Saved Lists</MenuItem>
                           </Link>
-                          <Link href='/profile'>
+                          <Link href='/profile' onClick={handleClose}>
                             <MenuItem>Account</MenuItem>
                           </Link>
                           <MenuItem onClick={handleLogout}>Logout</MenuItem>

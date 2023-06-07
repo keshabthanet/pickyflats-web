@@ -4,15 +4,27 @@ import React from 'react';
 import { PROFILES_BUCKET, storage } from '@/lib/client';
 import { timeAgo } from '@/lib/date';
 
+import useAuthStore from '@/store/useAuthStore';
+
 export default function ConversationItem({ item }: { item?: any }) {
+  const { user } = useAuthStore();
   const avatar = storage.getFilePreview(
     PROFILES_BUCKET,
     item?.participant?.profile_img
   );
 
+  const lastActivityDate = item?.participant?.lastActivity
+    ? new Date(item?.participant.lastActivity)
+    : null;
+  const differenceInMinutes = lastActivityDate
+    ? (new Date().getTime() - lastActivityDate!.getTime()) / (1000 * 60)
+    : null;
+
+  const userActive =
+    lastActivityDate && differenceInMinutes && differenceInMinutes < 1;
   return (
     <div className='flex items-start p-2'>
-      <div className='flex-shrink-0'>
+      <div className='relative flex-shrink-0'>
         {item?.participant?.profile_img ? (
           <img
             src={avatar.href}
@@ -26,10 +38,16 @@ export default function ConversationItem({ item }: { item?: any }) {
             </span>
           </div>
         )}
+        {userActive && (
+          <span className='absolute bottom-0 right-0 h-3 w-3 rounded-full bg-green-500' />
+        )}
       </div>
       <div className='ml-4'>
         <p className='font-bold'>{item?.participant?.name}</p>
-        <p className='text-gray-600'>{item?.lastMessage?.message}</p>
+        <p className='text-gray-600'>
+          {user?.$id === item?.lastMessage?.senderID ? 'You: ' : ''}
+          {item?.lastMessage?.message}
+        </p>
       </div>
       <div className='ml-auto text-sm text-gray-500'>
         {timeAgo(new Date(item?.lastUpdated || item?.$updatedAt))}
