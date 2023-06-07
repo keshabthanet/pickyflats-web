@@ -1,24 +1,21 @@
-import { useState } from 'react';
+import { AllFlatTypes } from '@/datas/flatTypes';
 
-import { flatTypes } from '@/datas/flatTypes';
+import { useFlatStore } from '@/store/flatStore';
 
 import { FlatTypeCard } from '@/features/my-flats/cards/FlatTypeCard';
 
-export const FlatTypes = () => {
-  const [allFlatTypes, setAllFlatTypes] = useState(flatTypes);
+export const FlatTypesPage = () => {
+  const { flatTypes, setFlatTypes } = useFlatStore();
 
   const handleCheck = (id: number) => {
-    const f = [...allFlatTypes];
-    f.forEach((d) => {
-      if (d.id == id) {
-        Object.assign(d, { checked: d.checked ? false : true });
-        return { ...d };
-      } else {
-        return d;
-      }
-    });
-
-    setAllFlatTypes(f);
+    if (flatTypes.includes(id)) {
+      const newF = flatTypes.filter((f) => {
+        return id != f;
+      });
+      setFlatTypes(newF);
+    } else {
+      setFlatTypes([...flatTypes, id]);
+    }
   };
 
   return (
@@ -30,8 +27,8 @@ export const FlatTypes = () => {
         </h3>
       </div>
       <div className='flex h-auto w-full  flex-wrap justify-center gap-5 align-middle   '>
-        {allFlatTypes.map((flat) => {
-          // const isSelected = flat.checked;
+        {AllFlatTypes.map((flat) => {
+          const isSelected = flatTypes.includes(flat.id);
           return (
             <div
               key={flat.id}
@@ -40,7 +37,7 @@ export const FlatTypes = () => {
             >
               <FlatTypeCard
                 label={flat.label}
-                checked={flat.checked}
+                checked={isSelected}
                 features={flat.features}
               />
             </div>

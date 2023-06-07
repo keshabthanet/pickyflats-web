@@ -42,7 +42,7 @@ export const Gallery = () => {
               <Rooms />
             </div>
           )}
-          {value == 'two' && <div>two</div>}
+          {value == 'two' && <div>kitchen</div>}
 
           {value == 'three' && <div>three</div>}
 

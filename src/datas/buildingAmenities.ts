@@ -1,4 +1,4 @@
-export const buildingAmenities = [
+export const AllBuildingAmenities = [
   {
     id: 0,
     name: 'Swimming Pool',

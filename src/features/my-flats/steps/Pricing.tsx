@@ -1,3 +1,24 @@
+import { useForm } from 'react-hook-form';
+
+import { Icosts } from '@/store/flatStore';
+
+import { AddPricing } from '@/features/my-flats/Modal/addPriceModal';
+
 export const Pricing = () => {
-  return <div className='m-auto flex h-auto  w-auto gap-9'>Pricing</div>;
+  const {
+    handleSubmit,
+    control,
+
+    formState: { errors, isDirty },
+  } = useForm<Icosts>({
+    defaultValues: {},
+  });
+
+  return (
+    <>
+      <div className='mt-9 flex justify-center'>
+        <AddPricing />
+      </div>
+    </>
+  );
 };

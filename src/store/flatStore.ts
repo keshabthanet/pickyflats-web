@@ -3,130 +3,149 @@ import create from 'zustand';
 // import { persist,  } from 'zustand/middleware'
 import { persist } from 'zustand/middleware';
 
-// import { useStudentMeQuery } from 'generatedGraphql/graphql'
-
-// interface part
-export interface Ibasic {
+export interface Iamenities {
+  id: number;
   name: string;
+  flatType: number[];
+  checked: boolean;
+}
+// export interface IcontactAndLocation {
+//   phone: string;
+//   email: string;
+//   country: string;
+//   city: string;
+//   flatCountry: string;
+//   flatCity: string;
+//   flatAdd1: string;
+//   flatAdd2: string;
+// }
 
+export interface Ipolicies {
+  id: number;
+  name: string;
+  flatType: number[];
+  checked: boolean;
+}
+
+export interface Icosts {
+  currency: string;
+  purchaseCost?: number | null | undefined;
+  rentCost?: number | null | undefined;
+  monthlyCost?: number | null | undefined;
+  yearlyCost?: number | null | undefined;
+  mortgagePayments?: number | null | undefined;
+  utilityCost?: number | null | undefined;
+  insuranceCost?: number | null | undefined;
+  propertyTax?: number | null | undefined;
+  internetCost?: number | null | undefined;
+  parkingFee?: number | null | undefined;
+  petFee?: number | null | undefined;
+  communalFacilityFee?: number | null | undefined;
+  cleaningFee?: number | null | undefined;
+  homeImprovement?: number | null | undefined;
+  furnitureAppliances?: number | null | undefined;
+  legalFees?: number | null | undefined;
+  movingCosts?: number | null | undefined;
+  securitySystem?: number | null | undefined;
+  homeOfficeSetup?: number | null | undefined;
+  cleaningPestControl?: number | null | undefined;
+  renewalFees?: number | null | undefined;
+  maintenanceRepairs?: number | null | undefined;
+  otherCosts?: number | null | undefined;
+}
+
+export interface IcontactAndLocation {
+  //agent contact
+  phoneNumber: string;
   email: string;
-  dateOfBirth: string | null;
-  contactNo: string;
-
-  country?: string;
-  streetAddressLine?: string;
-}
-
-export interface Iphoto {
-  id?: string;
-  keyName?: string;
-}
-
-export interface IIdentities {
-  id: string;
-
-  identityNo: string;
-  issueFrom: string;
-  issueDate: string;
-  expireDate: string | null;
-  frontFace: { id?: string; keyName?: string };
-  backFace?: { id?: string; keyName?: string };
+  country: string;
+  city: string;
+  street1: string;
+  //flat details
+  flatCountry: string;
+  flatCity: string;
+  flatStreet1: string;
+  flatStreet2: string;
 }
 
 // store part
 type Store = {
-  collegeId: string;
-  courseId: string;
-  consultancyId: string | null;
-  scholarshipId: string;
-  applicationId: string;
+  purpose: 'sell' | 'rent';
+  flatTypes: number[];
 
-  updatedAt: string | null;
+  buildingAmenities: Array<Iamenities>;
+  flatAmenities: Array<Iamenities>;
+  flatPolicies: Array<Iamenities>;
 
-  identitys: Array<IIdentities>;
+  costs: Icosts;
 
-  basicDetail: Ibasic;
-  // scholarship: Ischolarship
-
-  photo: Iphoto;
+  contactAndLocation: IcontactAndLocation;
 
   steps: number;
   openAppModal: boolean;
 };
 
-export interface Ischolarship {
-  id: string;
-  name: string;
-}
-
 type Actions = {
-  setCollegeId: (collegId: string) => void;
-  setCourseId: (courseId: string) => void;
-  setConsultancyId: (consultancyId: string | null) => void;
-  setScholarshipId: (scholarshipId: string) => void;
-  setApplicationId: (applicationId: string) => void;
+  setPurpose: (purpose: 'sell' | 'rent') => void;
+  setFlatTypes: (flatIds: number[]) => void;
 
-  setUpdatedAt: (updatedAt: string | null) => void;
+  setBuildingAmenities: (amenities: Array<Iamenities>) => void;
+  setFlatAmenities: (amenities: Array<Iamenities>) => void;
+  setFlatPolicies: (amenities: Array<Iamenities>) => void;
 
-  setIdentitys: (identity: Array<IIdentities>) => void;
+  setCosts: (costs: Icosts) => void;
 
-  setBasicDetails: (basicDetail: Ibasic) => void;
-  // setScholarship: (scholarship: Ischolarship) => void
-
-  setPhoto: (photo: Iphoto) => void;
+  setContactAndLocation: (contact: IcontactAndLocation) => void;
 
   setSteps: (steps: number) => void;
   setOpenAppModal: (open: boolean) => void;
 };
 
-export const useApplicationStore = create<Store & Actions>()(
+export const useFlatStore = create<Store & Actions>()(
   persist(
     (set) => ({
-      collegeId: '',
-      courseId: '',
-      consultancyId: null,
-      scholarshipId: '',
-      applicationId: '',
-      updatedAt: null,
+      purpose: 'rent',
+      flatTypes: [1],
+      buildingAmenities: [],
+      flatAmenities: [],
+      flatPolicies: [],
 
-      families: [],
-      experiences: [],
-      eligibilities: [],
-      academics: [],
-      essays: [],
-      lors: [],
-      identitys: [],
-      documents: [],
-      languages: [],
+      costs: { currency: '$' },
 
-      basicDetail: { name: '', email: '', dateOfBirth: '', contactNo: '' },
-
-      photo: { id: '', keyName: '' },
+      contactAndLocation: {
+        country: '',
+        city: '',
+        street1: '',
+        phoneNumber: '',
+        email: '',
+        flatCountry: '',
+        flatCity: '',
+        flatStreet1: '',
+        flatStreet2: '',
+      },
 
       steps: 1,
       openAppModal: false,
 
-      setCollegeId: (collegeId: string) => set({ collegeId }),
-      setCourseId: (courseId: string) => set({ courseId }),
-      setConsultancyId: (consultancyId: string | null) =>
-        set({ consultancyId }),
-      setScholarshipId: (scholarshipId: string) => set({ scholarshipId }),
-      setApplicationId: (applicationId: string) => set({ applicationId }),
-      setUpdatedAt: (updatedAt: string | null) => set({ updatedAt }),
+      setPurpose: (purpose: 'sell' | 'rent') => set({ purpose }),
+      setFlatTypes: (flatTypes: number[]) => set({ flatTypes }),
+      setBuildingAmenities: (amenities: Array<Iamenities>) =>
+        set({ buildingAmenities: [...amenities] }),
+      setFlatAmenities: (amenities: Array<Iamenities>) =>
+        set({ flatAmenities: [...amenities] }),
 
-      setIdentitys: (identity: Array<IIdentities>) =>
-        set({ identitys: [...identity] }),
+      setFlatPolicies: (policies: Array<Ipolicies>) =>
+        set({ flatPolicies: [...policies] }),
 
-      setBasicDetails: (basicDetail: Ibasic) => set({ basicDetail }),
-      // setScholarship: (scholarship: Ischolarship) => set({ scholarship }),
-
-      setPhoto: (photo: Iphoto) => set({ photo }),
+      setCosts: (costs: Icosts) => set({ costs }),
+      setContactAndLocation: (ContactAndLocation: IcontactAndLocation) =>
+        set({ contactAndLocation: ContactAndLocation }),
 
       setSteps: (steps: number) => set({ steps }),
       setOpenAppModal: (openAppModal: boolean) => set({ openAppModal }),
     }),
     {
-      name: 'application-storage',
+      name: 'flat-store',
     }
   )
 );

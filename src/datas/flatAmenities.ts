@@ -1,4 +1,4 @@
-export const flatAmenities = [
+export const AllFlatAmenities = [
   {
     id: 1,
     name: 'Air Conditioning',

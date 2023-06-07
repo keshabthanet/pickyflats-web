@@ -5,7 +5,7 @@ import { BsBuildingFillAdd } from 'react-icons/bs';
 import { CgClose } from 'react-icons/cg';
 
 import { FeaturesAndPolicies } from '@/features/my-flats/steps/Features';
-import { FlatTypes } from '@/features/my-flats/steps/FlatType';
+import { FlatTypesPage } from '@/features/my-flats/steps/FlatType';
 import { Gallery } from '@/features/my-flats/steps/Gallery';
 import { ContactAndLocation } from '@/features/my-flats/steps/Location';
 import { Pricing } from '@/features/my-flats/steps/Pricing';
@@ -15,7 +15,7 @@ type Step = { key: string; title: string; component: React.ReactNode };
 
 const steps: Step[] = [
   { key: 'choose', title: '', component: <Purpose /> },
-  { key: 'type', title: 'Flat Type', component: <FlatTypes /> },
+  { key: 'type', title: 'Flat Type', component: <FlatTypesPage /> },
   {
     key: 'feature-policies',
     title: 'Features & Policies',
@@ -57,14 +57,10 @@ export const AddFlatModal = () => {
     mode: 'onTouched',
     defaultValues: {},
   });
-  const {
-    handleSubmit,
-    control,
-    formState: { errors },
-  } = methods;
+  const { handleSubmit } = methods;
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
-    console.log('save flat ', data);
+    alert('submit');
   };
 
   return (
@@ -116,8 +112,11 @@ export const AddFlatModal = () => {
                 </Button>
                 <Button
                   variant='contained'
-                  className=' m-auto h-[40px] w-[150px] rounded-[20px]'
+                  className={` m-auto h-[40px] w-[150px] rounded-[20px] ${
+                    isLastStep ? 'bg-blue-700' : ''
+                  }`}
                   onClick={isLastStep ? handleSubmit(onSubmit) : plusStep}
+                  type={`${isLastStep ? 'submit' : 'button'}`}
                 >
                   {isLastStep ? 'Save' : 'Continue'}
                 </Button>
