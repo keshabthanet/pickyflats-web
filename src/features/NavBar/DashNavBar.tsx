@@ -26,7 +26,7 @@ export const DashNavBar = () => {
 
   return (
     <>
-      <div className='flex h-[50px] w-full bg-white px-5 md:h-[50px]'>
+      <div className='flex h-[50px] w-full border border-b bg-white px-5 md:h-[50px]'>
         <div className='flex-grow'>
           <div className='relative h-full  w-[150px] object-scale-down md:w-[200px]'>
             <Image src='/logo.svg' alt='logo' fill />

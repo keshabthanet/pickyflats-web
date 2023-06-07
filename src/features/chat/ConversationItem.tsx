@@ -1,0 +1,39 @@
+/* eslint-disable @next/next/no-img-element */
+import React from 'react';
+
+import { PROFILES_BUCKET, storage } from '@/lib/client';
+import { timeAgo } from '@/lib/date';
+
+export default function ConversationItem({ item }: { item?: any }) {
+  const avatar = storage.getFilePreview(
+    PROFILES_BUCKET,
+    item?.participant?.profile_img
+  );
+
+  return (
+    <div className='flex items-start p-2'>
+      <div className='flex-shrink-0'>
+        {item?.participant?.profile_img ? (
+          <img
+            src={avatar.href}
+            alt='Avatar'
+            className='inline-flex h-10 w-10 items-center justify-center rounded-full'
+          />
+        ) : (
+          <div className='bg-primary-light relative inline-flex h-10 w-10 items-center justify-center rounded-full'>
+            <span className='text-md font-bold uppercase text-white'>
+              {item?.participant?.name.substring(0, 2).toUpperCase()}
+            </span>
+          </div>
+        )}
+      </div>
+      <div className='ml-4'>
+        <p className='font-bold'>{item?.participant?.name}</p>
+        <p className='text-gray-600'>{item?.lastMessage?.message}</p>
+      </div>
+      <div className='ml-auto text-sm text-gray-500'>
+        {timeAgo(new Date(item?.lastUpdated || item?.$updatedAt))}
+      </div>
+    </div>
+  );
+}
