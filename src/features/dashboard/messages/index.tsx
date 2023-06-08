@@ -1,7 +1,10 @@
 import { Box, ClickAwayListener, IconButton, Popper } from '@mui/material';
 import Link from 'next/link';
 import React from 'react';
+import { Scrollbars } from 'react-custom-scrollbars';
 import { FiMessageCircle } from 'react-icons/fi';
+
+import { isEmptyArray } from '@/lib/helper';
 
 import { fetchConversationsForUser } from '@/database/conversation';
 
@@ -15,6 +18,8 @@ export default function MessagesPopover() {
   const { user } = useAuthStore();
   const [loading, setLoading] = React.useState(true);
   const [conversations, setConversations] = React.useState<any>([]);
+
+  const [fetchError, setFetchError] = React.useState('');
 
   const [panelOpen, setPanelOpen] = React.useState(false);
   const anchorRef = React.useRef<HTMLButtonElement>(null);
@@ -35,17 +40,18 @@ export default function MessagesPopover() {
 
   React.useEffect(() => {
     const loadConversations = async () => {
+      setFetchError('');
       try {
         const _conversations = await fetchConversationsForUser(user?.$id);
         setConversations(_conversations);
       } catch (error) {
-        console.log('Failed to load conversation ', error);
+        setFetchError('Failed to load conversations');
       } finally {
         setLoading(false);
       }
     };
     loadConversations();
-  }, []);
+  }, [panelOpen]);
 
   return (
     <div className='relative'>
@@ -66,24 +72,40 @@ export default function MessagesPopover() {
             <div className='text-text-secondary-default px-2 text-xl font-medium'>
               Messages
             </div>
-            <div className='flex-1 pt-2'>
-              {loading && <Loader />}
-              <ul className='divide-y divide-gray-300'>
+            <div className='overflow-y-autod flex-1 pt-2'>
+              <Scrollbars>
                 {loading && <Loader />}
-                {conversations.map((item, i) => {
-                  return (
-                    <li
-                      key={i}
-                      className='hover:bg-slate-100'
-                      onClick={() => setPanelOpen(false)}
-                    >
-                      <Link href={`/messages/${item.$id}`}>
-                        <ConversationItem item={item} />
-                      </Link>
-                    </li>
-                  );
-                })}
-              </ul>
+                <ul className='divide-y divide-gray-300'>
+                  {isEmptyArray(conversations) && (
+                    <div className='no-listings px-2'>
+                      <p className='font-medium'>
+                        Explore available listings to start a conversation.
+                      </p>
+                    </div>
+                  )}
+
+                  {fetchError && (
+                    <p className='px-2 font-medium text-red-400'>
+                      {fetchError}
+                    </p>
+                  )}
+
+                  {loading && <Loader />}
+                  {conversations.map((item, i) => {
+                    return (
+                      <li
+                        key={i}
+                        className='hover:bg-slate-100'
+                        onClick={() => setPanelOpen(false)}
+                      >
+                        <Link href={`/messages/${item.$id}`}>
+                          <ConversationItem item={item} />
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </Scrollbars>
             </div>
             <Link
               href='/messages'

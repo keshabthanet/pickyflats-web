@@ -10,13 +10,19 @@ import {
   MESSAGES_ID,
 } from '@/lib/client';
 
+import { pushListenerUpdate } from '@/database/listener';
+
 import useAuthStore from '@/store/useAuthStore';
 
 interface IProps {
   conversationID: string;
+  receiverID: string;
 }
 
-export default function ChatInputMessage({ conversationID }: IProps) {
+export default function ChatInputMessage({
+  conversationID,
+  receiverID,
+}: IProps) {
   const { user } = useAuthStore();
 
   const [inputText, setInputText] = React.useState('');
@@ -43,6 +49,9 @@ export default function ChatInputMessage({ conversationID }: IProps) {
         lastUpdated: new Date(),
       }
     );
+
+    // push for listeners update
+    await pushListenerUpdate(receiverID, 'Message');
     //! TODO: update last message in sidebar items
     setInputText('');
   };

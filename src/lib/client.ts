@@ -17,7 +17,7 @@ export const DATABASE_ID =
 
 //table IDs
 export const PROFILES_ID =
-  appwriteConfig[ENV_MODE].collections.PROFILES_ID || '6477ecf5129aa58806e1';
+  appwriteConfig[ENV_MODE].collections.PROFILES_ID || 'profiles';
 export const LISTINGS_ID =
   appwriteConfig[ENV_MODE].collections.LISTINGS_ID || 'listings';
 
@@ -26,6 +26,9 @@ export const CONVERSATIONS_ID =
 
 export const MESSAGES_ID =
   appwriteConfig[ENV_MODE].collections.MESSAGES_ID || 'messages';
+
+export const LISTENERS_ID =
+  appwriteConfig[ENV_MODE].collections.LISTENERS_ID || 'listeners';
 
 export const storage = new Storage(client);
 

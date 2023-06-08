@@ -62,7 +62,7 @@ export default function UserMessagePage() {
       DATABASE_ID,
       PROFILES_ID,
       _chatUserId,
-      [Query.select(['name', 'profile_img', 'lastActivity'])]
+      [Query.select(['name', 'profile_img', 'listenerID', 'lastActivity'])]
     );
     setChatUser(_chatUser);
     setLoading(false);
@@ -119,7 +119,10 @@ export default function UserMessagePage() {
           )}
         </div>
         <div className='border border-gray-300 py-2'>
-          <ChatInputMessage conversationID={conversationId} />
+          <ChatInputMessage
+            conversationID={conversationId}
+            receiverID={chatUser?.$id}
+          />
         </div>
       </div>
     </div>

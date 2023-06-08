@@ -19,6 +19,8 @@ import { MdOutlinePersonOutline } from 'react-icons/md';
 import { account, DATABASE_ID, databases, PROFILES_ID } from '@/lib/client';
 import clsxm from '@/lib/clsxm';
 
+import { createListener } from '@/database/listener';
+
 import AuthLayout from '@/components/layout/AuthLayout';
 import Seo from '@/components/Seo';
 
@@ -75,6 +77,9 @@ const RegisterPage = () => {
       await databases.createDocument(DATABASE_ID, PROFILES_ID, user.$id, {
         role: 'user',
       });
+
+      // create listener for notification & message updates
+      await createListener(user.$id);
 
       // hard refresh
       window.location.href = '/';

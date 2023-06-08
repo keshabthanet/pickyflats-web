@@ -78,9 +78,9 @@ export default function withAuth<T extends WithAuthProps = WithAuthProps>(
             PROFILES_ID,
             user.$id
           );
-          const { role, profile_img } = userProfile;
+          const { role, profile_img, listenerID } = userProfile;
 
-          login({ ...user, ...{ role, profile_img } } as any);
+          login({ ...user, ...{ role, profile_img, listenerID } } as any);
         } catch (err) {
           Cookies.remove('token');
         } finally {
