@@ -16,6 +16,7 @@ export const appwriteConfig = {
     buckets: {
       listings: '',
       profiles: '',
+      messages: 'messages',
     },
   },
   LOCAL: {
@@ -34,6 +35,7 @@ export const appwriteConfig = {
     buckets: {
       listings: 'listings',
       profiles: 'profiles',
+      messages: 'messages',
     },
   },
 };

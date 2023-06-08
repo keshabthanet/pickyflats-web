@@ -12,7 +12,7 @@ import Loader from '@/components/Loader';
 
 import useAuthStore from '@/store/useAuthStore';
 
-import ConversationItem from '@/features/chat/ConversationItem';
+import ConversationItem from '@/components/chat/ConversationItem';
 
 export default function MessagesPopover() {
   const { user } = useAuthStore();

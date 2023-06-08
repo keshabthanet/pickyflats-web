@@ -9,13 +9,14 @@ import {
   MESSAGES_ID,
   PROFILES_ID,
 } from '@/lib/client';
-import { iterateObject } from '@/lib/object';
 
 import DashboardLayout from '@/components/layout/DashboardLayout';
+import LightboxModal from '@/components/LightboxModal';
 import Loader from '@/components/Loader';
 
 import useAuthStore from '@/store/useAuthStore';
 import useChatStore from '@/store/useChatStore';
+import useLightBoxStore from '@/store/useLightBoxStore';
 import useSnackbarStore from '@/store/useSnackbarStore';
 
 import ChatActiveHeader from '@/features/chat/ChatActiveHeader';
@@ -23,6 +24,8 @@ import ChatMessages from '@/features/chat/ChatMessages';
 import ChatSidebar from '@/features/chat/ChatSidebar';
 import ChatInputMessage from '@/features/chat/InputMessage';
 import withAuth, { WithAuthProps } from '@/hoc/withAuth';
+
+import { Message } from '@/types/message';
 
 export default function UserMessagePage() {
   const {
@@ -38,6 +41,14 @@ export default function UserMessagePage() {
   const [messageLoading, setMessageLoading] = React.useState(true);
 
   const { messages, setMessages } = useChatStore();
+
+  const {
+    images,
+    selectedIndex: selectedImage,
+    setPhotoIndex,
+    isOpen: isLightBoxOpen,
+    setIsOpen: setLightBoxOpen,
+  } = useLightBoxStore();
 
   const fetchConversation = async () => {
     const _conversation = await databases.getDocument(
@@ -68,9 +79,11 @@ export default function UserMessagePage() {
     setLoading(false);
 
     // load messages only after fetching chat user
-    const _messages = await databases.listDocuments(DATABASE_ID, MESSAGES_ID, [
-      Query.equal('conversationID', conversationId),
-    ]);
+    const _messages = await databases.listDocuments<Message>(
+      DATABASE_ID,
+      MESSAGES_ID,
+      [Query.equal('conversationID', conversationId)]
+    );
     setMessages(_messages.documents);
   };
 
@@ -100,32 +113,42 @@ export default function UserMessagePage() {
   };
 
   return (
-    <div className='flex h-full'>
-      <ChatSidebar />
-      <div className='relative flex w-full flex-col'>
-        {chatUser && <ChatActiveHeader user={chatUser} />}
-        <div
-          className='flex flex-1 flex-col overflow-y-auto px-4 py-2'
-          ref={messagesContainer}
-        >
-          {messageLoading && <Loader className='my-auto' />}
-          {!messageLoading && (
-            <ChatMessages
-              conversationId={conversationId}
-              chatUser={chatUser}
-              messages={iterateObject(messages.byId)}
-              onNewMessage={handleOnNewMessage}
+    <>
+      <div className='flex h-full'>
+        <ChatSidebar />
+        <div className='relative flex w-full flex-col'>
+          {chatUser && <ChatActiveHeader user={chatUser} />}
+          <div
+            className='flex flex-1 flex-col overflow-y-auto px-4 py-2'
+            ref={messagesContainer}
+          >
+            {messageLoading && <Loader className='my-auto' />}
+            {!messageLoading && (
+              <ChatMessages
+                conversationId={conversationId}
+                chatUser={chatUser}
+                cbOnNewMessage={handleOnNewMessage}
+              />
+            )}
+          </div>
+          <div className='border border-gray-300 py-2'>
+            <ChatInputMessage
+              conversationID={conversationId}
+              receiverID={chatUser?.$id}
             />
-          )}
-        </div>
-        <div className='border border-gray-300 py-2'>
-          <ChatInputMessage
-            conversationID={conversationId}
-            receiverID={chatUser?.$id}
-          />
+          </div>
         </div>
       </div>
-    </div>
+
+      <LightboxModal
+        images={images}
+        mainSrc={images[selectedImage]}
+        photoIndex={selectedImage}
+        setPhotoIndex={setPhotoIndex}
+        isOpen={isLightBoxOpen}
+        onCloseRequest={() => setLightBoxOpen(false)}
+      />
+    </>
   );
 }
 
