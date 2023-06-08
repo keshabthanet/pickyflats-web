@@ -11,6 +11,8 @@ import { ContactAndLocation } from '@/features/my-flats/steps/Location';
 import { Pricing } from '@/features/my-flats/steps/Pricing';
 import { Purpose } from '@/features/my-flats/steps/Purpose';
 
+import { useFlatStore } from '@/store/flatStore';
+
 type Step = { key: string; title: string; component: React.ReactNode };
 
 const steps: Step[] = [
@@ -39,8 +41,20 @@ export const AddFlatModal = () => {
   const [open, setOpen] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
 
+  const { flatTypes, purpose } = useFlatStore();
+
   const plusStep = () => {
-    if (activeStep < 5) setActiveStep((step) => step + 1);
+    if (activeStep < 5) {
+      if (activeStep == 0 && purpose != 'rent' && purpose != 'sell') {
+        alert('select the purpose');
+        return;
+      } else if (activeStep == 1 && flatTypes.length == 0) {
+        alert('select at least one flat type');
+        return;
+      }
+
+      setActiveStep((step) => step + 1);
+    }
   };
   const minusStep = () => {
     if (activeStep > 0) setActiveStep((step) => step - 1);

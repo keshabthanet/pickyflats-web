@@ -10,7 +10,7 @@ import { Ipolicies, useFlatStore } from '@/store/flatStore';
 import { Iamenities } from '@/store/flatStore';
 
 export const FeaturesAndPolicies = () => {
-  const { buildingAmenities, setBuildingAmenities } = useFlatStore();
+  const { buildingAmenities, setBuildingAmenities, flatTypes } = useFlatStore();
 
   const handleBuildingCheck = (am: Iamenities) => {
     if (buildingAmenities.includes(am)) {
@@ -59,7 +59,9 @@ export const FeaturesAndPolicies = () => {
       <div>
         <h3 className='  text-[18px] font-semibold '>Building Amenities</h3>
         <div className='mt-5 flex flex-wrap gap-5'>
-          {AllBuildingAmenities.map((a: Iamenities) => {
+          {AllBuildingAmenities.filter((am) => {
+            return am.flatType.some((e) => flatTypes.includes(e));
+          }).map((a: Iamenities) => {
             const isChecked = buildingAmenities.includes(a);
             return (
               <div
@@ -85,7 +87,9 @@ export const FeaturesAndPolicies = () => {
         <Divider />
         <h3 className='  mt-5 text-[18px] font-semibold '>Flat Amenities</h3>
         <div className='mt-5 flex flex-wrap gap-5'>
-          {AllFlatAmenities.map((a: Iamenities) => {
+          {AllFlatAmenities.filter((am) => {
+            return am.flatType.some((e) => flatTypes.includes(e));
+          }).map((a: Iamenities) => {
             const isChecked = flatAmenities.includes(a);
             return (
               <div
@@ -111,7 +115,9 @@ export const FeaturesAndPolicies = () => {
         <Divider />
         <h3 className='  mt-5 text-[18px] font-semibold '>Flat Policies</h3>
         <div className='mt-5 flex flex-wrap gap-5'>
-          {AllFlatPolicies.map((a: Ipolicies) => {
+          {AllFlatPolicies.filter((am) => {
+            return am.flatType.some((e) => flatTypes.includes(e));
+          }).map((a: Ipolicies) => {
             const isChecked = flatPolicies.includes(a);
 
             return (
