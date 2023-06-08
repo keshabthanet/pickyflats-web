@@ -30,7 +30,7 @@ export interface Ipolicies {
 export interface Icosts {
   currency: string;
   purchaseCost?: number | null | undefined;
-  rentCost?: number | null | undefined;
+  // rentCost?: number | null | undefined;
   monthlyCost?: number | null | undefined;
   yearlyCost?: number | null | undefined;
   mortgagePayments?: number | null | undefined;
@@ -48,8 +48,6 @@ export interface Icosts {
   movingCosts?: number | null | undefined;
   securitySystem?: number | null | undefined;
   homeOfficeSetup?: number | null | undefined;
-  cleaningPestControl?: number | null | undefined;
-  renewalFees?: number | null | undefined;
   maintenanceRepairs?: number | null | undefined;
   otherCosts?: number | null | undefined;
 }

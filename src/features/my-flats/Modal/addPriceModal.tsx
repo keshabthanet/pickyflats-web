@@ -21,7 +21,29 @@ export const AddPricing = () => {
 
     formState: { errors, isDirty },
   } = useForm<Icosts>({
-    defaultValues: {},
+    defaultValues: {
+      currency: costs.currency,
+      purchaseCost: costs.purchaseCost ?? 0,
+      monthlyCost: costs.monthlyCost ?? 0,
+      yearlyCost: costs.yearlyCost ?? 0,
+      mortgagePayments: costs.mortgagePayments ?? 0,
+      utilityCost: costs.utilityCost ?? 0,
+      insuranceCost: costs.insuranceCost ?? 0,
+      propertyTax: costs.propertyTax ?? 0,
+      internetCost: costs.internetCost ?? 0,
+      parkingFee: costs.parkingFee ?? 0,
+      petFee: costs.petFee ?? 0,
+      communalFacilityFee: costs.communalFacilityFee ?? 0,
+      cleaningFee: costs.cleaningFee ?? 0,
+      homeImprovement: costs.homeImprovement ?? 0,
+      furnitureAppliances: costs.furnitureAppliances ?? 0,
+      legalFees: costs.legalFees ?? 0,
+      movingCosts: costs.movingCosts ?? 0,
+      securitySystem: costs.securitySystem ?? 0,
+      homeOfficeSetup: costs.homeOfficeSetup ?? 0,
+      maintenanceRepairs: costs.maintenanceRepairs ?? 0,
+      otherCosts: costs.otherCosts ?? 0,
+    },
   });
 
   const onSubmit = (data: Icosts) => {
@@ -36,7 +58,7 @@ export const AddPricing = () => {
           className=' capitalize'
           onClick={() => setOpen(true)}
         >
-          Add Pricing
+          Add/Update Pricing
         </Button>
       </div>
       <Dialog
@@ -52,7 +74,7 @@ export const AddPricing = () => {
               <div>
                 <ReactSelect
                   name='currency'
-                  options={[]}
+                  options={[{ label: 'nepali', value: 'nepali' }]}
                   label=' Currency'
                   placeholder='currency'
                   control={control}
@@ -65,7 +87,7 @@ export const AddPricing = () => {
                   error={!!errors.currency}
                 />
               </div>
-              <div>
+              {/* <div>
                 <TextField
                   name='rentCost'
                   type='number'
@@ -73,7 +95,7 @@ export const AddPricing = () => {
                   control={control}
                   label='Rent Cost'
                 />
-              </div>
+              </div> */}
 
               <div>
                 <TextField
@@ -88,9 +110,9 @@ export const AddPricing = () => {
                 <TextField
                   name='monthlyCost'
                   type='number'
-                  placeholder=' Monthly Cost'
+                  placeholder=' Monthly Rent'
                   control={control}
-                  label='Monthly Cost'
+                  label='Monthly Rent'
                 />
               </div>
               <div>
@@ -122,11 +144,29 @@ export const AddPricing = () => {
               </div>
               <div>
                 <TextField
+                  name='mortgagePayments'
+                  type='number'
+                  placeholder=' Mortagage  Payments'
+                  control={control}
+                  label='Mortagage Payments'
+                />
+              </div>
+              <div>
+                <TextField
                   name='internetCost'
                   type='number'
                   placeholder=' Internet Cost'
                   control={control}
                   label='Internet Cost'
+                />
+              </div>
+              <div>
+                <TextField
+                  name='homeImprovement'
+                  type='number'
+                  placeholder=' Improvement Cost'
+                  control={control}
+                  label='Improvement Cost'
                 />
               </div>
               <div>
@@ -140,11 +180,70 @@ export const AddPricing = () => {
               </div>
               <div>
                 <TextField
+                  name='legalFees'
+                  type='number'
+                  placeholder=' Legal Fees'
+                  control={control}
+                  label='Legal Fees'
+                />
+              </div>
+              <div>
+                <TextField
                   name='parkingFee'
                   type='number'
                   placeholder=' Parking Fee'
                   control={control}
                   label='Parking Fee'
+                />
+              </div>
+
+              <div>
+                <TextField
+                  name='furnitureAppliances'
+                  type='number'
+                  placeholder=' Forniture Costs'
+                  control={control}
+                  label='Forniture Costs'
+                />
+              </div>
+
+              <div>
+                <TextField
+                  name='movingCosts'
+                  type='number'
+                  placeholder=' Moving Costs'
+                  control={control}
+                  label='Moving Costs'
+                />
+              </div>
+
+              <div>
+                <TextField
+                  name='securitySystem'
+                  type='number'
+                  placeholder=' Security System Costs'
+                  control={control}
+                  label='Security System Costs'
+                />
+              </div>
+
+              <div>
+                <TextField
+                  name='homeOfficeSetup'
+                  type='number'
+                  placeholder=' Setup Costs'
+                  control={control}
+                  label='SetUp Costs'
+                />
+              </div>
+
+              <div>
+                <TextField
+                  name='maintenanceRepairs'
+                  type='number'
+                  placeholder=' Maintainance Costs'
+                  control={control}
+                  label='Maintainance Costs'
                 />
               </div>
 
@@ -187,22 +286,13 @@ export const AddPricing = () => {
                   label='Other Costs'
                 />
               </div>
-
-              {/* {flatFees.map((f) => (
-          <div key={f.id}>
-            <TextField
-              name={f.formName }
-              type='number'
-              placeholder=' Other Costs'
-              control={control}
-              label='Other Costs'
-            />
-          </div>
-        ))} */}
             </div>
-            <div className='mt-5 flex flex-row-reverse'>
+            <div className='mt-5 flex flex-row-reverse gap-5'>
               <Button variant='contained' onClick={handleSubmit(onSubmit)}>
                 Save Prices
+              </Button>
+              <Button variant='outlined' onClick={() => setOpen(false)}>
+                Cancel
               </Button>
             </div>
           </div>

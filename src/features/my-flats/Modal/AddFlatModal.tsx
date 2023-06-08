@@ -4,14 +4,14 @@ import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { BsBuildingFillAdd } from 'react-icons/bs';
 import { CgClose } from 'react-icons/cg';
 
+import { useFlatStore } from '@/store/flatStore';
+
 import { FeaturesAndPolicies } from '@/features/my-flats/steps/Features';
 import { FlatTypesPage } from '@/features/my-flats/steps/FlatType';
 import { Gallery } from '@/features/my-flats/steps/Gallery';
 import { ContactAndLocation } from '@/features/my-flats/steps/Location';
 import { Pricing } from '@/features/my-flats/steps/Pricing';
 import { Purpose } from '@/features/my-flats/steps/Purpose';
-
-import { useFlatStore } from '@/store/flatStore';
 
 type Step = { key: string; title: string; component: React.ReactNode };
 
@@ -132,7 +132,7 @@ export const AddFlatModal = () => {
                   onClick={isLastStep ? handleSubmit(onSubmit) : plusStep}
                   type={`${isLastStep ? 'submit' : 'button'}`}
                 >
-                  {isLastStep ? 'Save' : 'Continue'}
+                  {isLastStep ? 'Add My Flat' : 'Continue'}
                 </Button>
               </div>
             </div>

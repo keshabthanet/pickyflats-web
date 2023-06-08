@@ -22,7 +22,15 @@ export const AddLocationModal = () => {
     formState: { errors, isDirty },
   } = useForm<IcontactAndLocation>({
     defaultValues: {
-      phoneNumber: '',
+      country: contactAndLocation.country,
+      city: contactAndLocation.city,
+      phoneNumber: contactAndLocation.phoneNumber,
+      email: contactAndLocation.email,
+
+      flatCountry: contactAndLocation.flatCountry,
+      flatCity: contactAndLocation.flatCity,
+      flatStreet1: contactAndLocation.flatStreet1,
+      flatStreet2: contactAndLocation.flatStreet2,
     },
   });
 
@@ -38,7 +46,7 @@ export const AddLocationModal = () => {
           className=' capitalize'
           onClick={() => setOpen(true)}
         >
-          Add Location & Contact
+          Add/Update Location & Contact
         </Button>
       </div>
       <Dialog
@@ -57,7 +65,7 @@ export const AddLocationModal = () => {
                 <div>
                   <ReactSelect
                     name='country'
-                    options={[]}
+                    options={[{ label: 'nepal', value: 'nepal' }]}
                     label='Your Country'
                     placeholder='country'
                     control={control}
@@ -124,7 +132,7 @@ export const AddLocationModal = () => {
                 <div>
                   <ReactSelect
                     name='flatCountry'
-                    options={[]}
+                    options={[{ label: 'nepal', value: 'nepal' }]}
                     label=' Country'
                     placeholder='country'
                     control={control}
@@ -139,7 +147,7 @@ export const AddLocationModal = () => {
                 </div>
                 <div>
                   <TextField
-                    name='city'
+                    name='flatCity'
                     type='text'
                     placeholder='City'
                     control={control}
@@ -191,9 +199,13 @@ export const AddLocationModal = () => {
               <div className='py-5'>
                 <h3 className=' text-[18px] font-semibold '>Pin On Map</h3>
               </div>
-              <div className='my-5 flex flex-row-reverse'>
+              <div className='my-5 flex flex-row-reverse gap-5'>
                 <Button variant='contained' onClick={handleSubmit(onSubmit)}>
                   Save Details
+                </Button>
+
+                <Button variant='outlined' onClick={() => setOpen(false)}>
+                  Cancel
                 </Button>
               </div>
             </div>
