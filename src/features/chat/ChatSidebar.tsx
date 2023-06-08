@@ -6,13 +6,12 @@ import { isEmptyArray } from '@/lib/helper';
 
 import { fetchConversationsForUser } from '@/database/conversation';
 
+import ConversationItem from '@/components/chat/ConversationItem';
 import Loader from '@/components/Loader';
 
 import useAuthStore from '@/store/useAuthStore';
 import useChatStore from '@/store/useChatStore';
 import useSnackbarStore from '@/store/useSnackbarStore';
-
-import ConversationItem from '@/features/chat/ConversationItem';
 
 export default function ChatSidebar() {
   const { user } = useAuthStore();
@@ -41,10 +40,7 @@ export default function ChatSidebar() {
       `databases.${DATABASE_ID}.collections.${LISTENERS_ID}.documents.${user?.listenerID}`,
       (update) => {
         const payload: any = update.payload;
-        if (payload.updateType === 'Message') {
-          console.log('refresh conversations .. ');
-          loadConversations();
-        }
+        if (payload.updateType === 'Message') loadConversations();
 
         if (payload.updateType === 'Notification') {
           console.log('refresh notification.. ');
@@ -63,7 +59,7 @@ export default function ChatSidebar() {
 
       <div className='pt-2'>
         {/* //TODO! empty message according to user type - user/seller */}
-        {isEmptyArray(conversations.allIds) && (
+        {!loading && isEmptyArray(conversations.allIds) && (
           <div className='no-listings px-2'>
             <p className='font-medium'>
               Explore available listings to start a conversation.

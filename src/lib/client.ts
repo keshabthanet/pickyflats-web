@@ -36,6 +36,8 @@ export const LISTINGS_BUCKET =
   appwriteConfig[ENV_MODE].buckets.listings || 'listings';
 export const PROFILES_BUCKET =
   appwriteConfig[ENV_MODE].buckets.profiles || 'profiles';
+export const MESSAGES_BUCKET =
+  appwriteConfig[ENV_MODE].buckets.messages || 'messages';
 
 export const APP_URL =
   process.env.NODE_ENV == 'development'
