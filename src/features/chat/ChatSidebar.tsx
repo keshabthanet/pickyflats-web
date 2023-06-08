@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import React from 'react';
 
+import { client, DATABASE_ID, LISTENERS_ID } from '@/lib/client';
 import { isEmptyArray } from '@/lib/helper';
 
 import { fetchConversationsForUser } from '@/database/conversation';
@@ -34,6 +35,24 @@ export default function ChatSidebar() {
       }
     };
     loadConversations();
+
+    // listen for push updates
+    const unsubscribe = client.subscribe(
+      `databases.${DATABASE_ID}.collections.${LISTENERS_ID}.documents.${user?.listenerID}`,
+      (update) => {
+        const payload: any = update.payload;
+        if (payload.updateType === 'Message') {
+          console.log('refresh conversations .. ');
+          loadConversations();
+        }
+
+        if (payload.updateType === 'Notification') {
+          console.log('refresh notification.. ');
+        }
+      }
+    );
+
+    return () => unsubscribe();
   }, []);
 
   return (

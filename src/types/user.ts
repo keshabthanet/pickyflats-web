@@ -15,4 +15,5 @@ export type User = {
   // profiles data
   role: 'user' | 'seller' | 'admin';
   profile_img: string;
+  listenerID: string;
 };

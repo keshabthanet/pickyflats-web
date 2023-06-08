@@ -11,6 +11,7 @@ export const appwriteConfig = {
       // chat
       CONVERSATIONS_ID: 'CONVERSATIONS_ID',
       MESSAGES_ID: '6478c731211f0492f811',
+      LISTENERS_ID: 'listeners',
     },
     buckets: {
       listings: '',
@@ -28,6 +29,7 @@ export const appwriteConfig = {
       // chat
       CONVERSATIONS_ID: 'conversations',
       MESSAGES_ID: 'messages',
+      LISTENERS_ID: 'listeners',
     },
     buckets: {
       listings: 'listings',
