@@ -67,7 +67,7 @@ export const FeaturesAndPolicies = () => {
               <div
                 key={a.id}
                 onClick={() => handleBuildingCheck(a)}
-                className={`flex min-w-[330px] max-w-[350px] cursor-pointer gap-5 rounded-md bg-slate-100 ${
+                className={`flex min-w-[280px] cursor-pointer gap-5 rounded-md bg-slate-100 md:min-w-[330px] md:max-w-[350px] ${
                   isChecked ? 'bg-slate-200' : 'bg-slate-100'
                 } p-2 pt-5 `}
               >
@@ -95,7 +95,7 @@ export const FeaturesAndPolicies = () => {
               <div
                 key={a.id}
                 onClick={() => handleFlatCheck(a)}
-                className={`flex min-w-[330px] max-w-[350px] cursor-pointer gap-5 rounded-md bg-slate-100 ${
+                className={`flex min-w-[280px] cursor-pointer gap-5 rounded-md bg-slate-100 md:min-w-[330px] md:max-w-[350px] ${
                   isChecked ? 'bg-slate-200' : 'bg-slate-100'
                 } p-2 pt-5 `}
               >
@@ -124,7 +124,7 @@ export const FeaturesAndPolicies = () => {
               <div
                 key={a.id}
                 onClick={() => handlePolicyCheck(a)}
-                className={`flex min-w-[330px] max-w-[350px] cursor-pointer gap-5 rounded-md bg-slate-100 ${
+                className={`flex min-w-[280px] cursor-pointer gap-5 rounded-md bg-slate-100 md:min-w-[330px] md:max-w-[350px] ${
                   isChecked ? 'bg-slate-200' : 'bg-slate-100'
                 } p-2 pt-5 `}
               >

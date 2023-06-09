@@ -95,7 +95,7 @@ export const AddFlatModal = () => {
           className=''
         >
           <div className='flex h-full w-full flex-col   '>
-            <div className='m-auto flex  max-h-[70px] min-h-[70px] w-[80%] border-b-2 border-b-[#fee] py-3'>
+            <div className='m-auto flex  w-[80%] border-b-2 border-b-[#fee] py-3 md:max-h-[70px] md:min-h-[70px]'>
               <div className='flex-grow'>
                 <h2 className=' text-primary-main text-[30px] font-bold'>
                   {step()?.title}
@@ -132,7 +132,7 @@ export const AddFlatModal = () => {
                   onClick={isLastStep ? handleSubmit(onSubmit) : plusStep}
                   type={`${isLastStep ? 'submit' : 'button'}`}
                 >
-                  {isLastStep ? 'Add My Flat' : 'Continue'}
+                  {isLastStep ? 'Save' : 'Continue'}
                 </Button>
               </div>
             </div>

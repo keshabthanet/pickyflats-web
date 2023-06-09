@@ -1,3 +1,4 @@
+import { Divider } from '@mui/material';
 import { useForm } from 'react-hook-form';
 
 import { Icosts } from '@/store/flatStore';
@@ -26,33 +27,101 @@ export const Pricing = () => {
         <AddPricing />
       </div>
 
-      <div className='m-auto mt-9 grid w-[80%] grid-cols-3 justify-center text-lg font-semibold text-teal-800'>
+      <div className='m-auto mt-9 grid w-[80%] justify-center gap-9 text-lg font-semibold text-teal-800 md:grid-cols-3 '>
         {costs.currency && (
-          <div>Currency:{costs.currency ? costs.currency : ' -'}</div>
+          <div>
+            <div>Currency:{costs.currency ? costs.currency : ' -'}</div>
+            <Divider />
+          </div>
         )}
-        {isRent && <div>Monthly Rent:{costs.monthlyCost ?? ' -'}</div>}
-        {isRent && <div>Yearly Rent:{costs.yearlyCost ?? ' -'}</div>}
-        {isSell && <div>Purchase Cost:{costs.purchaseCost ?? ' -'}</div>}
 
-        <div>Utility Cost:{costs.utilityCost ?? ' -'}</div>
-        <div>Mortgage Paynents:{costs.mortgagePayments ?? ' -'}</div>
-        <div>Insurance Cost:{costs.insuranceCost ?? ' -'}</div>
-        <div>Property Tax:{costs.propertyTax ?? ' -'}</div>
+        {isRent && (
+          <div>
+            <div>Monthly Rent:${costs.monthlyCost ?? ' -'}</div>
+            <Divider />
+          </div>
+        )}
+        {isRent && (
+          <div>
+            <div>Yearly Rent:${costs.yearlyCost ?? ' -'}</div>
+            <Divider />
+          </div>
+        )}
+        {isSell && (
+          <div>
+            <div>Purchase Cost:${costs.purchaseCost ?? ' -'}</div>
+            <Divider />
+          </div>
+        )}
 
-        <div>Internet Cost:{costs.internetCost ?? ' -'}</div>
-        <div>Parking Fee:{costs.parkingFee ?? ' -'}</div>
-        <div>Pet Fee:{costs.petFee ?? ' -'}</div>
-        <div>Communal Facility Fee Fee:{costs.communalFacilityFee ?? ' -'}</div>
-        <div>Cleaning Fee:{costs.cleaningFee ?? ' -'}</div>
-
-        <div>Home Improvement Fee:{costs.homeImprovement ?? ' -'}</div>
-        <div>Legal Fees :{costs.legalFees ?? ' -'}</div>
-        <div>Furnitures Costs :{costs.furnitureAppliances ?? ' -'}</div>
-        <div>Moving Cost :{costs.movingCosts ?? ' -'}</div>
-        <div>Security System Cost :{costs.securitySystem ?? ' -'}</div>
-        <div>SetUp Cost :{costs.homeOfficeSetup ?? ' -'}</div>
-        <div>Maintainance Cost :{costs.maintenanceRepairs ?? ' -'}</div>
-        <div>Other Costs :{costs.otherCosts ?? ' -'}</div>
+        <div>
+          <div>Utility Cost: ${costs.utilityCost}</div>
+          <Divider />
+        </div>
+        <div>
+          <div>Mortgage Payments: ${costs.mortgagePayments}</div>
+          <Divider />
+        </div>
+        <div>
+          <div>Insurance Cost: ${costs.insuranceCost}</div>
+          <Divider />
+        </div>
+        <div>
+          <div>Property Tax: ${costs.propertyTax}</div>
+          <Divider />
+        </div>
+        <div>
+          <div>Internet Cost: ${costs.internetCost}</div>
+          <Divider />
+        </div>
+        <div>
+          <div>Parking Fee: ${costs.parkingFee}</div>
+          <Divider />
+        </div>
+        <div>
+          <div>Pet Fee: ${costs.petFee}</div>
+          <Divider />
+        </div>
+        <div>
+          <div>Communal Facility Fee: ${costs.communalFacilityFee}</div>
+          <Divider />
+        </div>
+        <div>
+          <div>Cleaning Fee: ${costs.cleaningFee}</div>
+          <Divider />
+        </div>
+        <div>
+          <div>Home Improvement Fee: ${costs.homeImprovement}</div>
+          <Divider />
+        </div>
+        <div>
+          <div>Legal Fees: ${costs.legalFees}</div>
+          <Divider />
+        </div>
+        <div>
+          <div>Furniture Costs: ${costs.furnitureAppliances}</div>
+          <Divider />
+        </div>
+        <div>
+          <div>Moving Cost: ${costs.movingCosts}</div>
+          <Divider />
+        </div>
+        <div>
+          <div>Security System Cost: ${costs.securitySystem}</div>
+          <Divider />
+        </div>
+        <div>
+          <div>Setup Cost: ${costs.homeOfficeSetup}</div>
+          <Divider />
+        </div>
+        <div>
+          <div>Maintenance Cost: ${costs.maintenanceRepairs}</div>
+          <Divider />
+        </div>
+        <div>
+          <div>Other Costs: ${costs.otherCosts}</div>
+          <Divider />
+        </div>
       </div>
     </>
   );
