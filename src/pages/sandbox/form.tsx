@@ -7,7 +7,7 @@ import logger from '@/lib/logger';
 import DatePicker from '@/components/forms/DatePicker';
 import DropzoneInput from '@/components/forms/DropzoneInput';
 import Input from '@/components/forms/Input';
-import SelectInput from '@/components/forms/SelectInput';
+import SelectInput from '@/components/forms/SelectInputOld';
 import TextArea from '@/components/forms/TextArea';
 import Layout from '@/components/layout/Layout';
 import Seo from '@/components/Seo';

@@ -70,6 +70,8 @@ export const NavBar = () => {
     ? storage.getFilePreview(PROFILES_BUCKET, user!.profile_img)
     : null;
 
+  const isHomePage = pathname === '/';
+
   return (
     <>
       <div className='flex h-[50px] w-full border-b border-solid bg-white px-5 shadow-sm md:h-[70px]'>
@@ -108,7 +110,7 @@ export const NavBar = () => {
             </>
           )}
 
-          {isAuthenticated && (
+          {!isHomePage && isAuthenticated && (
             <div className='flex h-full items-center justify-center space-x-2'>
               <NotificationsPopover />
               <MessagesPopover />

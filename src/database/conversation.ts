@@ -20,8 +20,7 @@ export const fetchConversationsForUser = async (userId, props?: IProps) => {
     // [Query.equal('participants', [userId])]
     // [Query.search('participants', userId)] // ! try on production
   );
-  console.log('getting convs  for  ? ', _listConversations);
-  console.log('hi convs ? ', _listConversations);
+
   const _conversations = _listConversations.documents;
   // filters all participants from conversations for profile fetching
   const participantIds = [
