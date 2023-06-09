@@ -24,7 +24,7 @@ export const Purpose = () => {
     setPurpose(purpose);
   };
   return (
-    <div className='m-auto flex h-auto  w-auto gap-9'>
+    <div className='m-auto h-auto w-auto  gap-9 md:flex '>
       {purposes.map((p) => {
         return (
           <div key={p.id} onClick={() => handlePurpose(p.value)}>

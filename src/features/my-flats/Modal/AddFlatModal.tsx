@@ -4,6 +4,8 @@ import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { BsBuildingFillAdd } from 'react-icons/bs';
 import { CgClose } from 'react-icons/cg';
 
+import { useFlatStore } from '@/store/flatStore';
+
 import { FeaturesAndPolicies } from '@/features/my-flats/steps/Features';
 import { FlatTypesPage } from '@/features/my-flats/steps/FlatType';
 import { Gallery } from '@/features/my-flats/steps/Gallery';
@@ -39,8 +41,20 @@ export const AddFlatModal = () => {
   const [open, setOpen] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
 
+  const { flatTypes, purpose } = useFlatStore();
+
   const plusStep = () => {
-    if (activeStep < 5) setActiveStep((step) => step + 1);
+    if (activeStep < 5) {
+      if (activeStep == 0 && purpose != 'rent' && purpose != 'sell') {
+        alert('select the purpose');
+        return;
+      } else if (activeStep == 1 && flatTypes.length == 0) {
+        alert('select at least one flat type');
+        return;
+      }
+
+      setActiveStep((step) => step + 1);
+    }
   };
   const minusStep = () => {
     if (activeStep > 0) setActiveStep((step) => step - 1);
@@ -81,7 +95,7 @@ export const AddFlatModal = () => {
           className=''
         >
           <div className='flex h-full w-full flex-col   '>
-            <div className='m-auto flex  max-h-[70px] min-h-[70px] w-[80%] border-b-2 border-b-[#fee] py-3'>
+            <div className='m-auto flex  w-[80%] border-b-2 border-b-[#fee] py-3 md:max-h-[70px] md:min-h-[70px]'>
               <div className='flex-grow'>
                 <h2 className=' text-primary-main text-[30px] font-bold'>
                   {step()?.title}

@@ -2,7 +2,7 @@
 export const AllFlatPolicies = [
   {
     id: 1,
-    name: 'Pets Allowed',
+    name: 'Pets Allowed Policy',
     checked: false,
     flatType: [1, 2, 3, 6, 7, 8, 12, 13, 14],
   },
