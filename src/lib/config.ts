@@ -19,6 +19,7 @@ export const appwriteConfig = {
       listings: '',
       profiles: '',
       messages: 'messages',
+      content: 'content',
     },
   },
   LOCAL: {
@@ -40,6 +41,7 @@ export const appwriteConfig = {
       listings: 'listings',
       profiles: 'profiles',
       messages: 'messages',
+      content: 'content',
     },
   },
 };
