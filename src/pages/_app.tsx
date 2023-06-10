@@ -3,6 +3,9 @@ import { Alert, Snackbar } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
 import { StyledEngineProvider } from '@mui/material/styles';
+// date-fns
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { NextPage } from 'next';
 import { AppProps } from 'next/app';
 // import Head from 'next/head';
@@ -40,26 +43,27 @@ export default function MyApp(props: AppPropsWithLayout) {
 
   return (
     <StyledEngineProvider injectFirst>
-      <ThemeProvider theme={muiTheme}>
-        <CssBaseline />
-
-        <Pages Component={Component} {...pageProps} />
-        {/*  */}
-        <Snackbar
-          anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-          open={snackbarOpen}
-          autoHideDuration={3000}
-          onClose={handleSnackbarClose}
-        >
-          <Alert
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <ThemeProvider theme={muiTheme}>
+          <CssBaseline />
+          <Pages Component={Component} {...pageProps} />
+          {/*  */}
+          <Snackbar
+            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+            open={snackbarOpen}
+            autoHideDuration={3000}
             onClose={handleSnackbarClose}
-            severity={snackbarSeverity}
-            sx={{ width: '100%' }}
           >
-            {snackbarContent}
-          </Alert>
-        </Snackbar>
-      </ThemeProvider>
+            <Alert
+              onClose={handleSnackbarClose}
+              severity={snackbarSeverity}
+              sx={{ width: '100%' }}
+            >
+              {snackbarContent}
+            </Alert>
+          </Snackbar>
+        </ThemeProvider>
+      </LocalizationProvider>
     </StyledEngineProvider>
   );
 }

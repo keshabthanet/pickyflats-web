@@ -7,13 +7,14 @@ export const appwriteConfig = {
     collections: {
       PROFILES_ID: '647c063d490ee20fd175',
       LISTINGS_ID: '6478c70cd7fda33eac70',
-      COMMENTS_ID: '6478c835e366e8980dcb',
+      COMMENTS_ID: 'comments',
       // chat
-      CONVERSATIONS_ID: 'CONVERSATIONS_ID',
-      MESSAGES_ID: '6478c731211f0492f811',
+      CONVERSATIONS_ID: 'conversations',
+      MESSAGES_ID: 'messages',
       LISTENERS_ID: 'listeners',
       VERIFICATIONS_ID: 'verificationRequests',
       NOTIFICATIONS_ID: 'notifications',
+      TOURREQUESTS_ID: 'tourRequests',
     },
     buckets: {
       listings: '',
@@ -36,6 +37,7 @@ export const appwriteConfig = {
       LISTENERS_ID: 'listeners',
       VERIFICATIONS_ID: 'verificationRequests',
       NOTIFICATIONS_ID: 'notifications',
+      TOURREQUESTS_ID: 'tourRequests',
     },
     buckets: {
       listings: 'listings',
