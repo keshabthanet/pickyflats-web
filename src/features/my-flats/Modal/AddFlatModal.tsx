@@ -41,7 +41,17 @@ export const AddFlatModal = () => {
   const [open, setOpen] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
 
-  const { flatTypes, purpose } = useFlatStore();
+  const {
+    flatTypes,
+    purpose,
+    buildingAmenities,
+    flatAmenities,
+    flatPolicies,
+    contactAndLocation,
+    gallery,
+    costs,
+    basics,
+  } = useFlatStore();
 
   const plusStep = () => {
     if (activeStep < 5) {
@@ -75,6 +85,7 @@ export const AddFlatModal = () => {
 
   const onSubmit: SubmitHandler<FormData> = async () => {
     alert('submit');
+    //call api here
   };
 
   return (

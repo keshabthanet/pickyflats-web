@@ -1,6 +1,3 @@
-import { IconButton } from '@mui/material';
-import Image from 'next/image';
-
 /* eslint-disable @next/next/no-img-element */
 interface Iprops {
   fileID: string;
@@ -8,7 +5,7 @@ interface Iprops {
 
 import { CONTENT_BUCKET, storage } from '@/lib/client';
 
-export const Viewer = (props: Iprops) => {
+export const ImageCard = (props: Iprops) => {
   const { fileID } = props;
 
   const file = storage.getFilePreview(CONTENT_BUCKET, fileID);
@@ -18,7 +15,7 @@ export const Viewer = (props: Iprops) => {
   // }
 
   return (
-    <div className='relative h-[200px] w-full'>
+    <div className='relative h-full w-full'>
       <img
         src={file.href}
         alt='preview image'

@@ -11,7 +11,7 @@ import { Iroom } from '@/store/flatStore';
 
 import Uploader from '@/features/Uploader';
 
-export const AddRoomModal = () => {
+export const AddBathroomModal = () => {
   const [open, setOpen] = useState(false);
 
   const [roomName, setRoomName] = useState('');
@@ -25,7 +25,7 @@ export const AddRoomModal = () => {
       id: uuid(),
       name: roomName,
       photos: images,
-      roomType: 'room',
+      roomType: 'bathroom',
       remark: remark,
     };
     setGallery([...gallery, newRoom]);
@@ -36,7 +36,7 @@ export const AddRoomModal = () => {
     <div>
       <div onClick={() => setOpen(true)}>
         <Button startIcon={<SiAddthis />} className=' capitalize'>
-          Add Room
+          Add BathRoom
         </Button>
 
         {/* <AddCard /> */}

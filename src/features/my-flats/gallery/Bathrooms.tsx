@@ -1,25 +1,25 @@
 import { useFlatStore } from '@/store/flatStore';
 
-import { DisplayRoomCard } from '@/features/my-flats/cards/DisplayRoomCard';
-import { AddRoomModal } from '@/features/my-flats/gallery/modal/AddRoomModal';
+import { DisplayBathRoomCard } from '@/features/my-flats/cards/DisplayBathroomCard';
+import { AddBathroomModal } from '@/features/my-flats/gallery/modal/AddBathroomModal';
 
-export const Rooms = () => {
+export const Bathrooms = () => {
   const { gallery } = useFlatStore();
   return (
     <div>
       <div className=' flex h-auto w-full justify-center py-5 '>
-        <AddRoomModal />
+        <AddBathroomModal />
       </div>
 
       <div className='mt-5 flex w-full flex-wrap gap-5'>
         {gallery
           .filter((g) => {
-            return g.roomType == 'room';
+            return g.roomType == 'bathroom';
           })
           .map((r) => {
             return (
               <div key={r.id}>
-                <DisplayRoomCard data={r} />
+                <DisplayBathRoomCard data={r} />
               </div>
             );
           })}

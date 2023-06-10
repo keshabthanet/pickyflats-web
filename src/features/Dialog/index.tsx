@@ -18,7 +18,7 @@ interface Iprops {
 }
 //  use res boolean for callback to track url change
 export default function Dialog(props: Iprops) {
-  const { type, callBack, hideDialog, open } = props;
+  const { type, callBack, hideDialog, open, Title, SubTitle } = props;
 
   const handleConfirmation = () => {
     callBack?.();
@@ -39,17 +39,14 @@ export default function Dialog(props: Iprops) {
             </IconButton>
           </div>
           <div>
-            <IconButton>
+            <IconButton onClick={() => handleClose()}>
               <RxCross2 />
             </IconButton>
           </div>
         </div>
         <div>
-          <h2 className=' text-xl font-bold'>Delete This Image ?</h2>
-          <h3 className=' text-sm font-medium text-emerald-950'>
-            You will not be able to revery this action after you delete this
-            room
-          </h3>
+          <h2 className=' text-xl font-bold'>{Title}</h2>
+          <h3 className=' text-sm font-medium text-emerald-950'>{SubTitle}</h3>
         </div>
         <div className='flex flex-row-reverse gap-5 pt-5'>
           <Button

@@ -26,8 +26,17 @@ export interface Ipolicies {
   checked: boolean;
 }
 
+export interface Ibasic {
+  totalRooms: number;
+  totalBathrooms: number;
+  totalKitchen: number;
+}
+
+export type Negotiability = 'negotiable' | 'non-negotiable';
+
 export interface Icosts {
   currency: string;
+  negotiable?: Negotiability;
   purchaseCost?: number | null | undefined;
   // rentCost?: number | null | undefined;
   monthlyCost?: number | null | undefined;
@@ -78,8 +87,10 @@ type Store = {
 
   costs: Icosts;
 
-  contactAndLocation: IcontactAndLocation;
+  basics: Ibasic;
 
+  contactAndLocation: IcontactAndLocation;
+  //not used here
   steps: number;
   openAppModal: boolean;
 };
@@ -95,6 +106,8 @@ type Actions = {
   setGallery: (gallery: Array<Iroom>) => void;
 
   setCosts: (costs: Icosts) => void;
+
+  setBasic: (costs: Ibasic) => void;
 
   setContactAndLocation: (contact: IcontactAndLocation) => void;
 
@@ -113,6 +126,7 @@ export const useFlatStore = create<Store & Actions>()(
       gallery: [],
 
       costs: { currency: '$' },
+      basics: { totalRooms: 0, totalBathrooms: 0, totalKitchen: 0 },
 
       contactAndLocation: {
         country: '',
@@ -142,6 +156,8 @@ export const useFlatStore = create<Store & Actions>()(
         set({ flatPolicies: [...policies] }),
 
       setCosts: (costs: Icosts) => set({ costs }),
+      setBasic: (basic: Ibasic) => set({ basics: basic }),
+
       setContactAndLocation: (ContactAndLocation: IcontactAndLocation) =>
         set({ contactAndLocation: ContactAndLocation }),
 

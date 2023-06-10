@@ -14,7 +14,7 @@ interface Iprop {
   data: Iroom;
 }
 
-export const EditRoomsModal = (props: Iprop) => {
+export const EditBathRoomsModal = (props: Iprop) => {
   const { data } = props;
   const [open, setOpen] = useState(false);
 

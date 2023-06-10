@@ -12,7 +12,7 @@ import { EditRoomsModal } from '@/features/my-flats/gallery/modal/EditRoomModal'
 interface Iprop {
   data: Iroom;
 }
-export const DisplayRoomCard = (props: Iprop) => {
+export const DisplayOtherRoomCard = (props: Iprop) => {
   const { data } = props;
 
   const [deleteId, setDeleteId] = useState('');

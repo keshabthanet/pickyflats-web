@@ -11,7 +11,7 @@ import { Iroom } from '@/store/flatStore';
 
 import Uploader from '@/features/Uploader';
 
-export const AddRoomModal = () => {
+export const AddKitchenModal = () => {
   const [open, setOpen] = useState(false);
 
   const [roomName, setRoomName] = useState('');
@@ -25,7 +25,7 @@ export const AddRoomModal = () => {
       id: uuid(),
       name: roomName,
       photos: images,
-      roomType: 'room',
+      roomType: 'kitchen',
       remark: remark,
     };
     setGallery([...gallery, newRoom]);
@@ -36,7 +36,7 @@ export const AddRoomModal = () => {
     <div>
       <div onClick={() => setOpen(true)}>
         <Button startIcon={<SiAddthis />} className=' capitalize'>
-          Add Room
+          Add Kitchen
         </Button>
 
         {/* <AddCard /> */}
@@ -69,7 +69,7 @@ export const AddRoomModal = () => {
             </div>
             <div className='m-auto flex w-[80%] flex-row-reverse gap-5 text-right'>
               <Button variant='contained' onClick={() => saveRoom()}>
-                Save Room
+                Save Kitchen
               </Button>
               <Button variant='outlined' onClick={() => setOpen(false)}>
                 Cancel
