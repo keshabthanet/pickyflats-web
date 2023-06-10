@@ -1,4 +1,4 @@
-type Flat = {};
+// type Flat = {};
 
 export type Listing = {
   type: 'sell' | 'rent';

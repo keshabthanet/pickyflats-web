@@ -23,7 +23,7 @@ const messagesList = [
   },
 ];
 export default function MessagesPage() {
-  const [messages, setMessages] = React.useState([]);
+  const [messages, setMessages] = React.useState<string[]>([]);
   const [inputText, setInputText] = React.useState('');
 
   const handleSendMessage = () => {
