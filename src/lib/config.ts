@@ -12,11 +12,14 @@ export const appwriteConfig = {
       CONVERSATIONS_ID: 'CONVERSATIONS_ID',
       MESSAGES_ID: '6478c731211f0492f811',
       LISTENERS_ID: 'listeners',
+      VERIFICATIONS_ID: 'verificationRequests',
+      NOTIFICATIONS_ID: 'notifications',
     },
     buckets: {
       listings: '',
       profiles: '',
       messages: 'messages',
+      content: 'content',
     },
   },
   LOCAL: {
@@ -31,11 +34,14 @@ export const appwriteConfig = {
       CONVERSATIONS_ID: 'conversations',
       MESSAGES_ID: 'messages',
       LISTENERS_ID: 'listeners',
+      VERIFICATIONS_ID: 'verificationRequests',
+      NOTIFICATIONS_ID: 'notifications',
     },
     buckets: {
       listings: 'listings',
       profiles: 'profiles',
       messages: 'messages',
+      content: 'content',
     },
   },
 };

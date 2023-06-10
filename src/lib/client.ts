@@ -16,8 +16,6 @@ export const DATABASE_ID =
   appwriteConfig[ENV_MODE].DATABASE_ID || 'pickyflats_web';
 
 //table IDs
-export const PROFILES_ID =
-  appwriteConfig[ENV_MODE].collections.PROFILES_ID || 'profiles';
 export const LISTINGS_ID =
   appwriteConfig[ENV_MODE].collections.LISTINGS_ID || 'listings';
 
@@ -30,6 +28,13 @@ export const MESSAGES_ID =
 export const LISTENERS_ID =
   appwriteConfig[ENV_MODE].collections.LISTENERS_ID || 'listeners';
 
+export const PROFILES_ID =
+  appwriteConfig[ENV_MODE].collections.PROFILES_ID || 'profiles';
+export const VERIFICATIONS_ID =
+  appwriteConfig[ENV_MODE].collections.LISTENERS_ID || 'verificationRequests';
+export const NOTIFICATIONS_ID =
+  appwriteConfig[ENV_MODE].collections.LISTENERS_ID || 'notifications';
+
 export const storage = new Storage(client);
 
 export const LISTINGS_BUCKET =
@@ -38,6 +43,8 @@ export const PROFILES_BUCKET =
   appwriteConfig[ENV_MODE].buckets.profiles || 'profiles';
 export const MESSAGES_BUCKET =
   appwriteConfig[ENV_MODE].buckets.messages || 'messages';
+export const CONTENT_BUCKET =
+  appwriteConfig[ENV_MODE].buckets.content || 'content';
 
 export const APP_URL =
   process.env.NODE_ENV == 'development'

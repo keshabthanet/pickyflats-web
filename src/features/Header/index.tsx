@@ -1,10 +1,11 @@
 import InputBase from '@mui/material/InputBase';
+import { useState } from 'react';
 import { FiSearch } from 'react-icons/fi';
 import { MdOutlineTune } from 'react-icons/md';
-import FlatTypeSelectorOptions from '@/features/home/FlatTypeSelectorOptions';
-import FilterModal from '../Filter';
 
-import { useState } from 'react';
+import FlatTypeSelectorOptions from '@/features/home/FlatTypeSelectorOptions';
+
+import FilterModal from '../Filter';
 
 export const Header = () => {
   const [openModal, setOpenModal] = useState(false);

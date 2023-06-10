@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { FiUpload } from 'react-icons/fi';
 import { uuid } from 'uuidv4';
 
+import { CONTENT_BUCKET, storage } from '@/lib/client';
+
 import useFileUploader from './useFileUploader';
 import { Viewer } from './Viewer';
 
@@ -19,16 +21,18 @@ function Uploader({ onSuccess }: IFileUploader) {
     setMyKeys(keys);
   };
 
-  const { keys } = useFileUploader();
+  const { isLoading, upload, uploadError, uploadedFileIDs } = useFileUploader({
+    onSuccess,
+  });
 
-  const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      const toUploadImage = e.target.files;
+      const toUploadImages = e.target.files;
       // setImage(toUploadImage);
-      setImage((prev) => [[...(prev ? prev : [])], toUploadImage]);
+      setImage((prev) => [...[prev ? prev : []], ...toUploadImages]);
 
-      const ff = Array.from(toUploadImage);
-      // !TODO: upload image to appwrite storage and call onSucess with image IDs
+      const ff = Array.from(toUploadImages);
+      upload(ff);
     }
   };
 
@@ -74,31 +78,33 @@ function Uploader({ onSuccess }: IFileUploader) {
         multiple
       />
       <div className='flex flex-wrap '>
-        {keys &&
+        {/* {keys &&
           keys?.map((keyy, index) => {
             // if (!key) return null;
             return (
-              <div className='basis-[300px]' key={index}>
-                {/* <UploadIndicator
+              <div className='basis-[300px]' key={index}> */}
+        {/* <UploadIndicator
                 // keyy={keyy}
                 // fileName={image[index].name} //this needs to be dynamic, image means images here
                 // fileSize={image[index].size}
                 // progress={progress.get(keyy)}
                 // status={status.get(keyy)}
                 /> */}
-              </div>
+        {/* </div>
             );
-          })}
+          })} */}
       </div>
-      {myKeys && (
+      {uploadedFileIDs && (
         <div className='mt-3 flex w-full flex-wrap gap-3'>
-          {myKeys.map((keyy) => {
-            if (keyy)
+          {uploadedFileIDs.map((fileID) => {
+            if (fileID) {
+              const file = storage.getFilePreview(CONTENT_BUCKET, fileID);
               return (
                 <>
-                  <Viewer url='' />
+                  <Viewer url={file.href} />
                 </>
               );
+            }
           })}
         </div>
       )}

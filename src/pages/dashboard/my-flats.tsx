@@ -1,11 +1,6 @@
-import { Button } from '@mui/material';
 import React from 'react';
-import { BsBuildingFillAdd } from 'react-icons/bs';
-
-import DashboardLayout from '@/components/layout/DashboardLayout';
 
 import { AddFlatModal } from '@/features/my-flats/Modal/AddFlatModal';
-import withAuth, { WithAuthProps } from '@/hoc/withAuth';
 
 export default function MyFlats() {
   return (
