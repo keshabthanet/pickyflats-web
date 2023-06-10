@@ -35,6 +35,15 @@ export const Pricing = () => {
           </div>
         )}
 
+        {costs.negotiable && (
+          <div>
+            <div>
+              Negiotiability:{costs.negotiable ? costs.negotiable : ' -'}
+            </div>
+            <Divider />
+          </div>
+        )}
+
         {isRent && (
           <div>
             <div>Monthly Rent:${costs.monthlyCost ?? ' -'}</div>

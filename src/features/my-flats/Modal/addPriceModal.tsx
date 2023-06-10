@@ -10,6 +10,11 @@ import { useFlatStore } from '@/store/flatStore';
 import ReactSelect from '@/features/HookForm/ReactSelect';
 import TextField from '@/features/HookForm/TextField';
 
+const negiotabilityOptions = [
+  { label: 'Negiotable', value: 'negiotable' },
+  { label: 'Non-negiotable', value: 'non-negiotable' },
+];
+
 export const AddPricing = () => {
   const [open, setOpen] = useState(false);
 
@@ -23,6 +28,7 @@ export const AddPricing = () => {
   } = useForm<Icosts>({
     defaultValues: {
       currency: costs.currency,
+      negotiable: costs.negotiable,
       purchaseCost: costs.purchaseCost ?? 0,
       monthlyCost: costs.monthlyCost ?? 0,
       yearlyCost: costs.yearlyCost ?? 0,
@@ -48,6 +54,7 @@ export const AddPricing = () => {
 
   const onSubmit = (data: Icosts) => {
     setCosts(data);
+    setOpen(false);
   };
 
   return (
@@ -96,6 +103,23 @@ export const AddPricing = () => {
                   label='Rent Cost'
                 />
               </div> */}
+
+              <div>
+                <ReactSelect
+                  name='negotiable'
+                  options={negiotabilityOptions}
+                  label=' Negiotability'
+                  placeholder='negiotability'
+                  control={control}
+                  required
+                  helperText={
+                    errors.negotiable?.type === 'required'
+                      ? 'Negiotability is Required'
+                      : ''
+                  }
+                  error={!!errors.negotiable}
+                />
+              </div>
 
               <div>
                 <TextField

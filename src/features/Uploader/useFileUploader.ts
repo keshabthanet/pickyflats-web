@@ -5,9 +5,11 @@ import { CONTENT_BUCKET, storage } from '@/lib/client';
 
 interface IUseFileUploader {
   onSuccess: (keys: string[] | null) => void;
+  mykeys: string[];
+  setMyKeys: (str: string[]) => void;
 }
 
-function useFileUploader({ onSuccess }: IUseFileUploader) {
+function useFileUploader({ onSuccess, mykeys, setMyKeys }: IUseFileUploader) {
   const [isLoading, setIsLoading] = useState(false);
   const [uploadError, setUploadError] = useState('');
 

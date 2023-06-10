@@ -9,16 +9,15 @@ export interface Iamenities {
   flatType: number[];
   checked: boolean;
 }
-// export interface IcontactAndLocation {
-//   phone: string;
-//   email: string;
-//   country: string;
-//   city: string;
-//   flatCountry: string;
-//   flatCity: string;
-//   flatAdd1: string;
-//   flatAdd2: string;
-// }
+export type roomType = 'room' | 'kitchen' | 'bathroom' | 'other';
+
+export interface Iroom {
+  id: string;
+  name: string;
+  photos: string[];
+  remark?: string;
+  roomType: roomType;
+}
 
 export interface Ipolicies {
   id: number;
@@ -27,8 +26,17 @@ export interface Ipolicies {
   checked: boolean;
 }
 
+export interface Ibasic {
+  totalRooms: number;
+  totalBathrooms: number;
+  totalKitchen: number;
+}
+
+export type Negotiability = 'negotiable' | 'non-negotiable';
+
 export interface Icosts {
   currency: string;
+  negotiable?: Negotiability;
   purchaseCost?: number | null | undefined;
   // rentCost?: number | null | undefined;
   monthlyCost?: number | null | undefined;
@@ -75,10 +83,14 @@ type Store = {
   flatAmenities: Array<Iamenities>;
   flatPolicies: Array<Iamenities>;
 
+  gallery: Array<Iroom>;
+
   costs: Icosts;
 
-  contactAndLocation: IcontactAndLocation;
+  basics: Ibasic;
 
+  contactAndLocation: IcontactAndLocation;
+  //not used here
   steps: number;
   openAppModal: boolean;
 };
@@ -91,7 +103,11 @@ type Actions = {
   setFlatAmenities: (amenities: Array<Iamenities>) => void;
   setFlatPolicies: (amenities: Array<Iamenities>) => void;
 
+  setGallery: (gallery: Array<Iroom>) => void;
+
   setCosts: (costs: Icosts) => void;
+
+  setBasic: (costs: Ibasic) => void;
 
   setContactAndLocation: (contact: IcontactAndLocation) => void;
 
@@ -107,8 +123,10 @@ export const useFlatStore = create<Store & Actions>()(
       buildingAmenities: [],
       flatAmenities: [],
       flatPolicies: [],
+      gallery: [],
 
       costs: { currency: '$' },
+      basics: { totalRooms: 0, totalBathrooms: 0, totalKitchen: 0 },
 
       contactAndLocation: {
         country: '',
@@ -132,10 +150,14 @@ export const useFlatStore = create<Store & Actions>()(
       setFlatAmenities: (amenities: Array<Iamenities>) =>
         set({ flatAmenities: [...amenities] }),
 
+      setGallery: (gallery: Array<Iroom>) => set({ gallery: [...gallery] }),
+
       setFlatPolicies: (policies: Array<Ipolicies>) =>
         set({ flatPolicies: [...policies] }),
 
       setCosts: (costs: Icosts) => set({ costs }),
+      setBasic: (basic: Ibasic) => set({ basics: basic }),
+
       setContactAndLocation: (ContactAndLocation: IcontactAndLocation) =>
         set({ contactAndLocation: ContactAndLocation }),
 

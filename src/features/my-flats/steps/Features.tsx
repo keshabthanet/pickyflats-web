@@ -1,6 +1,7 @@
 import { Divider, IconButton } from '@mui/material';
 import { ImCheckmark } from 'react-icons/im';
 import { RiCheckboxBlankLine } from 'react-icons/ri';
+import Select from 'react-select';
 
 import { AllBuildingAmenities } from '@/datas/buildingAmenities';
 import { AllFlatAmenities } from '@/datas/flatAmenities';
@@ -36,7 +37,7 @@ export const FeaturesAndPolicies = () => {
     }
   };
 
-  const { flatPolicies, setFlatPolicies } = useFlatStore();
+  const { flatPolicies, setFlatPolicies, basics, setBasic } = useFlatStore();
 
   const handlePolicyCheck = (p: Ipolicies) => {
     if (flatPolicies.includes(p)) {
@@ -49,13 +50,93 @@ export const FeaturesAndPolicies = () => {
     }
   };
 
+  const roomOptions = [
+    { label: '1 Room', value: 1 },
+    { label: '2 Room', value: 2 },
+    { label: '3 Room', value: 3 },
+    { label: '4 Room', value: 4 },
+    { label: '5 Room', value: 5 },
+    { label: '6 Room', value: 6 },
+    { label: '7 Room', value: 7 },
+    { label: '8 Room', value: 8 },
+    { label: '9 Room', value: 9 },
+    { label: '10 Room', value: 10 },
+
+    { label: '11 Room', value: 11 },
+  ];
+  const bathroomOptions = [
+    { label: '1 Bath Room', value: 1 },
+    { label: '2 Bath Room', value: 2 },
+    { label: '3 Bath Room', value: 3 },
+    { label: '4 Bath Room', value: 4 },
+    { label: '5 Bath Room', value: 5 },
+    { label: '6 Bath Room', value: 6 },
+    { label: '7 Bath Room', value: 7 },
+    { label: '8 Bath Room', value: 8 },
+  ];
+
+  const kithchenOptions = [
+    { label: '1 Kitchen', value: 1 },
+    { label: '2 Kitchen', value: 2 },
+    { label: '3 Kitchen', value: 3 },
+    { label: '4 Kitchen', value: 4 },
+    { label: '5 Kitchen', value: 5 },
+    { label: '6 Kitchen', value: 6 },
+    { label: '7 Kitchen', value: 7 },
+    { label: '8 Kitchen', value: 8 },
+  ];
+
+  const handleBasic = (data: any, from: 'room' | 'kitchen' | 'bathroom') => {
+    if (from == 'kitchen') {
+      setBasic({
+        totalBathrooms: basics.totalBathrooms,
+        totalRooms: basics.totalRooms,
+        totalKitchen: data.value,
+      });
+    } else if (from == 'bathroom') {
+      setBasic({
+        totalBathrooms: data.value,
+        totalRooms: basics.totalRooms,
+        totalKitchen: basics.totalKitchen,
+      });
+    } else if (from == 'room') {
+      setBasic({
+        totalBathrooms: basics.totalBathrooms,
+        totalRooms: data.value,
+        totalKitchen: basics.totalKitchen,
+      });
+    }
+  };
+
   return (
     <div className='m-auto  h-full  w-[80%] '>
-      <div>
-        {/* <h2 className=' text-primary-main text-[30px] font-bold'>
-          Features & Policies
-        </h2> */}
+      <div className='my-5 grid grid-cols-3 gap-10 '>
+        <div>
+          <h3 className=' text-sm font-semibold'>Total Rooms</h3>
+          <Select
+            options={roomOptions}
+            defaultValue={roomOptions[0]}
+            onChange={(data) => handleBasic(data, 'room')}
+          />
+        </div>
+        <div>
+          <h3 className=' text-sm font-semibold'>Total Bathrooms</h3>
+          <Select
+            options={bathroomOptions}
+            defaultValue={bathroomOptions[0]}
+            onChange={(data) => handleBasic(data, 'bathroom')}
+          />
+        </div>
+        <div>
+          <h3 className=' text-sm font-semibold'>Total Kitchen</h3>
+          <Select
+            options={kithchenOptions}
+            defaultValue={kithchenOptions[0]}
+            onChange={(data) => handleBasic(data, 'kitchen')}
+          />
+        </div>
       </div>
+
       <div>
         <h3 className='  text-[18px] font-semibold '>Building Amenities</h3>
         <div className='mt-5 flex flex-wrap gap-5'>
@@ -67,7 +148,7 @@ export const FeaturesAndPolicies = () => {
               <div
                 key={a.id}
                 onClick={() => handleBuildingCheck(a)}
-                className={`flex min-w-[280px] cursor-pointer gap-5 rounded-md bg-slate-100 md:min-w-[330px] md:max-w-[350px] ${
+                className={`flex min-w-[280px] cursor-pointer gap-5 rounded-md bg-slate-100 md:min-w-[300px] md:max-w-[300px] ${
                   isChecked ? 'bg-slate-200' : 'bg-slate-100'
                 } p-2 pt-5 `}
               >
@@ -95,7 +176,7 @@ export const FeaturesAndPolicies = () => {
               <div
                 key={a.id}
                 onClick={() => handleFlatCheck(a)}
-                className={`flex min-w-[280px] cursor-pointer gap-5 rounded-md bg-slate-100 md:min-w-[330px] md:max-w-[350px] ${
+                className={`flex min-w-[280px] cursor-pointer gap-5 rounded-md bg-slate-100 md:min-w-[300px] md:max-w-[300px] ${
                   isChecked ? 'bg-slate-200' : 'bg-slate-100'
                 } p-2 pt-5 `}
               >
@@ -124,7 +205,7 @@ export const FeaturesAndPolicies = () => {
               <div
                 key={a.id}
                 onClick={() => handlePolicyCheck(a)}
-                className={`flex min-w-[280px] cursor-pointer gap-5 rounded-md bg-slate-100 md:min-w-[330px] md:max-w-[350px] ${
+                className={`flex min-w-[280px] cursor-pointer gap-5 rounded-md bg-slate-100 md:min-w-[300px] md:max-w-[300px] ${
                   isChecked ? 'bg-slate-200' : 'bg-slate-100'
                 } p-2 pt-5 `}
               >
