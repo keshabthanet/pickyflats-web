@@ -3,7 +3,7 @@ import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import { useState } from 'react';
 
-import { Rooms } from '@/features/my-flats/Rooms';
+import { Rooms } from '@/features/my-flats/gallery/Rooms';
 
 export const Gallery = () => {
   const [value, setValue] = useState('one');
@@ -28,6 +28,8 @@ export const Gallery = () => {
             textColor='primary'
             indicatorColor='secondary'
             aria-label='secondary tabs example'
+            variant='scrollable'
+            allowScrollButtonsMobile
           >
             <Tab value='one' label='Rooms' />
             <Tab value='two' label='Kitchen' />

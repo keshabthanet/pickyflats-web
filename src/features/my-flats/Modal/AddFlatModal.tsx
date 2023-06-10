@@ -73,7 +73,7 @@ export const AddFlatModal = () => {
   });
   const { handleSubmit } = methods;
 
-  const onSubmit: SubmitHandler<FormData> = async (data) => {
+  const onSubmit: SubmitHandler<FormData> = async () => {
     alert('submit');
   };
 

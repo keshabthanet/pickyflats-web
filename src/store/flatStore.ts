@@ -9,16 +9,15 @@ export interface Iamenities {
   flatType: number[];
   checked: boolean;
 }
-// export interface IcontactAndLocation {
-//   phone: string;
-//   email: string;
-//   country: string;
-//   city: string;
-//   flatCountry: string;
-//   flatCity: string;
-//   flatAdd1: string;
-//   flatAdd2: string;
-// }
+export type roomType = 'room' | 'kitchen' | 'bathroom' | 'other';
+
+export interface Iroom {
+  id: string;
+  name: string;
+  photos: string[];
+  remark?: string;
+  roomType: roomType;
+}
 
 export interface Ipolicies {
   id: number;
@@ -75,6 +74,8 @@ type Store = {
   flatAmenities: Array<Iamenities>;
   flatPolicies: Array<Iamenities>;
 
+  gallery: Array<Iroom>;
+
   costs: Icosts;
 
   contactAndLocation: IcontactAndLocation;
@@ -90,6 +91,8 @@ type Actions = {
   setBuildingAmenities: (amenities: Array<Iamenities>) => void;
   setFlatAmenities: (amenities: Array<Iamenities>) => void;
   setFlatPolicies: (amenities: Array<Iamenities>) => void;
+
+  setGallery: (gallery: Array<Iroom>) => void;
 
   setCosts: (costs: Icosts) => void;
 
@@ -107,6 +110,7 @@ export const useFlatStore = create<Store & Actions>()(
       buildingAmenities: [],
       flatAmenities: [],
       flatPolicies: [],
+      gallery: [],
 
       costs: { currency: '$' },
 
@@ -131,6 +135,8 @@ export const useFlatStore = create<Store & Actions>()(
         set({ buildingAmenities: [...amenities] }),
       setFlatAmenities: (amenities: Array<Iamenities>) =>
         set({ flatAmenities: [...amenities] }),
+
+      setGallery: (gallery: Array<Iroom>) => set({ gallery: [...gallery] }),
 
       setFlatPolicies: (policies: Array<Ipolicies>) =>
         set({ flatPolicies: [...policies] }),
