@@ -1,4 +1,4 @@
-import { Account, Client, Databases, Storage } from 'appwrite';
+import { Account, Client, Databases, Functions, Storage } from 'appwrite';
 
 import { APPWRITE_ENV_MODE, appwriteConfig } from '@/lib/config';
 
@@ -34,6 +34,8 @@ export const VERIFICATIONS_ID =
   appwriteConfig[ENV_MODE].collections.LISTENERS_ID || 'verificationRequests';
 export const NOTIFICATIONS_ID =
   appwriteConfig[ENV_MODE].collections.LISTENERS_ID || 'notifications';
+export const TOURREQUESTS_ID =
+  appwriteConfig[ENV_MODE].collections.TOURREQUESTS_ID || 'tourRequests';
 
 export const storage = new Storage(client);
 
@@ -45,6 +47,9 @@ export const MESSAGES_BUCKET =
   appwriteConfig[ENV_MODE].buckets.messages || 'messages';
 export const CONTENT_BUCKET =
   appwriteConfig[ENV_MODE].buckets.content || 'content';
+
+// functions
+export const functions = new Functions(client);
 
 export const APP_URL =
   process.env.NODE_ENV == 'development'

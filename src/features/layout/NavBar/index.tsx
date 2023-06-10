@@ -168,6 +168,9 @@ export const NavBar = () => {
                       <>
                         <Divider />
                         <div className='py-2'>
+                          <Link href='/bookings' onClick={handleClose}>
+                            <MenuItem>My Bookings</MenuItem>
+                          </Link>
                           <Link href='/saved-lists' onClick={handleClose}>
                             <MenuItem>Saved Lists</MenuItem>
                           </Link>
