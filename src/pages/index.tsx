@@ -11,10 +11,8 @@ import Seo from '@/components/Seo';
 
 import useListingsStore from '@/store/useListingsStore';
 
-import { Header } from '@/features/Header';
 import FlatTypeSelectorOptions from '@/features/home/FlatTypeSelectorOptions';
 import { SearchResults } from '@/features/SearchResults';
-import { Video } from '@/features/Video';
 import withAuth, { WithAuthProps } from '@/hoc/withAuth';
 
 const ListingsMapView = dynamic(
@@ -36,6 +34,10 @@ export default function HomePage() {
   React.useEffect(() => {
     fetchData();
   }, [activeTypeFilter]);
+
+  // TODO: check if reserved & reservationID in params, open reserved dialog message,
+  // update reservation status & payment status
+  // update reserved listings to filter out from searching
   return (
     <>
       {/* <Seo templateTitle='Home' /> */}
@@ -43,14 +45,14 @@ export default function HomePage() {
       {/* main header part */}
       {!mapModeActive && (
         <>
-          <main className=' relative h-[85vh] w-full'>
+          {/* <main className=' relative h-[85vh] w-full'>
             <div className='absolute h-full w-full'>
               <Video url='/videos/bg.mp4' />
             </div>
             <div className='-h-full relative z-10 w-full'>
               <Header />
             </div>
-          </main>
+          </main> */}
           {!loading && (
             <div>
               <SearchResults listings={listings} />

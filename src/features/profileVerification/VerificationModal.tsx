@@ -34,7 +34,7 @@ export default function VerificationRequestModal() {
     // onClose(); // Close the modal after form submission
   };
   return (
-    <div>
+    <div className='w-full max-w-lg max-md:w-[300px]'>
       <div className='modal-container'>
         <h2 className=' text-primary-main text-2xl font-semibold'>
           Request for Verification

@@ -36,6 +36,8 @@ export const NOTIFICATIONS_ID =
   appwriteConfig[ENV_MODE].collections.LISTENERS_ID || 'notifications';
 export const TOURREQUESTS_ID =
   appwriteConfig[ENV_MODE].collections.TOURREQUESTS_ID || 'tourRequests';
+export const RESERVATIONS_ID =
+  appwriteConfig[ENV_MODE].collections.RESERVATIONS_ID || 'reservations';
 
 export const storage = new Storage(client);
 

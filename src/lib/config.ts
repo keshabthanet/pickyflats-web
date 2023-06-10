@@ -15,6 +15,7 @@ export const appwriteConfig = {
       VERIFICATIONS_ID: 'verificationRequests',
       NOTIFICATIONS_ID: 'notifications',
       TOURREQUESTS_ID: 'tourRequests',
+      RESERVATIONS_ID: 'reservations',
     },
     buckets: {
       listings: '',
@@ -38,6 +39,7 @@ export const appwriteConfig = {
       VERIFICATIONS_ID: 'verificationRequests',
       NOTIFICATIONS_ID: 'notifications',
       TOURREQUESTS_ID: 'tourRequests',
+      RESERVATIONS_ID: 'reservations',
     },
     buckets: {
       listings: 'listings',
