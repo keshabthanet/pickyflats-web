@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import { BsBuildingCheck, BsBuildings } from 'react-icons/bs';
-import { FaRegBuilding } from 'react-icons/fa';
 import { FiMessageCircle } from 'react-icons/fi';
 import { RxDashboard } from 'react-icons/rx';
 import { TbBuildingCarousel } from 'react-icons/tb';
@@ -92,17 +91,17 @@ function SidebarDrawerContainer() {
         </li>
         <li>
           <Link
-            href='/bookings'
+            href='/activity'
             className={`flex items-center rounded-lg p-2 text-sm font-normal text-gray-500 no-underline hover:bg-[#F2F2FE] 
                 ${
-                  isActiveRoute('/bookings')
+                  isActiveRoute('/activity')
                     ? 'bg-[#F2F2FF] !font-medium text-[#6D67E4]'
                     : ''
                 }
             `}
           >
-            <FaRegBuilding className='h-5 w-5' />
-            <span className='ml-3'>My Bookings</span>
+            <BsBuildings className='h-5 w-5' />
+            <span className='ml-3'>Activities</span>
           </Link>
         </li>
         <li>
