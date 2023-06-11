@@ -95,9 +95,25 @@ export default function GeoPickerModal({ onLocationChoose, onClose }: IProps) {
         <div>
           Selected Address : <span>{selectedAddress}</span>
         </div>
-        <Button onClick={handleGeoSelected} variant='outlined' className='mt-2'>
-          Choose Location Geo
-        </Button>
+        <div className='flex space-x-4'>
+          {position && (
+            <Button
+              onClick={handleGeoSelected}
+              variant='contained'
+              className='mt-2 w-1/2'
+            >
+              Choose Picked Location
+            </Button>
+          )}
+          <Button
+            color='error'
+            onClick={onClose}
+            variant='outlined'
+            className='mt-2 w-1/2'
+          >
+            Cancel
+          </Button>
+        </div>
       </div>
     </>
   );

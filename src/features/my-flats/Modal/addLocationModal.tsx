@@ -39,7 +39,7 @@ export const AddLocationModal = () => {
     defaultValues: {
       sellerCountry: contactAndLocation.sellerCountry,
       sellerCity: contactAndLocation.sellerCity,
-      phoneNumber: contactAndLocation.phoneNumber,
+      sellerContact: contactAndLocation.sellerContact,
       sellerEmail: user?.email || '',
 
       flatCountry: contactAndLocation.flatCountry,
@@ -99,7 +99,7 @@ export const AddLocationModal = () => {
                   <TextField
                     name='sellerCity'
                     type='text'
-                    placeholder=' Your City'
+                    placeholder='Your City'
                     control={control}
                     label='Your city'
                     required
@@ -114,8 +114,8 @@ export const AddLocationModal = () => {
 
                 <div>
                   <PhoneInput
-                    placeholder='phone input'
-                    label='Phone Input'
+                    placeholder='+977 98*******'
+                    label='Phone Number'
                     control={control}
                     name='phoneNumber'
                   />
@@ -124,9 +124,9 @@ export const AddLocationModal = () => {
                   <TextField
                     name='sellerEmail'
                     type='text'
-                    placeholder=' Your Email'
+                    placeholder='Your Email'
                     control={control}
-                    label='Your email'
+                    label='Your Email'
                     required
                     helperText={
                       errors.sellerEmail?.type === 'required'
@@ -150,7 +150,7 @@ export const AddLocationModal = () => {
                   <ReactSelect
                     name='flatCountry'
                     options={[{ label: 'nepal', value: 'nepal' }]}
-                    label=' Country'
+                    label='Country'
                     placeholder='country'
                     control={control}
                     required
@@ -168,7 +168,7 @@ export const AddLocationModal = () => {
                     type='text'
                     placeholder='City'
                     control={control}
-                    label='city'
+                    label='City'
                     required
                     helperText={
                       errors.flatCity?.type === 'required'
@@ -185,7 +185,7 @@ export const AddLocationModal = () => {
                     type='text'
                     placeholder='Street Address Line1'
                     control={control}
-                    label='street1'
+                    label='Street1'
                     required
                     helperText={
                       errors.flatStreet1?.type === 'required'
@@ -202,7 +202,7 @@ export const AddLocationModal = () => {
                     type='text'
                     placeholder='Street Address Line2'
                     control={control}
-                    label='street2'
+                    label='Street2'
                     error={!!errors.flatStreet2}
                   />
                 </div>

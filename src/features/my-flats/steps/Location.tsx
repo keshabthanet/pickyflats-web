@@ -17,7 +17,7 @@ const ContactAndLocation = () => {
     formState: { errors, isDirty },
   } = useForm<IcontactAndLocation>({
     defaultValues: {
-      phoneNumber: '',
+      sellerContact: '',
     },
   });
 
@@ -59,13 +59,13 @@ const ContactAndLocation = () => {
             )}
             <Divider />
 
-            {contactAndLocation.phoneNumber && (
+            {contactAndLocation.sellerContact && (
               <div className='flex'>
                 <IconButton className=' '>
                   <MdPhonePaused className='' />
                 </IconButton>
                 <span className='relative top-[10px] text-base font-semibold capitalize text-black opacity-80 '>
-                  {contactAndLocation.phoneNumber}
+                  {contactAndLocation.sellerContact}
                 </span>
               </div>
             )}

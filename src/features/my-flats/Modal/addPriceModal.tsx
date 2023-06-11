@@ -1,6 +1,6 @@
 import { Button } from '@mui/material';
 import { Dialog } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { SiAddthis } from 'react-icons/si';
 
@@ -44,11 +44,11 @@ export const AddPricing = () => {
       homeImprovement: costs.homeImprovement ?? 0,
       furnitureAppliances: costs.furnitureAppliances ?? 0,
       legalFees: costs.legalFees ?? 0,
-      movingCosts: costs.movingCosts ?? 0,
+      movingCost: costs.movingCost ?? 0,
       securitySystem: costs.securitySystem ?? 0,
       homeOfficeSetup: costs.homeOfficeSetup ?? 0,
       maintenanceRepairs: costs.maintenanceRepairs ?? 0,
-      otherCosts: costs.otherCosts ?? 0,
+      otherCost: costs.otherCost ?? 0,
     },
   });
 
@@ -56,6 +56,19 @@ export const AddPricing = () => {
     setCosts(data);
     setOpen(false);
   };
+
+  const [currenciesList, setcurrenciesList] = useState<any>({});
+
+  useEffect(() => {
+    const fetchCurrenciesList = async () => {
+      const fetchCurrencies = await fetch(
+        'https://openexchangerates.org/api/currencies.json'
+      );
+      const data = await fetchCurrencies.json();
+      setcurrenciesList(data);
+    };
+    fetchCurrenciesList();
+  }, []);
 
   return (
     <div>
@@ -81,8 +94,12 @@ export const AddPricing = () => {
               <div>
                 <ReactSelect
                   name='currency'
-                  options={[{ label: 'nepali', value: 'nepali' }]}
-                  label=' Currency'
+                  // options={[{ label: 'nepali', value: 'nepali' }]}
+                  options={Object.keys(currenciesList).map((key) => ({
+                    label: currenciesList[key],
+                    value: key,
+                  }))}
+                  label='Currency'
                   placeholder='currency'
                   control={control}
                   required
@@ -233,7 +250,7 @@ export const AddPricing = () => {
 
               <div>
                 <TextField
-                  name='movingCosts'
+                  name='movingCost'
                   type='number'
                   placeholder=' Moving Costs'
                   control={control}
@@ -303,7 +320,7 @@ export const AddPricing = () => {
 
               <div>
                 <TextField
-                  name='otherCosts'
+                  name='otherCost'
                   type='number'
                   placeholder=' Other Costs'
                   control={control}

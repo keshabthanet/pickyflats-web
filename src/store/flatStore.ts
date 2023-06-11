@@ -32,13 +32,12 @@ export interface Ibasic {
   kitchen: number;
 }
 
-export type Negotiability = 'negotiable' | 'non-negotiable';
+export type Negotiability = 'Negotiable' | 'Non-Negotiable';
 
 export interface Icosts {
   currency: string;
   negotiable?: Negotiability;
   purchaseCost?: number | null | undefined;
-  // rentCost?: number | null | undefined;
   monthlyCost?: number | null | undefined;
   yearlyCost?: number | null | undefined;
   mortgagePayments?: number | null | undefined;
@@ -53,11 +52,11 @@ export interface Icosts {
   homeImprovement?: number | null | undefined;
   furnitureAppliances?: number | null | undefined;
   legalFees?: number | null | undefined;
-  movingCosts?: number | null | undefined;
+  movingCost?: number | null | undefined;
   securitySystem?: number | null | undefined;
   homeOfficeSetup?: number | null | undefined;
   maintenanceRepairs?: number | null | undefined;
-  otherCosts?: number | null | undefined;
+  otherCost?: number | null | undefined;
 }
 
 export interface IcontactAndLocation {
@@ -65,7 +64,7 @@ export interface IcontactAndLocation {
   sellerCountry: string;
   sellerCity: string;
   sellerEmail: string;
-  phoneNumber: string;
+  sellerContact: string;
 
   //flat details
   flatCountry: string;
@@ -133,7 +132,7 @@ export const useFlatStore = create<Store & Actions>()(
         sellerCountry: '',
         sellerCity: '',
         sellerEmail: '',
-        phoneNumber: '',
+        sellerContact: '',
         flatCountry: '',
         flatCity: '',
         flatStreet1: '',
