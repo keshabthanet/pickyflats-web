@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { FiUpload } from 'react-icons/fi';
 import { uuid } from 'uuidv4';
 
-import { CONTENT_BUCKET, storage } from '@/lib/client';
-
+// import { CONTENT_BUCKET, storage } from '@/lib/client';
 import useFileUploader from './useFileUploader';
 import { Viewer } from './Viewer';
 
@@ -17,12 +16,14 @@ function Uploader({ onSuccess }: IFileUploader) {
   //this needs to be shifted to the page where we want out Uploader
   const [myKeys, setMyKeys] = useState<string[]>([]);
 
-  const addMyKeys = (keys: string[]) => {
+  const handleMyKeys = (keys: string[]) => {
     setMyKeys(keys);
   };
 
   const { isLoading, upload, uploadError, uploadedFileIDs } = useFileUploader({
     onSuccess,
+    mykeys: myKeys,
+    setMyKeys: handleMyKeys,
   });
 
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -66,7 +67,9 @@ function Uploader({ onSuccess }: IFileUploader) {
               </span>{' '}
               to Upload
             </p>
-            <p className=' text-xs leading-[150%] text-gray-500'>PNG/SVG/JPG</p>
+            <p className=' text-xs leading-[150%] text-gray-500'>
+              PNG/JPEG/JPG
+            </p>
           </div>
         </div>
       </label>
@@ -95,13 +98,13 @@ function Uploader({ onSuccess }: IFileUploader) {
           })} */}
       </div>
       {uploadedFileIDs && (
-        <div className='mt-3 flex w-full flex-wrap gap-3'>
+        <div className='my-5 mt-3 grid h-auto  w-full grid-cols-3  items-center gap-9'>
           {uploadedFileIDs.map((fileID) => {
             if (fileID) {
-              const file = storage.getFilePreview(CONTENT_BUCKET, fileID);
+              // const file = storage.getFilePreview(CONTENT_BUCKET, fileID);
               return (
                 <>
-                  <Viewer url={file.href} />
+                  <Viewer fileID={fileID} />
                 </>
               );
             }

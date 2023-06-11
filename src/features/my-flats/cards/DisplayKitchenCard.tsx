@@ -1,4 +1,5 @@
 import { IconButton } from '@mui/material';
+import Image from 'next/image';
 import { useState } from 'react';
 import { AiFillDelete } from 'react-icons/ai';
 
@@ -6,13 +7,13 @@ import { Iroom } from '@/store/flatStore';
 import { useFlatStore } from '@/store/flatStore';
 
 import Dialog from '@/features/Dialog';
+import { EditKitchenModal } from '@/features/my-flats/gallery/modal/EditKitchenModal';
 import { ImageCard } from '@/features/my-flats/cards/ImageCard';
-import { EditRoomsModal } from '@/features/my-flats/gallery/modal/EditRoomModal';
 
 interface Iprop {
   data: Iroom;
 }
-export const DisplayRoomCard = (props: Iprop) => {
+export const DisplayKitchenCard = (props: Iprop) => {
   const { data } = props;
 
   const [deleteId, setDeleteId] = useState('');
@@ -50,7 +51,7 @@ export const DisplayRoomCard = (props: Iprop) => {
           {/* <Image src='/images/1.jpg' alt='room ' fill className='rounded-md' /> */}
         </div>
         <div className='text-primary-main absolute right-5 top-5 z-50 m-auto  flex h-[25px]  w-[60px] justify-center rounded-md  align-middle text-lg'>
-          <EditRoomsModal data={data} />
+          <EditKitchenModal data={data} />
           <div>
             <IconButton onClick={() => handleDeleteDialog(data.id)}>
               <AiFillDelete />

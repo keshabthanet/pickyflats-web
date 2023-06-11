@@ -3,7 +3,10 @@ import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import { useState } from 'react';
 
-import { Rooms } from '@/features/my-flats/Rooms';
+import { Bathrooms } from '@/features/my-flats/gallery/Bathrooms';
+import { Kitchen } from '@/features/my-flats/gallery/Kitchen';
+import { Others } from '@/features/my-flats/gallery/Others';
+import { Rooms } from '@/features/my-flats/gallery/Rooms';
 
 export const Gallery = () => {
   const [value, setValue] = useState('one');
@@ -28,6 +31,8 @@ export const Gallery = () => {
             textColor='primary'
             indicatorColor='secondary'
             aria-label='secondary tabs example'
+            variant='scrollable'
+            allowScrollButtonsMobile
           >
             <Tab value='one' label='Rooms' />
             <Tab value='two' label='Kitchen' />
@@ -42,11 +47,23 @@ export const Gallery = () => {
               <Rooms />
             </div>
           )}
-          {value == 'two' && <div>kitchen</div>}
+          {value == 'two' && (
+            <div>
+              <Kitchen />
+            </div>
+          )}
 
-          {value == 'three' && <div>three</div>}
+          {value == 'three' && (
+            <div>
+              <Bathrooms />
+            </div>
+          )}
 
-          {value == 'four' && <div>four</div>}
+          {value == 'four' && (
+            <div>
+              <Others />
+            </div>
+          )}
         </div>
       </div>
       <div className='flex h-auto w-full  flex-wrap justify-center gap-5 align-middle   '></div>
