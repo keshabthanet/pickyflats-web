@@ -41,7 +41,7 @@ export default function RequestForTourModal({
       const newTourID = await createRequestForTour({
         userID: user!.$id,
         listingID,
-        requestedDateTime: data.date,
+        pickedDate: data.date,
         note: data.note,
       });
       await functions.createExecution(
@@ -57,7 +57,7 @@ export default function RequestForTourModal({
     }
   };
   return (
-    <div className='max-w-lg'>
+    <div className='w-full max-w-lg max-md:w-[300px]'>
       <div className='modal-container'>
         <h2 className=' text-primary-main text-2xl font-semibold'>
           Request for Tour

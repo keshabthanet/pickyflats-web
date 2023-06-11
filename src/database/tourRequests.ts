@@ -5,7 +5,7 @@ import { DATABASE_ID, databases, TOURREQUESTS_ID } from '@/lib/client';
 interface TourInput {
   userID: string;
   listingID: string;
-  requestedDateTime: string;
+  pickedDate: string;
   note: string;
 }
 
