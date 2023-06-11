@@ -6,7 +6,8 @@ export const appwriteConfig = {
     DATABASE_ID: process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
     collections: {
       PROFILES_ID: '647c063d490ee20fd175',
-      LISTINGS_ID: '6478c70cd7fda33eac70',
+      LISTINGS_ID: 'listings',
+      LISTINGCOSTS_ID: 'listingCosts',
       COMMENTS_ID: 'comments',
       // chat
       CONVERSATIONS_ID: 'conversations',
@@ -30,7 +31,8 @@ export const appwriteConfig = {
     DATABASE_ID: 'pickyflats_web',
     collections: {
       PROFILES_ID: 'profiles',
-      LISTINGS_ID: 'listings',
+      LISTINGS_ID: '64852e03b813c29bb019',
+      LISTINGCOSTS_ID: 'listingCosts',
       COMMENTS_ID: 'comments',
       // chat
       CONVERSATIONS_ID: 'conversations',

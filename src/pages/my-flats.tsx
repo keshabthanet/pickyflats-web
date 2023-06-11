@@ -12,6 +12,8 @@ export default function MyFlats() {
   const handleClose = () => {
     setOpen(false);
   };
+  // const
+  // TODO: refresh fetched myflat data on listing created
   return (
     <div className='w-full p-5'>
       <Alert severity='info' className='kdj'>
@@ -37,7 +39,9 @@ export default function MyFlats() {
       <div className='flex h-9 w-full p-3'>
         <div className='flex-grow'></div>
         <div>
-          <AddFlatModal />
+          <AddFlatModal
+          // onListingCreated={() => }
+          />
         </div>
       </div>
     </div>

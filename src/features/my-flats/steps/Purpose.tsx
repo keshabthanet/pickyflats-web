@@ -17,7 +17,7 @@ const purposes = [
   },
 ];
 
-export const Purpose = () => {
+const Purpose = () => {
   const { purpose, setPurpose } = useFlatStore();
 
   const handlePurpose = (purpose) => {
@@ -48,3 +48,5 @@ export const Purpose = () => {
     </div>
   );
 };
+
+export default Purpose;

@@ -8,7 +8,7 @@ import { Kitchen } from '@/features/my-flats/gallery/Kitchen';
 import { Others } from '@/features/my-flats/gallery/Others';
 import { Rooms } from '@/features/my-flats/gallery/Rooms';
 
-export const Gallery = () => {
+const Gallery = () => {
   const [value, setValue] = useState('one');
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
@@ -17,12 +17,6 @@ export const Gallery = () => {
 
   return (
     <div className='m-auto  h-full  w-[80%]'>
-      <div className='h-auto w-full py-3 '>
-        {/* <h2 className=' text-primary-main text-[30px] font-bold'>Gallerys</h2> */}
-        {/* <h3 className=' text-[18px] font-semibold '>
-          You Can Add Photos/Videos of Rooms/Kitchen/Bathrooms
-        </h3> */}
-      </div>
       <div>
         <Box sx={{ width: '100%' }}>
           <Tabs
@@ -70,3 +64,5 @@ export const Gallery = () => {
     </div>
   );
 };
+
+export default Gallery;

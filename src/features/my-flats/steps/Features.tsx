@@ -9,8 +9,7 @@ import { AllFlatPolicies } from '@/datas/policies';
 
 import { Ipolicies, useFlatStore } from '@/store/flatStore';
 import { Iamenities } from '@/store/flatStore';
-
-export const FeaturesAndPolicies = () => {
+const FeaturesAndPolicies = () => {
   const { buildingAmenities, setBuildingAmenities, flatTypes } = useFlatStore();
 
   const handleBuildingCheck = (am: Iamenities) => {
@@ -87,24 +86,13 @@ export const FeaturesAndPolicies = () => {
   ];
 
   const handleBasic = (data: any, from: 'room' | 'kitchen' | 'bathroom') => {
+    const { kitchen, bathroom, room } = basics;
     if (from == 'kitchen') {
-      setBasic({
-        totalBathrooms: basics.totalBathrooms,
-        totalRooms: basics.totalRooms,
-        totalKitchen: data.value,
-      });
+      setBasic({ bathroom, room, kitchen: data.value });
     } else if (from == 'bathroom') {
-      setBasic({
-        totalBathrooms: data.value,
-        totalRooms: basics.totalRooms,
-        totalKitchen: basics.totalKitchen,
-      });
+      setBasic({ bathroom: data.value, room, kitchen });
     } else if (from == 'room') {
-      setBasic({
-        totalBathrooms: basics.totalBathrooms,
-        totalRooms: data.value,
-        totalKitchen: basics.totalKitchen,
-      });
+      setBasic({ bathroom, room: data.value, kitchen });
     }
   };
 
@@ -138,7 +126,7 @@ export const FeaturesAndPolicies = () => {
       </div>
 
       <div>
-        <h3 className='  text-[18px] font-semibold '>Building Amenities</h3>
+        <h3 className='text-[18px] font-semibold '>Building Amenities</h3>
         <div className='mt-5 flex flex-wrap gap-5'>
           {AllBuildingAmenities.filter((am) => {
             return am.flatType.some((e) => flatTypes.includes(e));
@@ -223,3 +211,5 @@ export const FeaturesAndPolicies = () => {
     </div>
   );
 };
+
+export default FeaturesAndPolicies;

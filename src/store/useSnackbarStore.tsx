@@ -1,3 +1,4 @@
+import { SnackbarOrigin } from '@mui/material';
 import { createSelectorHooks } from 'auto-zustand-selectors-hook';
 import create from 'zustand';
 
@@ -7,20 +8,31 @@ interface SnackbarStore {
   snackbarOpen: boolean;
   snackbarContent: string;
   snackbarSeverity: SnackbarSeverity;
+  origin: SnackbarOrigin;
   setSnackbarOpen: (isOpen: boolean) => void;
-  openSnackbar: (content: string, severity?: SnackbarSeverity) => void;
+  openSnackbar: (
+    content: string,
+    severity?: SnackbarSeverity,
+    origin?: SnackbarOrigin
+  ) => void;
 }
 
 const useSnackbarStoreBase = create<SnackbarStore>((set) => ({
+  origin: { vertical: 'top', horizontal: 'right' },
   snackbarOpen: false,
   snackbarContent: '',
   snackbarSeverity: 'success',
   setSnackbarOpen: (isOpen) => set(() => ({ snackbarOpen: isOpen })),
-  openSnackbar: (content, severity = 'success') => {
+  openSnackbar: (
+    content,
+    severity = 'success',
+    origin = { vertical: 'top', horizontal: 'right' }
+  ) => {
     set(() => ({
       snackbarContent: content,
       snackbarSeverity: severity,
       snackbarOpen: true,
+      origin,
     }));
   },
 }));

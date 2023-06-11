@@ -27,18 +27,17 @@ export interface Ipolicies {
 }
 
 export interface Ibasic {
-  totalRooms: number;
-  totalBathrooms: number;
-  totalKitchen: number;
+  room?: number;
+  bathroom?: number;
+  kitchen: number;
 }
 
-export type Negotiability = 'negotiable' | 'non-negotiable';
+export type Negotiability = 'Negotiable' | 'Non-Negotiable';
 
 export interface Icosts {
   currency: string;
   negotiable?: Negotiability;
   purchaseCost?: number | null | undefined;
-  // rentCost?: number | null | undefined;
   monthlyCost?: number | null | undefined;
   yearlyCost?: number | null | undefined;
   mortgagePayments?: number | null | undefined;
@@ -53,25 +52,26 @@ export interface Icosts {
   homeImprovement?: number | null | undefined;
   furnitureAppliances?: number | null | undefined;
   legalFees?: number | null | undefined;
-  movingCosts?: number | null | undefined;
+  movingCost?: number | null | undefined;
   securitySystem?: number | null | undefined;
   homeOfficeSetup?: number | null | undefined;
   maintenanceRepairs?: number | null | undefined;
-  otherCosts?: number | null | undefined;
+  otherCost?: number | null | undefined;
 }
 
 export interface IcontactAndLocation {
-  //agent contact
-  phoneNumber: string;
-  email: string;
-  country: string;
-  city: string;
-  street1: string;
+  //agent info
+  sellerCountry: string;
+  sellerCity: string;
+  sellerEmail: string;
+  sellerContact: string;
+
   //flat details
   flatCountry: string;
   flatCity: string;
   flatStreet1: string;
   flatStreet2: string;
+  flatGeo: number[];
 }
 
 // store part
@@ -107,7 +107,7 @@ type Actions = {
 
   setCosts: (costs: Icosts) => void;
 
-  setBasic: (costs: Ibasic) => void;
+  setBasic: (basics: Ibasic) => void;
 
   setContactAndLocation: (contact: IcontactAndLocation) => void;
 
@@ -126,18 +126,18 @@ export const useFlatStore = create<Store & Actions>()(
       gallery: [],
 
       costs: { currency: '$' },
-      basics: { totalRooms: 0, totalBathrooms: 0, totalKitchen: 0 },
+      basics: { room: 0, bathroom: 0, kitchen: 0 },
 
       contactAndLocation: {
-        country: '',
-        city: '',
-        street1: '',
-        phoneNumber: '',
-        email: '',
+        sellerCountry: '',
+        sellerCity: '',
+        sellerEmail: '',
+        sellerContact: '',
         flatCountry: '',
         flatCity: '',
         flatStreet1: '',
         flatStreet2: '',
+        flatGeo: [],
       },
 
       steps: 1,

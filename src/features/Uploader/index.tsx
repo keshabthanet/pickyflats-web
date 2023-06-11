@@ -62,9 +62,9 @@ function Uploader({ onSuccess }: IFileUploader) {
             </p>
             <p className='text-sm text-gray-500'>
               Drag and Drop or
-              <span className=' cursor-pointer font-medium text-[#6941C6] '>
+              <span className='cursor-pointer px-1 font-medium text-[#6941C6] '>
                 Choose file
-              </span>{' '}
+              </span>
               to Upload
             </p>
             <p className=' text-xs leading-[150%] text-gray-500'>

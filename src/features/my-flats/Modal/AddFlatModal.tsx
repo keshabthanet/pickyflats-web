@@ -1,17 +1,37 @@
 import { Button, Dialog, IconButton } from '@mui/material';
-import { useState } from 'react';
+import dynamic from 'next/dynamic';
+import { useEffect, useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { BsBuildingFillAdd } from 'react-icons/bs';
 import { CgClose } from 'react-icons/cg';
 
-import { useFlatStore } from '@/store/flatStore';
+import { createListing, saveListingCost } from '@/database/listings';
 
-import { FeaturesAndPolicies } from '@/features/my-flats/steps/Features';
-import { FlatTypesPage } from '@/features/my-flats/steps/FlatType';
-import { Gallery } from '@/features/my-flats/steps/Gallery';
-import { ContactAndLocation } from '@/features/my-flats/steps/Location';
-import { Pricing } from '@/features/my-flats/steps/Pricing';
-import { Purpose } from '@/features/my-flats/steps/Purpose';
+import { useFlatStore } from '@/store/flatStore';
+import useAuthStore from '@/store/useAuthStore';
+import useSnackbarStore from '@/store/useSnackbarStore';
+
+const Purpose = dynamic(() => import('@/features/my-flats/steps/Purpose'), {
+  ssr: false,
+});
+const FeaturesAndPolicies = dynamic(
+  () => import('@/features/my-flats/steps/Features'),
+  { ssr: false }
+);
+const FlatTypesPage = dynamic(
+  () => import('@/features/my-flats/steps/FlatType'),
+  { ssr: false }
+);
+const Gallery = dynamic(() => import('@/features/my-flats/steps/Gallery'), {
+  ssr: false,
+});
+const ContactAndLocation = dynamic(
+  () => import('@/features/my-flats/steps/Location'),
+  { ssr: false }
+);
+const Pricing = dynamic(() => import('@/features/my-flats/steps/Pricing'), {
+  ssr: false,
+});
 
 type Step = { key: string; title: string; component: React.ReactNode };
 
@@ -37,9 +57,14 @@ type FormData = {
   rate: number;
 };
 
-export const AddFlatModal = () => {
+export const AddFlatModal = ({
+  onListingCreated,
+}: {
+  onListingCreated?: () => void;
+}) => {
   const [open, setOpen] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   const {
     flatTypes,
@@ -52,6 +77,12 @@ export const AddFlatModal = () => {
     costs,
     basics,
   } = useFlatStore();
+  const { openSnackbar } = useSnackbarStore();
+  const { user } = useAuthStore();
+
+  useEffect(() => {
+    // return () => setActiveStep(0);
+  }, [open]);
 
   const plusStep = () => {
     if (activeStep < 5) {
@@ -59,7 +90,10 @@ export const AddFlatModal = () => {
         alert('select the purpose');
         return;
       } else if (activeStep == 1 && flatTypes.length == 0) {
-        alert('select at least one flat type');
+        openSnackbar('Select at least one flat type', 'info', {
+          horizontal: 'center',
+          vertical: 'top',
+        });
         return;
       }
 
@@ -84,8 +118,44 @@ export const AddFlatModal = () => {
   const { handleSubmit } = methods;
 
   const onSubmit: SubmitHandler<FormData> = async () => {
-    alert('submit');
-    //call api here
+    try {
+      setLoading(true);
+      // recreate list with name field only
+      const _buildingAmenities = buildingAmenities.map((item) => item.name);
+      const _flatAmenities = flatAmenities.map((item) => item.name);
+      const _flatPolicies = flatPolicies.map((item) => item.name);
+      const newListingID = await createListing({
+        purpose,
+        flatTypes,
+        buildingAmenities: _buildingAmenities,
+        flatAmenities: _flatAmenities,
+        flatPolicies: _flatPolicies,
+        ...basics,
+        gallery: JSON.stringify(gallery),
+        ...contactAndLocation,
+        userID: user?.$id,
+      });
+
+      await saveListingCost({
+        listingID: newListingID,
+        ...costs,
+        negotiable: 'Negotiable',
+      });
+
+      openSnackbar('Listing posted successfully', 'success', {
+        horizontal: 'center',
+        vertical: 'top',
+      });
+      setOpen(false);
+      onListingCreated?.();
+    } catch (error) {
+      openSnackbar('Failed to save Listing!', 'error', {
+        horizontal: 'center',
+        vertical: 'top',
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -128,13 +198,15 @@ export const AddFlatModal = () => {
             </FormProvider>
             <div className='flex min-h-[100px] w-full   border-t-2  '>
               <div className='m-auto flex gap-5'>
-                <Button
-                  variant='contained'
-                  className=' m-auto h-[40px] w-[150px] rounded-[20px]'
-                  onClick={() => minusStep()}
-                >
-                  Back
-                </Button>
+                {!loading && (
+                  <Button
+                    variant='contained'
+                    className=' m-auto h-[40px] w-[150px] rounded-[20px]'
+                    onClick={() => minusStep()}
+                  >
+                    Back
+                  </Button>
+                )}
                 <Button
                   variant='contained'
                   className={` m-auto h-[40px] w-[150px] rounded-[20px] ${
@@ -142,6 +214,7 @@ export const AddFlatModal = () => {
                   }`}
                   onClick={isLastStep ? handleSubmit(onSubmit) : plusStep}
                   type={`${isLastStep ? 'submit' : 'button'}`}
+                  disabled={loading}
                 >
                   {isLastStep ? 'Save' : 'Continue'}
                 </Button>

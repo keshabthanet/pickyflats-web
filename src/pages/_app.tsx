@@ -34,8 +34,13 @@ type AppPropsWithLayout = AppProps &
 export default function MyApp(props: AppPropsWithLayout) {
   const { Component, pageProps } = props;
 
-  const { snackbarOpen, snackbarContent, snackbarSeverity, setSnackbarOpen } =
-    useSnackbarStore();
+  const {
+    origin,
+    snackbarOpen,
+    snackbarContent,
+    snackbarSeverity,
+    setSnackbarOpen,
+  } = useSnackbarStore();
 
   const handleSnackbarClose = () => {
     setSnackbarOpen(false);
@@ -49,7 +54,7 @@ export default function MyApp(props: AppPropsWithLayout) {
           <Pages Component={Component} {...pageProps} />
           {/*  */}
           <Snackbar
-            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+            anchorOrigin={origin}
             open={snackbarOpen}
             autoHideDuration={3000}
             onClose={handleSnackbarClose}

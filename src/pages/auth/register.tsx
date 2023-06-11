@@ -61,20 +61,18 @@ const RegisterPage = () => {
       return;
     }
 
+    const fullName = `${data.firstName} ${data.lastName}`;
+
     try {
       setIsLoading(true);
-      await account.create(
-        ID.unique(),
-        data.email,
-        data.password,
-        `${data.firstName} ${data.lastName}`
-      );
+      await account.create(ID.unique(), data.email, data.password, fullName);
       await account.createEmailSession(data.email, data.password);
       const user = await account.get();
       const token = (await account.createJWT()).jwt;
       Cookies.set('token', token);
       // save role to profiles data
       await databases.createDocument(DATABASE_ID, PROFILES_ID, user.$id, {
+        name: fullName,
         role: 'user',
       });
 
