@@ -41,7 +41,7 @@ export default function RequestForTourModal({
       const newTourID = await createRequestForTour({
         userID: user!.$id,
         listingID,
-        requestedDateTime: data.date,
+        pickedDate: data.date,
         note: data.note,
       });
       await functions.createExecution(

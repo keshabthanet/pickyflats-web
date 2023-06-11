@@ -1,7 +1,7 @@
 import { Button, Divider, IconButton } from '@mui/material';
 import clsx from 'clsx';
 import Image from 'next/image';
-import React from 'react';
+import React, { useState } from 'react';
 import { FaRegBookmark } from 'react-icons/fa';
 import { FcLike } from 'react-icons/fc';
 import { RiShareForwardFill } from 'react-icons/ri';
@@ -13,6 +13,7 @@ import Modal from '@/components/Modal';
 import useAuthStore from '@/store/useAuthStore';
 import useSnackbarStore from '@/store/useSnackbarStore';
 
+import ReserveModal from '@/features/listings/ReserveModal';
 import RequestForTourModal from '@/features/tour-request/RequestForTourModal';
 
 export const FlatCardV1 = ({ item }: { item }) => {
@@ -21,6 +22,7 @@ export const FlatCardV1 = ({ item }: { item }) => {
   const [inSavedList, setInSavedList] = React.useState(false);
 
   const [tourModal, setTourModal] = React.useState(false);
+  const [reserveModal, setReserveModal] = useState(false);
 
   React.useEffect(() => {
     setInSavedList(item?.saved_by.includes(user?.$id));
@@ -47,6 +49,14 @@ export const FlatCardV1 = ({ item }: { item }) => {
       return;
     }
     setTourModal(true);
+  };
+
+  // workflow for reservation
+  // allow user to choose and proceed even without any account
+  // save reservation in localstorage until user has cleared /reserved
+  // quick reservation without pickyflats account, only using phone number or email and verification code
+  const handleReserveClick = () => {
+    setReserveModal(true);
   };
 
   return (
@@ -115,7 +125,14 @@ export const FlatCardV1 = ({ item }: { item }) => {
               <RiShareForwardFill />
             </IconButton>
           </div>
-          <div>
+          <div className='space-x-2'>
+            <Button
+              variant='contained'
+              className='bg-secondary-main !text-whtie relative top-1 h-[30px]'
+              onClick={handleReserveClick}
+            >
+              Reserve
+            </Button>
             <Button
               variant='outlined'
               className='relative top-1 h-[30px]'
@@ -127,6 +144,13 @@ export const FlatCardV1 = ({ item }: { item }) => {
         </div>
       </div>
 
+      <Modal isOpen={reserveModal} onClose={() => setReserveModal(false)}>
+        <ReserveModal
+          listing={item}
+          listingID={item?.$id}
+          onClose={() => setTourModal(false)}
+        />
+      </Modal>
       <Modal
         isOpen={tourModal}
         className=''

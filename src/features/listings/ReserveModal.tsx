@@ -71,7 +71,7 @@ export default function ReserveModal({
     const newReservationID = await createListingReservation({
       user: user?.$id,
       listingID,
-      totalAmount: totalPrice,
+      totalPrice,
       reservationStatus: 'draft',
       startDate: selectedDateRange.startDate,
       endDate: selectedDateRange.endDate,
