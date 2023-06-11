@@ -27,9 +27,9 @@ export interface Ipolicies {
 }
 
 export interface Ibasic {
-  totalRooms: number;
-  totalBathrooms: number;
-  totalKitchen: number;
+  room?: number;
+  bathroom?: number;
+  kitchen: number;
 }
 
 export type Negotiability = 'negotiable' | 'non-negotiable';
@@ -61,17 +61,18 @@ export interface Icosts {
 }
 
 export interface IcontactAndLocation {
-  //agent contact
+  //agent info
+  sellerCountry: string;
+  sellerCity: string;
+  sellerEmail: string;
   phoneNumber: string;
-  email: string;
-  country: string;
-  city: string;
-  street1: string;
+
   //flat details
   flatCountry: string;
   flatCity: string;
   flatStreet1: string;
   flatStreet2: string;
+  flatGeo: number[];
 }
 
 // store part
@@ -107,7 +108,7 @@ type Actions = {
 
   setCosts: (costs: Icosts) => void;
 
-  setBasic: (costs: Ibasic) => void;
+  setBasic: (basics: Ibasic) => void;
 
   setContactAndLocation: (contact: IcontactAndLocation) => void;
 
@@ -126,18 +127,18 @@ export const useFlatStore = create<Store & Actions>()(
       gallery: [],
 
       costs: { currency: '$' },
-      basics: { totalRooms: 0, totalBathrooms: 0, totalKitchen: 0 },
+      basics: { room: 0, bathroom: 0, kitchen: 0 },
 
       contactAndLocation: {
-        country: '',
-        city: '',
-        street1: '',
+        sellerCountry: '',
+        sellerCity: '',
+        sellerEmail: '',
         phoneNumber: '',
-        email: '',
         flatCountry: '',
         flatCity: '',
         flatStreet1: '',
         flatStreet2: '',
+        flatGeo: [],
       },
 
       steps: 1,

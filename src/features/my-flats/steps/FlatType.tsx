@@ -4,7 +4,7 @@ import { useFlatStore } from '@/store/flatStore';
 
 import { FlatTypeCard } from '@/features/my-flats/cards/FlatTypeCard';
 
-export const FlatTypesPage = () => {
+const FlatTypesPage = () => {
   const { flatTypes, setFlatTypes } = useFlatStore();
 
   const handleCheck = (id: number) => {
@@ -47,3 +47,5 @@ export const FlatTypesPage = () => {
     </div>
   );
 };
+
+export default FlatTypesPage;

@@ -10,9 +10,9 @@ import { useFlatStore } from '@/store/flatStore';
 import ReactSelect from '@/features/HookForm/ReactSelect';
 import TextField from '@/features/HookForm/TextField';
 
-const negiotabilityOptions = [
-  { label: 'Negiotable', value: 'negiotable' },
-  { label: 'Non-negiotable', value: 'non-negiotable' },
+const negotiabilityOptions = [
+  { label: 'Negotiable', value: 'negotiable' },
+  { label: 'Non-Negotiable', value: 'non-negotiable' },
 ];
 
 export const AddPricing = () => {
@@ -107,14 +107,14 @@ export const AddPricing = () => {
               <div>
                 <ReactSelect
                   name='negotiable'
-                  options={negiotabilityOptions}
-                  label=' Negiotability'
-                  placeholder='negiotability'
+                  options={negotiabilityOptions}
+                  label='Negotiability'
+                  placeholder='negotiability'
                   control={control}
                   required
                   helperText={
                     errors.negotiable?.type === 'required'
-                      ? 'Negiotability is Required'
+                      ? 'Negotiability is Required'
                       : ''
                   }
                   error={!!errors.negotiable}

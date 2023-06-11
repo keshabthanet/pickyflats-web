@@ -1,17 +1,34 @@
 import { Button, Dialog, IconButton } from '@mui/material';
-import { useState } from 'react';
+import dynamic from 'next/dynamic';
+import { useEffect, useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { BsBuildingFillAdd } from 'react-icons/bs';
 import { CgClose } from 'react-icons/cg';
 
 import { useFlatStore } from '@/store/flatStore';
+import useSnackbarStore from '@/store/useSnackbarStore';
 
-import { FeaturesAndPolicies } from '@/features/my-flats/steps/Features';
-import { FlatTypesPage } from '@/features/my-flats/steps/FlatType';
-import { Gallery } from '@/features/my-flats/steps/Gallery';
-import { ContactAndLocation } from '@/features/my-flats/steps/Location';
-import { Pricing } from '@/features/my-flats/steps/Pricing';
-import { Purpose } from '@/features/my-flats/steps/Purpose';
+const Purpose = dynamic(() => import('@/features/my-flats/steps/Purpose'), {
+  ssr: false,
+});
+const FeaturesAndPolicies = dynamic(
+  () => import('@/features/my-flats/steps/Features'),
+  { ssr: false }
+);
+const FlatTypesPage = dynamic(
+  () => import('@/features/my-flats/steps/FlatType'),
+  { ssr: false }
+);
+const Gallery = dynamic(() => import('@/features/my-flats/steps/Gallery'), {
+  ssr: false,
+});
+const ContactAndLocation = dynamic(
+  () => import('@/features/my-flats/steps/Location'),
+  { ssr: false }
+);
+const Pricing = dynamic(() => import('@/features/my-flats/steps/Pricing'), {
+  ssr: false,
+});
 
 type Step = { key: string; title: string; component: React.ReactNode };
 
@@ -52,6 +69,14 @@ export const AddFlatModal = () => {
     costs,
     basics,
   } = useFlatStore();
+  const { openSnackbar } = useSnackbarStore();
+
+  // console.log('buildingAmenities ? ', buildingAmenities);
+  console.log('gallery ? ', gallery);
+
+  useEffect(() => {
+    // return () => setActiveStep(0);
+  }, [open]);
 
   const plusStep = () => {
     if (activeStep < 5) {
@@ -59,7 +84,10 @@ export const AddFlatModal = () => {
         alert('select the purpose');
         return;
       } else if (activeStep == 1 && flatTypes.length == 0) {
-        alert('select at least one flat type');
+        openSnackbar('Select at least one flat type', 'info', {
+          horizontal: 'center',
+          vertical: 'top',
+        });
         return;
       }
 

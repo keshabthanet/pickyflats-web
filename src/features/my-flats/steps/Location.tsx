@@ -1,5 +1,6 @@
 import { Divider, IconButton } from '@mui/material';
 import { useForm } from 'react-hook-form';
+import { FaMapMarker, FaStreetView } from 'react-icons/fa';
 import { GrMapLocation } from 'react-icons/gr';
 import { MdAttachEmail, MdPhonePaused } from 'react-icons/md';
 
@@ -7,9 +8,8 @@ import { IcontactAndLocation } from '@/store/flatStore';
 import { useFlatStore } from '@/store/flatStore';
 
 import { AddLocationModal } from '@/features/my-flats/Modal/addLocationModal';
-import { FaStreetView } from 'react-icons/fa';
 
-export const ContactAndLocation = () => {
+const ContactAndLocation = () => {
   const {
     handleSubmit,
     control,
@@ -34,24 +34,26 @@ export const ContactAndLocation = () => {
             Your Contact Information
           </h2>
           <div className='w-full text-left'>
-            {contactAndLocation.country && (
+            {contactAndLocation.sellerCountry && (
               <div className='flex '>
                 <IconButton>
                   <GrMapLocation className='' color='primary' />
                 </IconButton>
                 <span className='relative top-[10px] text-base font-semibold capitalize text-black opacity-80 '>
-                  {contactAndLocation.city + ',' + contactAndLocation.country}
+                  {contactAndLocation.sellerCity +
+                    ',' +
+                    contactAndLocation.sellerCountry}
                 </span>
               </div>
             )}
             <Divider />
-            {contactAndLocation.email && (
+            {contactAndLocation.sellerEmail && (
               <div className='flex'>
                 <IconButton>
                   <MdAttachEmail />
                 </IconButton>
                 <span className='relative top-[10px] text-base font-semibold capitalize text-black opacity-80  '>
-                  {contactAndLocation.email}
+                  {contactAndLocation.sellerEmail}
                 </span>
               </div>
             )}
@@ -88,7 +90,7 @@ export const ContactAndLocation = () => {
               </div>
             )}
             <Divider />
-            {contactAndLocation.email && (
+            {contactAndLocation.flatStreet1 && (
               <div className='flex'>
                 <IconButton>
                   <FaStreetView />
@@ -100,7 +102,7 @@ export const ContactAndLocation = () => {
             )}
             <Divider />
 
-            {contactAndLocation.phoneNumber && (
+            {contactAndLocation.flatStreet2 && (
               <div className='flex'>
                 <IconButton className=' '>
                   <FaStreetView className='' />
@@ -110,9 +112,22 @@ export const ContactAndLocation = () => {
                 </span>
               </div>
             )}
+            <Divider />
+            {contactAndLocation.flatGeo && (
+              <div className='flex items-center'>
+                <IconButton className=' '>
+                  <FaMapMarker className='text-sm' />
+                </IconButton>
+                <span className='relative text-base font-semibold capitalize text-black opacity-80 '>
+                  {contactAndLocation.flatGeo?.join(',')}
+                </span>
+              </div>
+            )}
           </div>
         </div>
       </div>
     </>
   );
 };
+
+export default ContactAndLocation;

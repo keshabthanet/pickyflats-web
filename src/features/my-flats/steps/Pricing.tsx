@@ -6,7 +6,7 @@ import { useFlatStore } from '@/store/flatStore';
 
 import { AddPricing } from '@/features/my-flats/Modal/addPriceModal';
 
-export const Pricing = () => {
+const Pricing = () => {
   const {
     handleSubmit,
     control,
@@ -135,3 +135,5 @@ export const Pricing = () => {
     </>
   );
 };
+
+export default Pricing;
