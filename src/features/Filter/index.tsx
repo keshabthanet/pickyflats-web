@@ -1,18 +1,60 @@
-import Modal from '@/components/Modal';
-
-import { IoCloseOutline } from 'react-icons/io5';
-import IconButton from '@mui/material/IconButton';
 import { Button, Divider } from '@mui/material';
-
-import Slider from '@mui/material/Slider';
 import Chip from '@mui/material/Chip';
-
+import IconButton from '@mui/material/IconButton';
+import Slider from '@mui/material/Slider';
+import Switch from '@mui/material/Switch';
 import { useState } from 'react';
+import { IoCloseOutline } from 'react-icons/io5';
+
+import Modal from '@/components/Modal';
 
 interface Iprops {
   isOpen: boolean;
   onClose: () => void;
 }
+
+const amenitiesOptions = [
+  {
+    label: 'WIFI',
+    value: 'WIFI',
+  },
+  {
+    label: 'TV',
+    value: 'TV',
+  },
+  {
+    label: 'AC',
+    value: 'AC',
+  },
+  {
+    label: 'KITCHEN',
+    value: 'KITCHEN',
+  },
+  {
+    label: 'PARKING',
+    value: 'PARKING',
+  },
+  {
+    label: 'ELEVATOR',
+    value: 'ELEVATOR',
+  },
+  {
+    label: 'BUSINESS CENTER',
+    value: 'BUSINESS CENTER',
+  },
+  {
+    label: 'PLAYGROUND',
+    value: 'PLAYGROUND',
+  },
+  {
+    label: 'MOVIE THEATRE',
+    value: 'MOVIE THEATRE',
+  },
+  {
+    label: 'PARTY ROOM',
+    value: 'PARTY ROOM',
+  },
+];
 
 const bedroomOptions = [
   {
@@ -72,8 +114,10 @@ const FilterModal = (props: Iprops) => {
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(0);
   const [bedrooms, setBedrooms] = useState(0);
+  const [checked, setChecked] = useState(true);
 
   const [flatType, setFlatType] = useState('');
+  const [amenities, setAmenities] = useState<string[]>([]);
 
   const { isOpen, onClose } = props;
 
@@ -86,6 +130,10 @@ const FilterModal = (props: Iprops) => {
 
   const handleApply = () => {
     // dispatch filter action
+  };
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setChecked(event.target.checked);
   };
 
   return (
@@ -184,29 +232,48 @@ const FilterModal = (props: Iprops) => {
             <Divider className='mt-4' />
             <div className=' gap-2'>
               <h1 className='text-primary-main nt-2 text-sm font-normal'>
-                Flat Type
+                Booking Type
               </h1>
 
-              <div className='mt-2 grid grid-cols-2 gap-4'>
-                {
-                  // here we will use reactangular box to select the property type
+              <div className='mt-2'>
+                <div className='flex w-full justify-between'>
+                  <div className='text-sm font-medium leading-[150%]'>Sale</div>
+                  <Switch
+                    checked={checked}
+                    onChange={handleChange}
+                    inputProps={{ 'aria-label': 'controlled' }}
+                  />
+                </div>
+                <div className='flex w-full justify-between'>
+                  <div className='text-sm font-medium leading-[150%]'>Rent</div>
+                  <Switch
+                    checked={checked}
+                    onChange={handleChange}
+                    inputProps={{ 'aria-label': 'controlled' }}
+                  />
+                </div>
+              </div>
+            </div>
+            <Divider className='mt-4' />
+            <div>
+              <h1 className='text-primary-main text-sm font-normal'>
+                Amenitites
+              </h1>
 
-                  FlatTypeOptions.map((item, index) => {
-                    return (
-                      <div
-                        key={index}
-                        onClick={() => setFlatType(item.value)}
-                        className={` cursor-pointer rounded-md px-3 py-2 ${
-                          flatType === item.value
-                            ? 'bg-primary-main text-white '
-                            : 'text-primary-main border-primary-main border bg-white'
-                        }`}
-                      >
-                        {item.label}{' '}
-                      </div>
-                    );
-                  })
-                }
+              <div className='mt-2'>
+                {amenitiesOptions.map((item, index) => (
+                  <Chip
+                    onClick={() => setAmenities([...amenities, item.value])}
+                    key={index}
+                    label={item.label}
+                    variant='outlined'
+                    className={`mx-2 my-2 px-2  py-1 ${
+                      amenities.includes(item.value)
+                        ? 'bg-primary-main text-white'
+                        : 'text-primary-main bg-white'
+                    }`}
+                  />
+                ))}
               </div>
             </div>
             <Divider className='mt-4' />
