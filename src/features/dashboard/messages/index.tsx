@@ -8,11 +8,10 @@ import { isEmptyArray } from '@/lib/helper';
 
 import { fetchConversationsForUser } from '@/database/conversation';
 
+import ConversationItem from '@/components/chat/ConversationItem';
 import Loader from '@/components/Loader';
 
 import useAuthStore from '@/store/useAuthStore';
-
-import ConversationItem from '@/components/chat/ConversationItem';
 
 export default function MessagesPopover() {
   const { user } = useAuthStore();
@@ -76,7 +75,7 @@ export default function MessagesPopover() {
               <Scrollbars>
                 {loading && <Loader />}
                 <ul className='divide-y divide-gray-300'>
-                  {isEmptyArray(conversations) && (
+                  {!loading && !fetchError && isEmptyArray(conversations) && (
                     <div className='no-listings px-2'>
                       <p className='font-medium'>
                         Explore available listings to start a conversation.

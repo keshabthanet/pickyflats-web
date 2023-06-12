@@ -2,11 +2,12 @@ import { Button, Divider } from '@mui/material';
 import Chip from '@mui/material/Chip';
 import IconButton from '@mui/material/IconButton';
 import Slider from '@mui/material/Slider';
-import Switch from '@mui/material/Switch';
 import { useState } from 'react';
 import { IoCloseOutline } from 'react-icons/io5';
 
 import Modal from '@/components/Modal';
+
+import useListingsStore from '@/store/useListingsStore';
 
 interface Iprops {
   isOpen: boolean;
@@ -111,25 +112,35 @@ const FlatTypeOptions = [
 ];
 
 const FilterModal = (props: Iprops) => {
-  const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(0);
-  const [bedrooms, setBedrooms] = useState(0);
-  const [checked, setChecked] = useState(true);
+  const {
+    minPrice,
+    maxPrice,
+    bathrooms,
+    bedrooms,
+    setBathrooms,
+    setBedrooms,
+    setMinPrice,
+    setMaxPrice,
+    setExtraFiilterActive,
+  } = useListingsStore();
+  // const [flatType, setFlatType] = useState('');
 
-  const [flatType, setFlatType] = useState('');
-  const [amenities, setAmenities] = useState<string[]>([]);
+  const [checked, setChecked] = useState(true);
 
   const { isOpen, onClose } = props;
 
   const handleClear = () => {
     setMinPrice(0);
     setMaxPrice(0);
+    setBathrooms(0);
     setBedrooms(0);
-    setFlatType('');
+    // setFlatType('');
+    setExtraFiilterActive(false);
   };
 
   const handleApply = () => {
-    // dispatch filter action
+    setExtraFiilterActive(true);
+    onClose();
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -216,12 +227,12 @@ const FilterModal = (props: Iprops) => {
               <div className='mt-2'>
                 {bedroomOptions.map((item, index) => (
                   <Chip
-                    onClick={() => setBedrooms(item.value)}
+                    onClick={() => setBathrooms(item.value)}
                     key={index}
                     label={item.label}
                     variant='outlined'
                     className={`mx-2 px-2 py-1 ${
-                      bedrooms === item.value
+                      bathrooms === item.value
                         ? 'bg-primary-main text-white'
                         : 'text-primary-main bg-white'
                     }`}
@@ -229,8 +240,9 @@ const FilterModal = (props: Iprops) => {
                 ))}
               </div>
             </div>
-            <Divider className='mt-4' />
-            <div className=' gap-2'>
+            {/* //!no extra flat type filter as we are already using same in home */}
+            {/* <Divider className='mt-4' /> */}
+            {/* <div className=' gap-2'>
               <h1 className='text-primary-main nt-2 text-sm font-normal'>
                 Booking Type
               </h1>
@@ -275,7 +287,7 @@ const FilterModal = (props: Iprops) => {
                   />
                 ))}
               </div>
-            </div>
+            </div> */}
             <Divider className='mt-4' />
             <div className='flex justify-end gap-2'>
               <Button

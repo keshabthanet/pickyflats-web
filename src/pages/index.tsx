@@ -27,23 +27,42 @@ const ListingsMapView = dynamic(
 );
 
 export default function HomePage() {
-  const { listings, setListings, activeTypeFilter } = useListingsStore();
+  const {
+    listings,
+    setListings,
+    activeTypeFilter,
+    extraFilterActive,
+    minPrice,
+    maxPrice,
+    bathrooms,
+    bedrooms,
+  } = useListingsStore();
   const [mapModeActive, setMapModeActive] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
     const fetchData = async () => {
-      // const listings = await databases.listDocuments(DATABASE_ID, LISTINGS_ID, [
-      //   // ...(activeTypeFilter ? [Query.equal('type', activeTypeFilter)] : []),
-      // ]);
-
-      const listings = await fetchListings();
+      const listings = await fetchListings(
+        {
+          byFlatType: activeTypeFilter?.value,
+          // pass other filters
+          ...(extraFilterActive
+            ? {
+                minPrice,
+                maxPrice,
+                bathrooms,
+                bedrooms,
+              }
+            : {}),
+        }
+        // activeTypeFilter ? { byFlatType: activeTypeFilter.value } : {},
+      );
       setListings(listings);
       setLoading(false);
     };
 
     fetchData();
-  }, [activeTypeFilter, setListings]);
+  }, [activeTypeFilter, setListings, extraFilterActive]);
 
   // TODO: check if reserved & reservationID in params, open reserved dialog message,
   // update reservation status & payment status

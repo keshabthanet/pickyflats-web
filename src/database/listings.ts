@@ -6,11 +6,28 @@ import { LISTINGS_ID } from '../lib/client';
 
 import { Listing } from '@/types/listing';
 
+interface ListingFetchProps {
+  byFlatType?: number;
+  minPrice?: number;
+  maxPrice?: number;
+  bedrooms?: number;
+  bathrooms?: number;
+}
 //! TODO: fetch by recent & flat type
-export const fetchListings = async () => {
+export const fetchListings = async (props?: ListingFetchProps) => {
   const _listings = await databases.listDocuments(DATABASE_ID, LISTINGS_ID, [
     // Query.equal('userID', [userID]),
-    // Query.search('userID', userID), // ! try on production
+    // ...(props?.byFlatType
+    //   ? [Query.equal('flatTypes', props.byFlatType as any)]
+    //   : []),
+    //! Query issue with integer data
+    // Query.equal('flatTypes', 8), // ! try on production
+    // Query.equal('flatTypes', [8]), // ! try on production
+    // Query.equal('flatTypes', activeTypeFilter)
+    // Query.greaterThan()
+
+    ...(props?.bedrooms ? [Query.equal('room', props.bedrooms)] : []),
+    ...(props?.bathrooms ? [Query.equal('bathrooms', props.bathrooms)] : []),
   ]);
 
   const listingsIds = [
@@ -32,24 +49,6 @@ export const fetchListings = async () => {
   });
 
   return listingsWithCosts as Listing[];
-};
-
-export const fetchListingById = async (listingId) => {
-  const _listing = await databases.getDocument(
-    DATABASE_ID,
-    LISTINGS_ID,
-    listingId
-  );
-  // fetch cost data
-  const _listingCosts = await databases.listDocuments(
-    DATABASE_ID,
-    LISTINGCOSTS_ID,
-    [Query.equal('listingID', listingId)]
-  );
-
-  const _costs = _listingCosts.documents[0];
-
-  return { ..._listing, costs: _costs };
 };
 
 export const fetchListingsByUserId = async (userID) => {

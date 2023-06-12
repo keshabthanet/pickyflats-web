@@ -1,4 +1,4 @@
-import { Button, Divider, IconButton } from '@mui/material';
+import { Divider, IconButton } from '@mui/material';
 import clsx from 'clsx';
 import Image from 'next/image';
 import React from 'react';
@@ -76,17 +76,9 @@ export const MyFlatCard = ({ item }: { item: Listing }) => {
       <div className='flex-grow'></div>
       <div className='flex w-full p-2'>
         <div className='flex-grow'>
-          {/* <IconButton>
-            <BiLike />
-          </IconButton> */}
           <IconButton>
             <FcLike />
           </IconButton>
-        </div>
-        <div>
-          <Button variant='outlined' className='relative top-1 h-[30px]'>
-            Request Tour
-          </Button>
         </div>
       </div>
     </div>

@@ -1,12 +1,17 @@
 import { Button, Divider, IconButton } from '@mui/material';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { FaRegBookmark } from 'react-icons/fa';
 import { FcLikePlaceholder } from 'react-icons/fc';
 import { RiShareForwardFill } from 'react-icons/ri';
 
+import { fetchListingById } from '@/database/listing';
+import { AllFlatTypes } from '@/datas/flatTypes';
+
 import { useFlatStore } from '@/store/flatStore';
+import useSnackbarStore from '@/store/useSnackbarStore';
 
 import { Comment } from '@/features/Comment';
 import { NavBar } from '@/features/layout/NavBar';
@@ -16,11 +21,20 @@ import { Costs } from '@/pageComponents/flats/Costs';
 import { GalleryModal } from '@/pageComponents/flats/GalleryModal';
 import { Policies } from '@/pageComponents/flats/Policies';
 
+import { Listing } from '@/types/listing';
+
 const Map = dynamic(() => import('@/features/map/MapView'), {
   ssr: false,
 });
 
 export const DetailView = () => {
+  const {
+    query: { id },
+    push,
+  } = useRouter();
+  const { openSnackbar } = useSnackbarStore();
+  const [loading, setLoading] = useState(true);
+  const [listing, setListing] = useState<Listing>();
   const { gallery, buildingAmenities } = useFlatStore();
 
   const [bgImage, setBgImage] = useState('');
@@ -43,6 +57,27 @@ export const DetailView = () => {
     return () => clearInterval(interval);
   }, [gallery]);
 
+  const fetchFlatData = async () => {
+    try {
+      // con
+      const flatData = await fetchListingById(id);
+      setListing(flatData);
+    } catch (error) {
+      console.log('?  erro ? ', error);
+      openSnackbar('Failed to query for request flat', 'error');
+      // push('/');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (!id) return;
+    fetchFlatData();
+  }, [id]);
+
+  const flatType = AllFlatTypes.find((i) => i.id === listing?.flatTypes[0]);
+
   return (
     <div className='h-auto w-full'>
       <div>
@@ -53,7 +88,8 @@ export const DetailView = () => {
           <div className='hidden min-w-[350px] max-w-[350px] md:block'></div>
           <div className=' flex-grow py-5'>
             <h1 className=' text-primary-main text-xl font-semibold md:text-3xl'>
-              1Bhk/Duplex Flat for sale in Sukhedhara, Nepal
+              {flatType?.label} Flat for sale in {listing?.flatCity},{' '}
+              {listing?.flatCountry}
             </h1>
 
             <div className='flex flex-grow font-semibold md:hidden'>
@@ -124,7 +160,9 @@ export const DetailView = () => {
             <div className='fixed top-[80px]  z-50 h-[80vh] w-[350px] p-5 pr-12 '>
               <div className='relative z-50 flex h-full w-full flex-col rounded-md bg-[#74f574] p-5'>
                 <div className=' flex text-xl text-white'>
-                  <div className='flex-grow font-semibold'>$30,000</div>
+                  <div className='flex-grow font-semibold'>
+                    {listing?.costs?.currency} {listing?.costs?.monthlyCost}
+                  </div>
                   <div className=' rounded-[20px] border-[2px] bg-black px-4 py-1 text-center text-sm'>
                     Rent
                   </div>
@@ -135,26 +173,26 @@ export const DetailView = () => {
                   </h2>
                   <Divider />
                   <h3 className='text-lg font-medium text-blue-950'>
-                    Kathmandu, Nepal
+                    {listing?.flatCity}, {listing?.flatCountry}
                   </h3>
                   <h4 className='text-lg font-medium text-blue-950'>
-                    Kandevta Temple, House No 111
+                    {listing?.flatStreet1}
                   </h4>
 
-                  <div className='flex flex-wrap'>
+                  <div className='flex flex-wrap gap-1'>
                     <div className=' bg-primary-main rounded-[20px] border-[2px] px-4 py-1 text-center text-sm text-white'>
-                      3 Rooms
+                      {listing?.room} Rooms
                     </div>
                     <div className=' bg-primary-main rounded-[20px] border-[2px] px-4 py-1 text-center text-sm text-white'>
-                      2 Kitchen
-                    </div>
-
-                    <div className=' bg-primary-main rounded-[20px] border-[2px] px-4 py-1 text-center text-sm text-white'>
-                      3 bathroom
+                      {listing?.kitchen} Kitchen
                     </div>
 
                     <div className=' bg-primary-main rounded-[20px] border-[2px] px-4 py-1 text-center text-sm text-white'>
-                      Non-negiotable
+                      {listing?.bathroom} bathroom
+                    </div>
+
+                    <div className=' bg-primary-main rounded-[20px] border-[2px] px-4 py-1 text-center text-sm text-white'>
+                      {listing?.costs?.negotiable}
                     </div>
                   </div>
                 </div>
@@ -176,14 +214,17 @@ export const DetailView = () => {
               </div>
             </div>
 
-            <section className='h-auto w-full' id='amenities'>
-              <AllAmenities />
+            <section className='h-auto w-full pt-2' id='amenities'>
+              <AllAmenities
+                buildingAmenities={listing?.buildingAmenities}
+                flatAmenities={listing?.flatAmenities}
+              />
             </section>
-            <section id='policies'>
-              <Policies />
+            <section id='policies' className='pt-2'>
+              <Policies flatPolicies={listing?.flatPolicies} />
             </section>
             <section id='costs'>
-              <Costs />
+              <Costs costs={listing?.costs} />
             </section>
             <section className='relative z-0' id='location'>
               <Map />
