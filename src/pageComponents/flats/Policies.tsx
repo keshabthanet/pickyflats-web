@@ -1,16 +1,7 @@
 import { Divider, IconButton } from '@mui/material';
-import { useEffect, useState } from 'react';
 import { BsCheck2Square } from 'react-icons/bs';
 
-import { Iamenities, useFlatStore } from '@/store/flatStore';
-export const Policies = () => {
-  const { flatPolicies } = useFlatStore();
-
-  const [policies, setPolicies] = useState<Iamenities[]>([]);
-
-  useEffect(() => {
-    setPolicies(flatPolicies);
-  }, [flatPolicies]);
+export const Policies = ({ flatPolicies }: { flatPolicies }) => {
   return (
     <div className=' h-auto w-full py-9'>
       <div>
@@ -20,7 +11,7 @@ export const Policies = () => {
         <Divider />
       </div>
       <div className='mt-9 grid grid-cols-3 gap-5'>
-        {policies.map((am, index) => (
+        {flatPolicies?.map((item, index) => (
           <h3
             key={index}
             className=' text-secondary-main text-sm font-semibold'
@@ -30,7 +21,7 @@ export const Policies = () => {
                 <BsCheck2Square />
               </IconButton>
             </span>
-            {am.name}
+            {item}
           </h3>
         ))}
       </div>

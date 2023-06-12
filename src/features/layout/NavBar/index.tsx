@@ -21,9 +21,6 @@ import { PROFILES_BUCKET, storage } from '@/lib/client';
 import useAuthStore from '@/store/useAuthStore';
 import useDrawerStore from '@/store/useDrawerStore';
 
-import MessagesPopover from '@/features/dashboard/messages';
-import NotificationsPopover from '@/features/dashboard/notification';
-
 const topSideControlMenuPages = [
   '/dashboard',
   '/my-flats',
@@ -110,12 +107,13 @@ export const NavBar = () => {
             </>
           )}
 
-          {!isHomePage && isAuthenticated && (
+          {/* //  */}
+          {/* {!isHomePage && isAuthenticated && (
             <div className='flex h-full items-center justify-center space-x-2'>
               <NotificationsPopover />
               <MessagesPopover />
             </div>
-          )}
+          )} */}
 
           <div className='relative box-border flex h-full  flex-col justify-center align-middle'>
             <div
@@ -159,6 +157,7 @@ export const NavBar = () => {
                     aria-labelledby='composition-button'
                   >
                     <div className='py-2'>
+                      {/* !TODO:  */}
                       {/* <Link
                         href='/my-flats?newListing=true'
                         onClick={handleClose}

@@ -33,7 +33,7 @@ export const Header = () => {
           </div>
         </div>
       </div>
-      <div className='min-h-[80px] flex-shrink'>
+      <div className='min-h-[80px] flex-shrink pb-4'>
         <FlatTypeSelectorOptions />
       </div>
       <FilterModal isOpen={openModal} onClose={() => setOpenModal(false)} />

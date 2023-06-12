@@ -1,6 +1,7 @@
 import { Button, Divider, IconButton } from '@mui/material';
 import clsx from 'clsx';
 import Image from 'next/image';
+import Link from 'next/link';
 import React, { useState } from 'react';
 import { FaRegBookmark } from 'react-icons/fa';
 import { FcLike } from 'react-icons/fc';
@@ -94,7 +95,7 @@ export const FlatCardV1 = ({ item }: { item: Listing }) => {
         </div>
         <div className='flex w-full p-2'>
           <h3 className='flex-grow text-lg font-medium text-blue-900'>
-            {item?.flatStreet1}
+            <Link href={`/flats/${item.$id}`}>{item?.flatStreet1}</Link>
           </h3>
           <h4 className=' text-sm text-blue-600'>
             {timeAgo(new Date(item.$createdAt), { suffix: true })}

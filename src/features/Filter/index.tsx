@@ -1,13 +1,12 @@
+import { Button, Divider } from '@mui/material';
+import Chip from '@mui/material/Chip';
+import IconButton from '@mui/material/IconButton';
+import Slider from '@mui/material/Slider';
+import { IoCloseOutline } from 'react-icons/io5';
+
 import Modal from '@/components/Modal';
 
-import { IoCloseOutline } from 'react-icons/io5';
-import IconButton from '@mui/material/IconButton';
-import { Button, Divider } from '@mui/material';
-
-import Slider from '@mui/material/Slider';
-import Chip from '@mui/material/Chip';
-
-import { useState } from 'react';
+import useListingsStore from '@/store/useListingsStore';
 
 interface Iprops {
   isOpen: boolean;
@@ -69,23 +68,33 @@ const FlatTypeOptions = [
 ];
 
 const FilterModal = (props: Iprops) => {
-  const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(0);
-  const [bedrooms, setBedrooms] = useState(0);
-
-  const [flatType, setFlatType] = useState('');
+  const {
+    minPrice,
+    maxPrice,
+    bathrooms,
+    bedrooms,
+    setBathrooms,
+    setBedrooms,
+    setMinPrice,
+    setMaxPrice,
+    setExtraFiilterActive,
+  } = useListingsStore();
+  // const [flatType, setFlatType] = useState('');
 
   const { isOpen, onClose } = props;
 
   const handleClear = () => {
     setMinPrice(0);
     setMaxPrice(0);
+    setBathrooms(0);
     setBedrooms(0);
-    setFlatType('');
+    // setFlatType('');
+    setExtraFiilterActive(false);
   };
 
   const handleApply = () => {
-    // dispatch filter action
+    setExtraFiilterActive(true);
+    onClose();
   };
 
   return (
@@ -168,12 +177,12 @@ const FilterModal = (props: Iprops) => {
               <div className='mt-2'>
                 {bedroomOptions.map((item, index) => (
                   <Chip
-                    onClick={() => setBedrooms(item.value)}
+                    onClick={() => setBathrooms(item.value)}
                     key={index}
                     label={item.label}
                     variant='outlined'
                     className={`mx-2 px-2 py-1 ${
-                      bedrooms === item.value
+                      bathrooms === item.value
                         ? 'bg-primary-main text-white'
                         : 'text-primary-main bg-white'
                     }`}
@@ -181,8 +190,9 @@ const FilterModal = (props: Iprops) => {
                 ))}
               </div>
             </div>
-            <Divider className='mt-4' />
-            <div className=' gap-2'>
+            {/* //!no extra flat type filter as we are already using same in home */}
+            {/* <Divider className='mt-4' /> */}
+            {/* <div className=' gap-2'>
               <h1 className='text-primary-main nt-2 text-sm font-normal'>
                 Flat Type
               </h1>
@@ -190,7 +200,6 @@ const FilterModal = (props: Iprops) => {
               <div className='mt-2 grid grid-cols-2 gap-4'>
                 {
                   // here we will use reactangular box to select the property type
-
                   FlatTypeOptions.map((item, index) => {
                     return (
                       <div
@@ -208,7 +217,7 @@ const FilterModal = (props: Iprops) => {
                   })
                 }
               </div>
-            </div>
+            </div> */}
             <Divider className='mt-4' />
             <div className='flex justify-end gap-2'>
               <Button

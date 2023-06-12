@@ -1,18 +1,13 @@
 import { Divider, IconButton } from '@mui/material';
-import { useEffect, useState } from 'react';
 import { BsCheck2Square } from 'react-icons/bs';
 
-import { Iamenities, useFlatStore } from '@/store/flatStore';
-export const AllAmenities = () => {
-  const { buildingAmenities, flatAmenities, flatPolicies } = useFlatStore();
-
-  const [buildingAms, setBuildingAms] = useState<Iamenities[]>([]);
-  const [flatAms, setFlatAms] = useState<Iamenities[]>([]);
-
-  useEffect(() => {
-    setBuildingAms(buildingAmenities);
-    setFlatAms(flatAmenities);
-  }, [buildingAmenities, flatAmenities]);
+export const AllAmenities = ({
+  buildingAmenities,
+  flatAmenities,
+}: {
+  buildingAmenities?: string[];
+  flatAmenities?: string[];
+}) => {
   return (
     <div className=' h-auto w-full py-9'>
       <div>
@@ -22,7 +17,7 @@ export const AllAmenities = () => {
         <Divider />
       </div>
       <div className='mt-9 grid grid-cols-3 gap-5'>
-        {buildingAms.map((am, index) => (
+        {buildingAmenities?.map((item, index) => (
           <h3
             key={index}
             className=' text-secondary-main text-sm font-semibold'
@@ -32,7 +27,7 @@ export const AllAmenities = () => {
                 <BsCheck2Square />
               </IconButton>
             </span>
-            {am.name}
+            {item}
           </h3>
         ))}
       </div>
@@ -44,7 +39,7 @@ export const AllAmenities = () => {
         <Divider />
       </div>
       <div className='mt-9 grid grid-cols-3 gap-5'>
-        {flatAms.map((am, index) => (
+        {flatAmenities?.map((item, index) => (
           <h3
             key={index}
             className=' text-secondary-main text-sm font-semibold'
@@ -54,7 +49,7 @@ export const AllAmenities = () => {
                 <BsCheck2Square />
               </IconButton>
             </span>
-            {am.name}
+            {item}
           </h3>
         ))}
       </div>
