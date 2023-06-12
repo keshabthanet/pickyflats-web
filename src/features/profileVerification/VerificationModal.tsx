@@ -9,7 +9,7 @@ import {
 import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
-import SelectInput from '@/components/forms/SelectInput';
+import ReactSelect from '@/features/HookForm/ReactSelect';
 
 interface VerificationFormData {
   accountType: string;
@@ -40,10 +40,11 @@ export default function VerificationRequestModal() {
           Request for Verification
         </h2>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <SelectInput
+          <ReactSelect
             control={control}
             name='accountType'
             label=''
+            placeholder=''
             options={[{ label: 'a', value: 'a' }]}
           />
           <FormControl fullWidth margin='normal'>

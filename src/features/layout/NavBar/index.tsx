@@ -159,10 +159,11 @@ export const NavBar = () => {
                     aria-labelledby='composition-button'
                   >
                     <div className='py-2'>
-                      <Link
+                      {/* <Link
                         href='/my-flats?newListing=true'
                         onClick={handleClose}
-                      >
+                      > */}
+                      <Link href='/dashboard/my-flats' onClick={handleClose}>
                         <MenuItem>List Flat/Apartment</MenuItem>
                       </Link>
                     </div>

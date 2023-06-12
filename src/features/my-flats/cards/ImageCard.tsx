@@ -21,7 +21,6 @@ export const ImageCard = (props: Iprops) => {
         alt='preview image'
         className=' h-full w-full object-cover'
       />
-      {/* <Image src={props.url} fill alt='preview image' /> */}
 
       {/* <div className='absolute top-0 right-0'><IconButton onClick={()=>deleteImg()}>D</IconButton></div> */}
     </div>
