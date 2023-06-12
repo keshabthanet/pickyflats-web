@@ -26,7 +26,7 @@ export type Listing = {
   $permissions: string[];
   $collectionId: string;
   $databaseId: string;
-  costs: Costs;
+  costs?: Costs;
 };
 
 export interface Costs {

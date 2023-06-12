@@ -1,5 +1,6 @@
 import { Button } from '@mui/material';
 import dynamic from 'next/dynamic';
+import { useRouter } from 'next/router';
 import * as React from 'react';
 import { BsFillGridFill, BsMapFill } from 'react-icons/bs';
 
@@ -13,6 +14,10 @@ import useListingsStore from '@/store/useListingsStore';
 import FlatTypeSelectorOptions from '@/features/home/FlatTypeSelectorOptions';
 import { SearchResults } from '@/features/SearchResults';
 import withAuth, { WithAuthProps } from '@/hoc/withAuth';
+
+const ReservationEssential = dynamic(() => import('@/features/reservation'), {
+  ssr: false,
+});
 
 const ListingsMapView = dynamic(
   () => import('@/features/home/ListingsMapView'),
@@ -39,6 +44,9 @@ export default function HomePage() {
   // TODO: check if reserved & reservationID in params, open reserved dialog message,
   // update reservation status & payment status
   // update reserved listings to filter out from searching
+  const {
+    query: { reserved },
+  } = useRouter();
   return (
     <>
       {/* <Seo templateTitle='Home' /> */}
@@ -82,6 +90,8 @@ export default function HomePage() {
           Show {mapModeActive ? 'List' : 'Map'}
         </Button>
       </div>
+
+      {reserved && <ReservationEssential />}
     </>
   );
 }
