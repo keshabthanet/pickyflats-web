@@ -163,7 +163,7 @@ export const NavBar = () => {
                         href='/my-flats?newListing=true'
                         onClick={handleClose}
                       > */}
-                      <Link href='/dashboard/my-flats' onClick={handleClose}>
+                      <Link href='/my-flats' onClick={handleClose}>
                         <MenuItem>List Flat/Apartment</MenuItem>
                       </Link>
                     </div>
