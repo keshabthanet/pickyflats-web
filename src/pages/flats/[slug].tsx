@@ -13,6 +13,7 @@ import { AllAmenities } from '@/pageComponents/flats/AllAmenities';
 import { Costs } from '@/pageComponents/flats/Costs';
 import { GalleryModal } from '@/pageComponents/flats/GalleryModal';
 import { Policies } from '@/pageComponents/flats/Policies';
+import { Comment } from '@/features/Comment';
 
 export const DetailView = () => {
   const { gallery, buildingAmenities } = useFlatStore();
@@ -88,6 +89,20 @@ export const DetailView = () => {
                 Costs
               </div>
             </Link>
+
+            <Link href='#costs'>
+              {' '}
+              <div className=' bg-primary-main hover:bg-secondary-main cursor-pointer rounded-sm p-1 px-3 text-left text-white'>
+                Location
+              </div>
+            </Link>
+
+            <Link href='#costs'>
+              {' '}
+              <div className=' bg-primary-main hover:bg-secondary-main cursor-pointer rounded-sm p-1 px-3 text-left text-white'>
+                Comments
+              </div>
+            </Link>
           </div>
         </div>
         <div className='flex w-full '>
@@ -155,6 +170,9 @@ export const DetailView = () => {
             </section>
             <section id='costs'>
               <Costs />
+            </section>
+            <section>
+              <Comment />
             </section>
           </div>
         </div>
