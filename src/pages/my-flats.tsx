@@ -1,4 +1,5 @@
 import { Alert, AlertTitle, Button } from '@mui/material';
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 
 import { fetchListingsByUserId } from '@/database/listings';
@@ -15,6 +16,10 @@ import withAuth, { WithAuthProps } from '@/hoc/withAuth';
 
 import { Listing } from '@/types/listing';
 export default function MyFlats() {
+  const {
+    query: { newListing },
+  } = useRouter();
+
   const [open, setOpen] = useState(false);
   const handleClose = () => {
     setOpen(false);
@@ -62,7 +67,8 @@ export default function MyFlats() {
         </div>
         <div>
           <AddFlatModal
-          // onListingCreated={() => }
+            openListingModal={Boolean(newListing)}
+            // onListingCreated={() => }
           />
         </div>
       </div>
