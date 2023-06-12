@@ -1,10 +1,12 @@
 import { createSelectorHooks } from 'auto-zustand-selectors-hook';
 import create from 'zustand';
 
+import { Listing } from '@/types/listing';
+
 interface ListingsStore {
-  listings: any[];
+  listings: Listing[];
   activeTypeFilter: string;
-  setListings: (listings: any[]) => void;
+  setListings: (listings: Listing[]) => void;
   setTypeFilter: (type: string) => void;
 }
 

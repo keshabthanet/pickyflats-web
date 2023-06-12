@@ -24,13 +24,13 @@ export const getReservedListingsForUser = async (userID) => {
     [Query.equal('user', userID)]
   );
 
-  const litingsIds = [
+  const listingsIds = [
     ...new Set(reservations.documents.flatMap((res) => res.listingID)),
   ];
 
   // find all the reserved listings
   const listings = await databases.listDocuments(DATABASE_ID, LISTINGS_ID, [
-    Query.equal('$id', litingsIds),
+    Query.equal('$id', listingsIds),
   ]);
 
   const reservationsWithListings = reservations.documents.map(

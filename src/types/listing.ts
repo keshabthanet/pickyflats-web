@@ -1,35 +1,62 @@
-// type Flat = {};
-
 export type Listing = {
-  type: 'sell' | 'rent';
-  flatType: string;
-  address: string;
-  gallery: any[];
-  rate: number;
-  description: string;
-  facilities: any[];
-  startDate: any;
-  endDate: any;
-  contact: any;
-  status: string;
-  discount: number;
-  geo: number[];
-  user: string;
+  purpose: 'sell' | 'rent';
+  flatTypes: number[];
+  buildingAmenities: string[];
+  flatAmenities: string[];
+  flatPolicies: string[];
+  room: number;
+  bathroom: number;
+  kitchen: number;
+  gallery: string | object;
+  sellerCountry: string;
+  sellerCity: string;
+  sellerEmail: string;
+  flatCountry: string;
+  flatCity: string;
+  flatStreet1: string;
+  flatStreet2: string;
+  flatGeo: number[];
+  userID: string;
   liked_by: any[];
-  saved_by: string[];
-
-  // document default data
+  saved_by: any[];
+  sellerContact: any;
   $id: string;
   $createdAt: string;
   $updatedAt: string;
   $permissions: string[];
-  $databaseId: string;
   $collectionId: string;
-
-  //
-  bedrooms: number;
-  bathrooms: number;
-  livingRooms: number;
-  kitchens: number;
-  balconies: number;
+  $databaseId: string;
+  costs: Costs;
 };
+
+export interface Costs {
+  currency: string;
+  negotiable: string;
+  purchaseCost: number;
+  monthlyCost: number;
+  yearlyCost: number;
+  mortgagePayments: number;
+  utilityCost: number;
+  insuranceCost: number;
+  propertyTax: number;
+  internetCost: number;
+  parkingFee: number;
+  petFee: number;
+  communalFacilityFee: number;
+  cleaningFee: number;
+  homeImprovement: number;
+  furnitureAppliances: number;
+  legalFees: number;
+  movingCost: number;
+  securitySystem: number;
+  homeOfficeSetup: number;
+  maintenanceRepairs: number;
+  otherCost: number;
+  listingID: string;
+  $id: string;
+  $createdAt: string;
+  $updatedAt: string;
+  $permissions: string[];
+  $collectionId: string;
+  $databaseId: string;
+}

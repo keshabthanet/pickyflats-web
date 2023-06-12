@@ -7,6 +7,7 @@ import { FcLike } from 'react-icons/fc';
 import { RiShareForwardFill } from 'react-icons/ri';
 
 import { DATABASE_ID, databases, LISTINGS_ID } from '@/lib/client';
+import { timeAgo } from '@/lib/date';
 
 import Modal from '@/components/Modal';
 
@@ -16,7 +17,9 @@ import useSnackbarStore from '@/store/useSnackbarStore';
 import ReserveModal from '@/features/listings/ReserveModal';
 import RequestForTourModal from '@/features/tour-request/RequestForTourModal';
 
-export const FlatCardV1 = ({ item }: { item }) => {
+import { Listing } from '@/types/listing';
+
+export const FlatCardV1 = ({ item }: { item: Listing }) => {
   const { user } = useAuthStore();
   const { openSnackbar } = useSnackbarStore();
   const [inSavedList, setInSavedList] = React.useState(false);
@@ -73,7 +76,7 @@ export const FlatCardV1 = ({ item }: { item }) => {
                   Buy
                   <span className=' text-primary-light font-normal'>
                     {' '}
-                    ${item?.rate}
+                    {item.costs?.currency} {item.costs?.monthlyCost}
                   </span>
                 </span>
               </div>
@@ -91,26 +94,27 @@ export const FlatCardV1 = ({ item }: { item }) => {
         </div>
         <div className='flex w-full p-2'>
           <h3 className='flex-grow text-lg font-medium text-blue-900'>
-            {item?.address}
+            {item?.flatStreet1}
           </h3>
-          <h4 className=' text-sm text-blue-600'>5 days ago</h4>
+          <h4 className=' text-sm text-blue-600'>
+            {timeAgo(new Date(item.$createdAt), { suffix: true })}
+          </h4>
         </div>
         <div className='m-auto w-[96%]'>
           <Divider />
         </div>
         <div className='flex flex-wrap gap-2 p-1 '>
+          {/* !TODO: fetch nearyby points using geo points */}
+
           <span className='hover:bg-primary-main rounded-full bg-black p-1.5 px-2 text-xs text-white'>
+            {item?.bathroom} Bathrooms
+          </span>
+          <span className='hover:bg-primary-main rounded-full bg-black p-1.5 px-2 text-xs text-white'>
+            {item?.room} Large rooms
+          </span>
+          {/* <span className='hover:bg-primary-main rounded-full bg-black p-1.5 px-2 text-xs text-white'>
             Near By City Hospital
-          </span>
-          <span className='hover:bg-primary-main rounded-full bg-black p-1.5 px-2 text-xs text-white'>
-            3 Bathrooms
-          </span>
-          <span className='hover:bg-primary-main rounded-full bg-black p-1.5 px-2 text-xs text-white'>
-            3 Large rooms
-          </span>
-          <span className='hover:bg-primary-main rounded-full bg-black p-1.5 px-2 text-xs text-white'>
-            Near By City Hospital
-          </span>
+          </span> */}
         </div>
         <div className='flex-grow'></div>
         <div className='flex w-full p-2'>
