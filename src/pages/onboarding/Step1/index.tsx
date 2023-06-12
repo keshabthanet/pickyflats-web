@@ -5,19 +5,19 @@ import Checkbox from '@/components/Checkbox';
 const Options = [
   {
     key: 'buyFlat',
-    label: 'Buy a flat',
+    label: 'Buy a Flat',
   },
   {
     key: 'sellFlat',
-    label: 'Sell a flat',
+    label: 'Sell a Flat',
   },
   {
-    key: 'findRomMate',
+    key: 'findRoomMate',
     label: 'Find room mates',
   },
   {
     key: 'rentFlates',
-    label: 'Rent  a flat',
+    label: 'Rent a Flat',
   },
 ];
 

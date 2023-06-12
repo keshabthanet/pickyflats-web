@@ -58,7 +58,7 @@ export default function SavedPage() {
         <div className='mt-5 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3'>
           {savedListings
             .filter((item) =>
-              item.address?.toLowerCase().includes(search.toLowerCase())
+              item.flatStreet1?.toLowerCase().includes(search.toLowerCase())
             )
             .map((item, i) => (
               <SavedFlatCard key={i} item={item} />
