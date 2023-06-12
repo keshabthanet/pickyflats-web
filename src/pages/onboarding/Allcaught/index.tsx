@@ -21,6 +21,7 @@ const Alldone = () => {
           onClick={() => {
             window.location.href = '/';
           }}
+          type='button'
         >
           Go to home
         </button>
