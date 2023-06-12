@@ -33,7 +33,7 @@ export const MyFlatCard = ({ item }: { item: Listing }) => {
             <div className='flex-grow '>
               <span className='text-primary-main rounded-[15px] bg-white bg-opacity-80 p-1 px-2 pt-1.5  text-lg font-medium'>
                 <span className=' text-primary-light font-normal'>
-                  {item?.costs.currency} {item?.costs.monthlyCost}
+                  {item?.costs?.currency} {item?.costs?.monthlyCost}
                 </span>
               </span>
             </div>
