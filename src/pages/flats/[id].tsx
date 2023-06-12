@@ -1,4 +1,5 @@
 import { Button, Divider, IconButton } from '@mui/material';
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -12,6 +13,7 @@ import { AllFlatTypes } from '@/datas/flatTypes';
 import { useFlatStore } from '@/store/flatStore';
 import useSnackbarStore from '@/store/useSnackbarStore';
 
+import { Comment } from '@/features/Comment';
 import { NavBar } from '@/features/layout/NavBar';
 import { ImageCard } from '@/features/my-flats/cards/ImageCard';
 import { AllAmenities } from '@/pageComponents/flats/AllAmenities';
@@ -20,6 +22,10 @@ import { GalleryModal } from '@/pageComponents/flats/GalleryModal';
 import { Policies } from '@/pageComponents/flats/Policies';
 
 import { Listing } from '@/types/listing';
+
+const Map = dynamic(() => import('@/features/map/MapView'), {
+  ssr: false,
+});
 
 export const DetailView = () => {
   const {
@@ -40,7 +46,7 @@ export const DetailView = () => {
   useEffect(() => {
     const changeBackgroundImage = () => {
       const randomIndex = Math.floor(Math.random() * gallery.length);
-      const randomImage = gallery[randomIndex].photos[0];
+      const randomImage = gallery[randomIndex]?.photos[0] ?? 0;
       setBgImage(`${randomImage}`);
     };
 
@@ -77,14 +83,22 @@ export const DetailView = () => {
       <div>
         <NavBar />
       </div>
-      <div className=' relative h-[86vh] w-full overflow-y-scroll  px-9'>
+      <div className=' relative h-[86vh] w-full overflow-y-scroll  px-3 md:px-9'>
         <div className=' flex   '>
-          <div className='min-w-[350px] max-w-[350px]'></div>
+          <div className='hidden min-w-[350px] max-w-[350px] md:block'></div>
           <div className=' flex-grow py-5'>
-            <h1 className=' text-primary-main text-3xl font-semibold'>
+            <h1 className=' text-primary-main text-xl font-semibold md:text-3xl'>
               {flatType?.label} Flat for sale in {listing?.flatCity},{' '}
               {listing?.flatCountry}
             </h1>
+
+            <div className='flex flex-grow font-semibold md:hidden'>
+              <span className='flex-grow'>$30,000</span>{' '}
+              <span>
+                <Button>Request A Tour</Button>
+              </span>
+            </div>
+
             <div className='flex flex-row-reverse'>
               <IconButton>
                 <FaRegBookmark className='  relative m-auto ' />
@@ -98,9 +112,10 @@ export const DetailView = () => {
             </div>
           </div>
         </div>
-        <div className='sticky top-0 z-10  flex bg-white pl-5 pt-1'>
-          <div className='sticky top-0 min-w-[350px] max-w-[350px]'></div>
-          <div className='relative flex gap-3 py-1'>
+
+        <div className='sticky top-0 z-10  flex bg-white pl-2 pt-1 md:pl-5'>
+          <div className='sticky top-0 md:min-w-[350px] md:max-w-[350px]'></div>
+          <div className='relative flex flex-wrap gap-3 py-1'>
             <Link href='#gallery'>
               {' '}
               <div className=' bg-primary-main hover:bg-secondary-main cursor-pointer rounded-sm p-1 px-3 text-left text-white'>
@@ -124,10 +139,24 @@ export const DetailView = () => {
                 Costs
               </div>
             </Link>
+
+            <Link href='#location'>
+              {' '}
+              <div className=' bg-primary-main hover:bg-secondary-main cursor-pointer rounded-sm p-1 px-3 text-left text-white'>
+                Location
+              </div>
+            </Link>
+
+            <Link href='#comment'>
+              {' '}
+              <div className=' bg-primary-main hover:bg-secondary-main cursor-pointer rounded-sm p-1 px-3 text-left text-white'>
+                Comments
+              </div>
+            </Link>
           </div>
         </div>
         <div className='flex w-full '>
-          <div className='sticky top-0 z-50 min-w-[350px] max-w-[350px] shadow-lg'>
+          <div className='sticky top-0 z-50 hidden min-w-[350px] max-w-[350px] shadow-lg md:block '>
             <div className='fixed top-[80px]  z-50 h-[80vh] w-[350px] p-5 pr-12 '>
               <div className='relative z-50 flex h-full w-full flex-col rounded-md bg-[#74f574] p-5'>
                 <div className=' flex text-xl text-white'>
@@ -174,7 +203,7 @@ export const DetailView = () => {
             </div>
           </div>
 
-          <div className='min-h-[1100px] flex-grow pl-5 '>
+          <div className='min-h-[1100px] flex-grow md:pl-5 '>
             {/* gallery part */}
             <div className='relative h-[70vh] w-full ' id='gallery'>
               <div className='relative mt-5 h-full w-full '>
@@ -196,6 +225,12 @@ export const DetailView = () => {
             </section>
             <section id='costs'>
               <Costs costs={listing?.costs} />
+            </section>
+            <section className='relative z-0' id='location'>
+              <Map />
+            </section>
+            <section id='comment'>
+              <Comment />
             </section>
           </div>
         </div>

@@ -16,8 +16,8 @@ export const AllAmenities = ({
         </h2>
         <Divider />
       </div>
-      <div className='mt-9 grid grid-cols-3 gap-5'>
-        {buildingAmenities?.map((item, index) => (
+      <div className='mt-9 grid grid-cols-1 gap-5 md:grid-cols-3'>
+        {buildingAmenities?.map((am, index) => (
           <h3
             key={index}
             className=' text-secondary-main text-sm font-semibold'
@@ -27,7 +27,7 @@ export const AllAmenities = ({
                 <BsCheck2Square />
               </IconButton>
             </span>
-            {item}
+            {am}
           </h3>
         ))}
       </div>

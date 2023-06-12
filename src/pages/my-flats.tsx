@@ -15,6 +15,7 @@ import { AddFlatModal } from '@/features/my-flats/Modal/AddFlatModal';
 import withAuth, { WithAuthProps } from '@/hoc/withAuth';
 
 import { Listing } from '@/types/listing';
+import { FlatListCard } from '@/pageComponents/dashboard/cards/FlatListCard';
 export default function MyFlats() {
   const {
     query: { newListing },
@@ -73,6 +74,14 @@ export default function MyFlats() {
         </div>
       </div>
 
+      <div>
+        <div className='flex flex-wrap gap-9 py-9'>
+          <FlatListCard data={null} />
+          <FlatListCard data={null} />
+
+          <FlatListCard data={null} />
+        </div>
+      </div>
       <div className='mt-5 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3'>
         {myFlats.map((item, i) => (
           <MyFlatCard item={item} key={i} />

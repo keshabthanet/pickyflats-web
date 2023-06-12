@@ -131,13 +131,13 @@ export const FlatCardV1 = ({ item }: { item: Listing }) => {
             </IconButton>
           </div>
           <div className='space-x-2'>
-            <Button
+            {/* <Button
               variant='contained'
               className='bg-secondary-main !text-whtie relative top-1 h-[30px]'
               onClick={handleReserveClick}
             >
               Reserve
-            </Button>
+            </Button> */}
             <Button
               variant='outlined'
               className='relative top-1 h-[30px]'

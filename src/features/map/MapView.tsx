@@ -19,9 +19,9 @@ export default function MapView({
   position?;
 }) {
   return (
-    <div className='h-full w-full'>
+    <div className='relative my-9 h-auto w-full'>
       <MapContainer
-        className='Map h-full'
+        className='Map '
         center={[27.7172, 85.324]}
         zoom={13}
         scrollWheelZoom={false}

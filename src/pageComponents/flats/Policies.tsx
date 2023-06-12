@@ -10,8 +10,8 @@ export const Policies = ({ flatPolicies }: { flatPolicies }) => {
         </h2>
         <Divider />
       </div>
-      <div className='mt-9 grid grid-cols-3 gap-5'>
-        {flatPolicies?.map((item, index) => (
+      <div className='mt-9 grid grid-cols-1 gap-5 md:grid-cols-3'>
+        {flatPolicies?.map((am, index) => (
           <h3
             key={index}
             className=' text-secondary-main text-sm font-semibold'
@@ -21,7 +21,7 @@ export const Policies = ({ flatPolicies }: { flatPolicies }) => {
                 <BsCheck2Square />
               </IconButton>
             </span>
-            {item}
+            {am}
           </h3>
         ))}
       </div>

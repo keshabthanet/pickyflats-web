@@ -10,7 +10,7 @@ export const Costs = ({ costs }: { costs }) => {
         <Divider />
       </div>
       <div className=''>
-        <div className='m-auto mt-9 grid w-[100%] justify-center gap-9 text-sm font-semibold text-teal-800 md:grid-cols-3 '>
+        <div className='m-auto mt-9 grid w-[100%] grid-cols-1 justify-center gap-3 text-sm font-semibold text-teal-800 md:grid-cols-3 md:gap-9 '>
           {costs?.currency && (
             <div>
               <div>Currency: {costs.currency ? costs.currency : ' -'}</div>
