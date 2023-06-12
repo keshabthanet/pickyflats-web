@@ -1,17 +1,35 @@
 import { Alert, AlertTitle, Button } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+
+import { fetchListingsByUserId } from '@/database/listings';
 
 import DashboardLayout from '@/components/layout/DashboardLayout';
 import Modal from '@/components/Modal';
 
+import useAuthStore from '@/store/useAuthStore';
+
+import { MyFlatCard } from '@/features/FlatCard/MyFlatCard';
 import { AddFlatModal } from '@/features/my-flats/Modal/AddFlatModal';
 // import VerificationRequestModal from '@/features/profileVerification/VerificationModal';
 import withAuth, { WithAuthProps } from '@/hoc/withAuth';
+
+import { Listing } from '@/types/listing';
 export default function MyFlats() {
   const [open, setOpen] = useState(false);
   const handleClose = () => {
     setOpen(false);
   };
+
+  const { user } = useAuthStore();
+  const [myFlats, setMyFlats] = useState<Listing[]>([]);
+
+  const fetchMyListingsData = async () => {
+    const myFlats = await fetchListingsByUserId(user?.$id);
+    setMyFlats(myFlats);
+  };
+  useEffect(() => {
+    fetchMyListingsData();
+  }, []);
   // const
   // TODO: refresh fetched myflat data on listing created
   return (
@@ -36,13 +54,23 @@ export default function MyFlats() {
         {/* <VerificationRequestModal /> */}
       </Modal>
 
-      <div className='flex h-9 w-full p-3'>
-        <div className='flex-grow'></div>
+      <div className='flex h-9 w-full py-3'>
+        <div className='flex-grow'>
+          <h2 className=' text-primary-main text-2xl font-semibold'>
+            My Flats
+          </h2>
+        </div>
         <div>
           <AddFlatModal
           // onListingCreated={() => }
           />
         </div>
+      </div>
+
+      <div className='mt-5 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3'>
+        {myFlats.map((item, i) => (
+          <MyFlatCard item={item} key={i} />
+        ))}
       </div>
     </div>
   );

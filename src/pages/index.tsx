@@ -1,10 +1,9 @@
 import { Button } from '@mui/material';
-import { Query } from 'appwrite';
 import dynamic from 'next/dynamic';
 import * as React from 'react';
 import { BsFillGridFill, BsMapFill } from 'react-icons/bs';
 
-import { DATABASE_ID, databases, LISTINGS_ID } from '@/lib/client';
+import { fetchListings } from '@/database/listings';
 
 import MainLayout from '@/components/layout/MainLayout';
 import Seo from '@/components/Seo';
@@ -25,10 +24,12 @@ export default function HomePage() {
   const [mapModeActive, setMapModeActive] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
   const fetchData = async () => {
-    const listings = await databases.listDocuments(DATABASE_ID, LISTINGS_ID, [
-      ...(activeTypeFilter ? [Query.equal('type', activeTypeFilter)] : []),
-    ]);
-    setListings(listings.documents);
+    // const listings = await databases.listDocuments(DATABASE_ID, LISTINGS_ID, [
+    //   // ...(activeTypeFilter ? [Query.equal('type', activeTypeFilter)] : []),
+    // ]);
+
+    const listings = await fetchListings();
+    setListings(listings);
     setLoading(false);
   };
   React.useEffect(() => {
