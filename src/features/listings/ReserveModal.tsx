@@ -48,7 +48,7 @@ export default function ReserveModal({
 
   const [selectedDateRange, setSelectedDateRange] =
     useState<Range>(initialDateRange);
-  const [totalPrice, setTotalPrice] = useState(listing.costs.monthlyCost);
+  const [totalPrice, setTotalPrice] = useState(listing.costs?.monthlyCost ?? 0);
   const [reservationID, setReservationID] = useState('');
 
   useEffect(() => {
@@ -59,11 +59,11 @@ export default function ReserveModal({
         dateRange.startDate
       );
 
-      if (dayCount && listing.costs.monthlyCost) {
+      if (dayCount && listing.costs?.monthlyCost) {
         //TODO: count same day rate?
         setTotalPrice((dayCount + 1) * listing.costs.monthlyCost);
       } else {
-        setTotalPrice(listing.costs.monthlyCost);
+        setTotalPrice(listing.costs?.monthlyCost || 0);
       }
     }
   }, [selectedDateRange]);
@@ -71,7 +71,7 @@ export default function ReserveModal({
   const handleReservation = async () => {
     // save reservation data and open payment screen
     const newReservationID = await createListingReservation({
-      user: user?.$id,
+      userID: user?.$id,
       listingID,
       totalPrice,
       reservationStatus: 'draft',
@@ -101,7 +101,7 @@ export default function ReserveModal({
           <h2 className=' flex justify-between text-2xl font-semibold'>
             <span className='text-secondary-main'>Total</span>
             <span>
-              {listing.costs.currency} {totalPrice}
+              {listing.costs?.currency} {totalPrice}
             </span>
           </h2>
           <Button

@@ -48,3 +48,12 @@ export const getReservedListingsForUser = async (userID) => {
 
   return reservationsWithListings;
 };
+
+export const updateReservationById = async (reservationID, data) => {
+  await databases.updateDocument(
+    DATABASE_ID,
+    RESERVATIONS_ID,
+    reservationID,
+    data
+  );
+};
