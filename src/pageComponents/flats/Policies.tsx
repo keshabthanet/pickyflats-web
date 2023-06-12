@@ -19,7 +19,7 @@ export const Policies = () => {
         </h2>
         <Divider />
       </div>
-      <div className='mt-9 grid grid-cols-3 gap-5'>
+      <div className='mt-9 grid grid-cols-1 gap-5 md:grid-cols-3'>
         {policies.map((am, index) => (
           <h3
             key={index}
