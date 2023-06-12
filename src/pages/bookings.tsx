@@ -14,8 +14,11 @@ export default function MyBookings() {
     setOpen(false);
   };
 
+  const [bookedFlats, setBookedFlats] = useState<any[]>([]);
+
   const fetchReservedListings = async () => {
     const listings = await getReservedListingsForUser(user?.$id);
+    setBookedFlats(listings);
     console.log('listings ? ', listings);
   };
 
@@ -27,7 +30,12 @@ export default function MyBookings() {
     <div className='w-full p-5'>
       <h3 className='text-3xl font-semibold'>My Bookings</h3>
 
-      <div className='flex'>booked flat lists ..</div>
+      <div className='flex'>
+        list out booked flats with payment status, booking status ..
+      </div>
+      <div className='text-2xl font-semibold '>
+        totla booked count : {bookedFlats?.length}
+      </div>
     </div>
   );
 }

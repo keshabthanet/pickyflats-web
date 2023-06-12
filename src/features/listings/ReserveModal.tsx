@@ -17,13 +17,15 @@ import { createListingReservation } from '@/database/booking';
 
 import useAuthStore from '@/store/useAuthStore';
 
+import { Listing } from '@/types/listing';
+
 // Initialize Stripe with your public API key
 const stripePromise = loadStripe(
   'pk_test_51N0N4GI0ho0pbppLkehcxc1R3PmL2mAXKPgpFU9PHanDsyhMVFwqchmDPkROHjEwfGtn1ZbsKZP8LyMRLnpi1rCD00FxZqnSAR'
 );
 
 interface ModalProps {
-  listing: any;
+  listing: Listing;
   listingID: string;
   onClose: () => void;
 }
@@ -46,7 +48,7 @@ export default function ReserveModal({
 
   const [selectedDateRange, setSelectedDateRange] =
     useState<Range>(initialDateRange);
-  const [totalPrice, setTotalPrice] = useState(listing.rate);
+  const [totalPrice, setTotalPrice] = useState(listing.costs.monthlyCost);
   const [reservationID, setReservationID] = useState('');
 
   useEffect(() => {
@@ -57,11 +59,11 @@ export default function ReserveModal({
         dateRange.startDate
       );
 
-      if (dayCount && listing.rate) {
+      if (dayCount && listing.costs.monthlyCost) {
         //TODO: count same day rate?
-        setTotalPrice((dayCount + 1) * listing.rate);
+        setTotalPrice((dayCount + 1) * listing.costs.monthlyCost);
       } else {
-        setTotalPrice(listing.rate);
+        setTotalPrice(listing.costs.monthlyCost);
       }
     }
   }, [selectedDateRange]);
@@ -81,13 +83,14 @@ export default function ReserveModal({
   };
 
   return (
-    <div className='w-full max-w-lg space-y-3 max-md:w-[340px]'>
+    <div className='w-full space-y-3 max-md:w-[340px]'>
       <h2 className=' text-primary-main text-2xl font-semibold'>
         Reserve Your Space
       </h2>
       {!paymentScreen && (
         <div className='space-y-3'>
           <DateRange
+            className='w-full'
             ranges={[selectedDateRange]}
             showDateDisplay={false}
             minDate={new Date()}
@@ -97,7 +100,9 @@ export default function ReserveModal({
           />
           <h2 className=' flex justify-between text-2xl font-semibold'>
             <span className='text-secondary-main'>Total</span>
-            <span>${totalPrice}</span>
+            <span>
+              {listing.costs.currency} {totalPrice}
+            </span>
           </h2>
           <Button
             variant='contained'

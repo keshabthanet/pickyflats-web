@@ -21,13 +21,17 @@ export const getReservedListingsForUser = async (userID) => {
   const reservations = await databases.listDocuments(
     DATABASE_ID,
     RESERVATIONS_ID,
-    [Query.equal('user', userID)]
+    [
+      Query.equal('userID', userID),
+      // Query.orderAsc('userID'),
+      // Query.orderDesc('$createdAt'),
+    ]
   );
 
   const listingsIds = [
     ...new Set(reservations.documents.flatMap((res) => res.listingID)),
   ];
-
+  // console.log("reservations? ", reservations)
   // find all the reserved listings
   const listings = await databases.listDocuments(DATABASE_ID, LISTINGS_ID, [
     Query.equal('$id', listingsIds),

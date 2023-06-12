@@ -58,11 +58,13 @@ type FormData = {
 };
 
 export const AddFlatModal = ({
+  openListingModal = false,
   onListingCreated,
 }: {
+  openListingModal?: boolean;
   onListingCreated?: () => void;
 }) => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(openListingModal);
   const [activeStep, setActiveStep] = useState(0);
   const [loading, setLoading] = useState(false);
 
