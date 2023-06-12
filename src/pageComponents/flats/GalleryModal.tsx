@@ -28,7 +28,7 @@ export const GalleryModal = (props: Iprop) => {
   return (
     <div>
       <div
-        className='relative inset-0 h-[200px] w-[250px]   cursor-pointer bg-black text-center '
+        className='relative inset-0 h-[150px] w-[150px] cursor-pointer bg-black   text-center md:h-[200px] md:w-[250px] '
         onClick={() => setOpen(true)}
       >
         <img

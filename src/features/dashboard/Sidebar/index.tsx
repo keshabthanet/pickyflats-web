@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import { BsBuildingCheck, BsBuildings } from 'react-icons/bs';
 import { FiMessageCircle } from 'react-icons/fi';
-import { RxDashboard } from 'react-icons/rx';
+import { RxActivityLog, RxDashboard } from 'react-icons/rx';
 import { TbBuildingCarousel } from 'react-icons/tb';
 
 import useDrawerStore from '@/store/useDrawerStore';
@@ -100,7 +100,7 @@ function SidebarDrawerContainer() {
                 }
             `}
           >
-            <BsBuildings className='h-5 w-5' />
+            <RxActivityLog className='h-5 w-5' />
             <span className='ml-3'>Activities</span>
           </Link>
         </li>
