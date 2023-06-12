@@ -104,7 +104,7 @@ export const Costs = () => {
             <Divider />
           </div>
           <div>
-            <div>Moving Cost: ${costs?.movingCosts}</div>
+            <div>Moving Cost: ${costs?.movingCost}</div>
             <Divider />
           </div>
           <div>
@@ -120,7 +120,7 @@ export const Costs = () => {
             <Divider />
           </div>
           <div>
-            <div>Other Costs: ${costs?.otherCosts}</div>
+            <div>Other Costs: ${costs?.otherCost}</div>
             <Divider />
           </div>
         </div>

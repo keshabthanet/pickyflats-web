@@ -62,7 +62,7 @@ export const DetailView = () => {
             </div>
           </div>
         </div>
-        <div className='sticky top-0 z-10  flex bg-white pt-1'>
+        <div className='sticky top-0 z-10  flex bg-white pl-5 pt-1'>
           <div className='sticky top-0 min-w-[350px] max-w-[350px]'></div>
           <div className='relative flex gap-3 py-1'>
             <Link href='#gallery'>
@@ -91,8 +91,8 @@ export const DetailView = () => {
           </div>
         </div>
         <div className='flex w-full '>
-          <div className='sticky top-0 z-50 min-w-[350px] max-w-[350px]'>
-            <div className='fixed top-[130px]  z-50 h-[70vh] w-[350px] p-5 '>
+          <div className='sticky top-0 z-50 min-w-[350px] max-w-[350px] shadow-lg'>
+            <div className='fixed top-[80px]  z-50 h-[80vh] w-[350px] p-5 pr-12 '>
               <div className='relative z-50 flex h-full w-full flex-col rounded-md bg-[#74f574] p-5'>
                 <div className=' flex text-xl text-white'>
                   <div className='flex-grow font-semibold'>$30,000</div>
@@ -136,7 +136,7 @@ export const DetailView = () => {
             </div>
           </div>
 
-          <div className='min-h-[1100px] flex-grow '>
+          <div className='min-h-[1100px] flex-grow pl-5 '>
             {/* gallery part */}
             <div className='relative h-[70vh] w-full ' id='gallery'>
               <div className='relative mt-5 h-full w-full '>

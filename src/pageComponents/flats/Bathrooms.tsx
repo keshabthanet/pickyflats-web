@@ -1,21 +1,21 @@
 import { useFlatStore } from '@/store/flatStore';
 
-import { AddOtherRoomModal } from '@/features/my-flats/gallery/modal/AddOtherRoomModal';
-import { DisplayOtherRoomCard } from '@/features/pageComponents/flats/cards/DisplayOtherRoomCard';
+import { AddBathroomModal } from '@/features/my-flats/gallery/modal/AddBathroomModal';
+import { DisplayBathRoomCard } from '@/pageComponents/flats/cards/DisplayBathroomCard';
 
-export const Others = () => {
+export const Bathrooms = () => {
   const { gallery } = useFlatStore();
   return (
     <div>
       <div className='mt-5 flex w-full flex-wrap gap-5'>
         {gallery
           .filter((g) => {
-            return g.roomType == 'other';
+            return g.roomType == 'bathroom';
           })
           .map((r) => {
             return (
               <div key={r.id}>
-                <DisplayOtherRoomCard data={r} />
+                <DisplayBathRoomCard data={r} />
               </div>
             );
           })}

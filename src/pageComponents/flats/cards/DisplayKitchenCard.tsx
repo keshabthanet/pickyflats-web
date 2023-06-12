@@ -5,12 +5,12 @@ import { useFlatStore } from '@/store/flatStore';
 
 import Dialog from '@/features/Dialog';
 import { ImageCard } from '@/features/my-flats/cards/ImageCard';
-import { DisplayPhotosModal } from '@/features/pageComponents/flats/DisplayPhotosModal';
+import { DisplayPhotosModal } from '@/pageComponents/flats/DisplayPhotosModal';
 
 interface Iprop {
   data: Iroom;
 }
-export const DisplayRoomCard = (props: Iprop) => {
+export const DisplayKitchenCard = (props: Iprop) => {
   const { data } = props;
 
   const [deleteId, setDeleteId] = useState('');

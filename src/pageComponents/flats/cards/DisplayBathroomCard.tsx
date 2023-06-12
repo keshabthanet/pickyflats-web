@@ -1,14 +1,11 @@
-import { IconButton } from '@mui/material';
 import { useState } from 'react';
-import { AiFillDelete } from 'react-icons/ai';
 
 import { Iroom } from '@/store/flatStore';
 import { useFlatStore } from '@/store/flatStore';
 
 import Dialog from '@/features/Dialog';
 import { ImageCard } from '@/features/my-flats/cards/ImageCard';
-import { EditRoomsModal } from '@/features/my-flats/gallery/modal/EditRoomModal';
-import { DisplayPhotosModal } from '@/features/pageComponents/flats/DisplayPhotosModal';
+import { DisplayPhotosModal } from '@/pageComponents/flats/DisplayPhotosModal';
 
 interface Iprop {
   data: Iroom;
