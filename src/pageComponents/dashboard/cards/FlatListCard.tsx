@@ -1,6 +1,6 @@
 import { IconButton } from '@mui/material';
 import { useState } from 'react';
-import { AiFillDelete } from 'react-icons/ai';
+import { AiFillDelete, AiFillEye } from 'react-icons/ai';
 import { MdBathroom, MdBedroomParent, MdKitchen } from 'react-icons/md';
 
 import { Iroom } from '@/store/flatStore';
@@ -8,6 +8,8 @@ import { useFlatStore } from '@/store/flatStore';
 
 import Dialog from '@/features/Dialog';
 import { UpdateFlatModal } from '@/features/my-flats/Modal/UpdateFlatModal';
+import { BiComment, BiLike } from 'react-icons/bi';
+import { FcLike } from 'react-icons/fc';
 
 interface Iprop {
   data: Iroom | null;
@@ -62,7 +64,7 @@ export const FlatListCard = (props: Iprop) => {
             </IconButton>
           </div>
         </div>
-        <div className='relative h-auto w-full py-5'>
+        <div className='relative h-auto w-full pt-3'>
           <h3 className='line-clamp-1 p-1 text-lg font-bold text-white'>
             $40,000
           </h3>
@@ -93,6 +95,19 @@ export const FlatListCard = (props: Iprop) => {
             <span className='rounded-full border-[2px]  bg-black px-3 py-1 text-white'>
               1 bhk
             </span>
+          </div>
+          <div className='flex flex-row-reverse'>
+            <IconButton>
+              <AiFillEye />
+            </IconButton>
+            <IconButton>
+              <span className=' relative top-1 pr-1 text-lg'>12</span>
+              <BiComment />
+            </IconButton>
+            <IconButton>
+              <span className=' relative top-1 pr-1 text-lg'>123</span>
+              <FcLike />
+            </IconButton>
           </div>
         </div>
       </div>
