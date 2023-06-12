@@ -7,6 +7,7 @@ import {
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import { differenceInCalendarDays } from 'date-fns';
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { DateRange, Range } from 'react-date-range';
 
@@ -16,6 +17,7 @@ import 'react-date-range/dist/theme/default.css'; // theme css file
 import { createListingReservation } from '@/database/booking';
 
 import useAuthStore from '@/store/useAuthStore';
+import useSnackbarStore from '@/store/useSnackbarStore';
 
 import { Listing } from '@/types/listing';
 
@@ -50,6 +52,8 @@ export default function ReserveModal({
     useState<Range>(initialDateRange);
   const [totalPrice, setTotalPrice] = useState(listing.costs?.monthlyCost ?? 0);
   const [reservationID, setReservationID] = useState('');
+  const { openSnackbar } = useSnackbarStore();
+  const { push } = useRouter();
 
   useEffect(() => {
     const dateRange = selectedDateRange;
@@ -69,6 +73,16 @@ export default function ReserveModal({
   }, [selectedDateRange]);
 
   const handleReservation = async () => {
+    if (!user) {
+      openSnackbar('Please login to reserve your space!', 'info', {
+        horizontal: 'center',
+        vertical: 'top',
+      });
+      // push login page
+      push('/auth/login');
+      return;
+    }
+    //! TODO:
     // save reservation data and open payment screen
     const newReservationID = await createListingReservation({
       userID: user?.$id,

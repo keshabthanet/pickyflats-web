@@ -51,8 +51,11 @@ const ForgotPasswordPage = () => {
         data.password,
         data.confirmPassword
       );
-      openSnackbar('Password changed successfully!', 'success');
-      router.push('/');
+      openSnackbar(
+        'Password reset is complete. Please login using your new password.',
+        'success'
+      );
+      router.push('/login');
     } catch (error: any) {
       setFormError(error?.message);
     } finally {
