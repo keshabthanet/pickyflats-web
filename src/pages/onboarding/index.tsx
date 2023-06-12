@@ -12,19 +12,19 @@ import StepsCard from '@/features/StepsCard';
 import withAuth, { WithAuthProps } from '@/hoc/withAuth';
 
 const Step1Component = dynamic(
-  () => import('@/features/pageComponents/onboarding/Step1')
+  () => import('@/pageComponents/onboarding/Step1')
 );
 
 const Step2Component = dynamic(
-  () => import('@/features/pageComponents/onboarding/Step2')
+  () => import('@/pageComponents/onboarding/Step2')
 );
 
 const Step3Component = dynamic(
-  () => import('@/features/pageComponents/onboarding/Step3')
+  () => import('@/pageComponents/onboarding/Step3')
 );
 
 const AllDoneComponent = dynamic(
-  () => import('@/features/pageComponents/onboarding/Allcaught')
+  () => import('@/pageComponents/onboarding/Allcaught')
 );
 
 const steps = [

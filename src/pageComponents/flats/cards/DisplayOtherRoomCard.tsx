@@ -5,12 +5,12 @@ import { useFlatStore } from '@/store/flatStore';
 
 import Dialog from '@/features/Dialog';
 import { ImageCard } from '@/features/my-flats/cards/ImageCard';
-import { DisplayPhotosModal } from '@/features/pageComponents/flats/DisplayPhotosModal';
+import { DisplayPhotosModal } from '@/pageComponents/flats/DisplayPhotosModal';
 
 interface Iprop {
   data: Iroom;
 }
-export const DisplayKitchenCard = (props: Iprop) => {
+export const DisplayOtherRoomCard = (props: Iprop) => {
   const { data } = props;
 
   const [deleteId, setDeleteId] = useState('');
@@ -48,7 +48,6 @@ export const DisplayKitchenCard = (props: Iprop) => {
           {/* <Image src='/images/1.jpg' alt='room ' fill className='rounded-md' /> */}
         </div>
         <DisplayPhotosModal photos={data.photos} name={data.name} />
-
         <div className='relative h-8 w-full'>
           <h3 className='text-primary-main line-clamp-1 p-1 text-lg font-bold'>
             {data.name}

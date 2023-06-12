@@ -6,10 +6,11 @@ import { useState } from 'react';
 import { CgClose } from 'react-icons/cg';
 
 import { CONTENT_BUCKET, storage } from '@/lib/client';
-import { Rooms } from '@/features/pageComponents/flats/Rooms';
-import { Kitchen } from '@/features/pageComponents/flats/Kitchen';
-import { Bathrooms } from '@/features/pageComponents/flats/Bathrooms';
-import { Others } from '@/features/pageComponents/flats/Others';
+
+import { Bathrooms } from '@/pageComponents/flats/Bathrooms';
+import { Kitchen } from '@/pageComponents/flats/Kitchen';
+import { Others } from '@/pageComponents/flats/Others';
+import { Rooms } from '@/pageComponents/flats/Rooms';
 
 interface Iprop {
   src: string;
