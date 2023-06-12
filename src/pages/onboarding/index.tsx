@@ -11,13 +11,21 @@ import useSnackbarStore from '@/store/useSnackbarStore';
 import StepsCard from '@/features/StepsCard';
 import withAuth, { WithAuthProps } from '@/hoc/withAuth';
 
-const Step1Component = dynamic(() => import('@/pages/onboarding/Step1'));
+const Step1Component = dynamic(
+  () => import('@/pageComponents/onboarding/Step1')
+);
 
-const Step2Component = dynamic(() => import('@/pages/onboarding/Step2'));
+const Step2Component = dynamic(
+  () => import('@/pageComponents/onboarding/Step2')
+);
 
-const Step3Component = dynamic(() => import('@/pages/onboarding/Step3'));
+const Step3Component = dynamic(
+  () => import('@/pageComponents/onboarding/Step3')
+);
 
-const AllDoneComponent = dynamic(() => import('@/pages/onboarding/Allcaught'));
+const AllDoneComponent = dynamic(
+  () => import('@/pageComponents/onboarding/Allcaught')
+);
 
 const steps = [
   {

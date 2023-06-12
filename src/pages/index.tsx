@@ -11,8 +11,10 @@ import Seo from '@/components/Seo';
 
 import useListingsStore from '@/store/useListingsStore';
 
+import { Header } from '@/features/Header';
 import FlatTypeSelectorOptions from '@/features/home/FlatTypeSelectorOptions';
 import { SearchResults } from '@/features/SearchResults';
+import { Video } from '@/features/Video';
 import withAuth, { WithAuthProps } from '@/hoc/withAuth';
 
 const ReservationEssential = dynamic(() => import('@/features/reservation'), {
@@ -28,18 +30,20 @@ export default function HomePage() {
   const { listings, setListings, activeTypeFilter } = useListingsStore();
   const [mapModeActive, setMapModeActive] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
-  const fetchData = async () => {
-    // const listings = await databases.listDocuments(DATABASE_ID, LISTINGS_ID, [
-    //   // ...(activeTypeFilter ? [Query.equal('type', activeTypeFilter)] : []),
-    // ]);
 
-    const listings = await fetchListings();
-    setListings(listings);
-    setLoading(false);
-  };
   React.useEffect(() => {
+    const fetchData = async () => {
+      // const listings = await databases.listDocuments(DATABASE_ID, LISTINGS_ID, [
+      //   // ...(activeTypeFilter ? [Query.equal('type', activeTypeFilter)] : []),
+      // ]);
+
+      const listings = await fetchListings();
+      setListings(listings);
+      setLoading(false);
+    };
+
     fetchData();
-  }, [activeTypeFilter]);
+  }, [activeTypeFilter, setListings]);
 
   // TODO: check if reserved & reservationID in params, open reserved dialog message,
   // update reservation status & payment status
@@ -54,14 +58,14 @@ export default function HomePage() {
       {/* main header part */}
       {!mapModeActive && (
         <>
-          {/* <main className=' relative h-[85vh] w-full'>
+          <main className=' relative h-[85vh] w-full'>
             <div className='absolute h-full w-full'>
               <Video url='/videos/bg.mp4' />
             </div>
             <div className='-h-full relative z-10 w-full'>
               <Header />
             </div>
-          </main> */}
+          </main>
           {!loading && (
             <div>
               <SearchResults listings={listings} />

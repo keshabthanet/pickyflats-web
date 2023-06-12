@@ -52,7 +52,7 @@ export default function LoginPage() {
       const token = (await account.createJWT()).jwt;
       Cookies.set('token', token);
       // hard refresh on login
-      window.location.href = '/';
+      window.location.href = '/dashboard';
     } catch (error: any) {
       setLoginError(error?.message);
     } finally {

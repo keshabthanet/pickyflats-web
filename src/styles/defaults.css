@@ -37,6 +37,7 @@ html {
   -moz-tab-size: 4; /* 3 */
   tab-size: 4; /* 3 */
   font-family: theme('fontFamily.sans'); /* 4 */
+  scroll-behavior: smooth;
 }
 
 /*
@@ -47,6 +48,7 @@ html {
 body {
   margin: 0; /* 1 */
   line-height: inherit; /* 2 */
+  scroll-behavior: smooth;
 }
 
 /*
