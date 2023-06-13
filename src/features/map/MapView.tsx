@@ -16,9 +16,10 @@ const icon = L.icon({
 export default function MapView({
   position = [27.7172, 85.324],
 }: {
-  position?;
+  position?: any;
 }) {
-  // const a = [27.7172, 85.324];
+  if (position && position.length !== 2) return <></>;
+  // ! TODO: better approch to detect 2 geo points not available
   return (
     <div className='relative my-9 h-auto w-full'>
       <MapContainer
@@ -31,7 +32,7 @@ export default function MapView({
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
         />
-        <Marker position={position} icon={icon} />
+        <Marker position={position as any} icon={icon} />
         {/* <Marker position={a} icon={icon} /> */}
       </MapContainer>
     </div>

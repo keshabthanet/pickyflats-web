@@ -1,4 +1,4 @@
-import { Button, Divider, IconButton } from '@mui/material';
+import { Button, IconButton } from '@mui/material';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -23,6 +23,7 @@ import { ImageCard } from '@/features/my-flats/cards/ImageCard';
 import withAuth, { WithAuthProps } from '@/hoc/withAuth';
 import { AllAmenities } from '@/pageComponents/flats/AllAmenities';
 import { Costs } from '@/pageComponents/flats/Costs';
+import FlatSidebar from '@/pageComponents/flats/flat/Sidebar';
 import { GalleryModal } from '@/pageComponents/flats/GalleryModal';
 import { Policies } from '@/pageComponents/flats/Policies';
 
@@ -67,8 +68,9 @@ export const DetailView = () => {
     };
     decodeGallery();
 
-    setInSavedList(Boolean(listing?.saved_by.includes(user!.$id)));
-    setIsLiked(Boolean(listing?.liked_by.includes(user!.$id)));
+    if (!user) return;
+    setInSavedList(Boolean(listing?.saved_by.includes(user?.$id)));
+    setIsLiked(Boolean(listing?.liked_by.includes(user?.$id)));
   }, [listing]);
 
   useEffect(() => {
@@ -235,48 +237,7 @@ export const DetailView = () => {
         <div className='flex w-full '>
           <div className='sticky top-0 z-50 hidden min-w-[350px] max-w-[350px] shadow-lg md:block '>
             <div className='fixed top-[80px]  z-50 h-[80vh] w-[350px] p-5 pr-12 '>
-              <div className='relative z-50 flex h-full w-full flex-col rounded-md bg-[#74f574] p-5'>
-                <div className=' flex text-xl text-white'>
-                  <div className='flex-grow font-semibold'>
-                    {listing?.costs?.currency} {listing?.costs?.monthlyCost}
-                  </div>
-                  <div className=' rounded-[20px] border-[2px] bg-black px-4 py-1 text-center text-sm'>
-                    Rent
-                  </div>
-                </div>
-                <div className=' flex-grow'>
-                  <h2 className=' text-primary-main text-lg font-semibold'>
-                    Location Info:
-                  </h2>
-                  <Divider />
-                  <h3 className='text-lg font-medium text-blue-950'>
-                    {listing?.flatCity}, {listing?.flatCountry}
-                  </h3>
-                  <h4 className='text-lg font-medium text-blue-950'>
-                    {listing?.flatStreet1}
-                  </h4>
-
-                  <div className='flex flex-wrap gap-1'>
-                    <div className=' bg-primary-main rounded-[20px] border-[2px] px-4 py-1 text-center text-sm text-white'>
-                      {listing?.room} Rooms
-                    </div>
-                    <div className=' bg-primary-main rounded-[20px] border-[2px] px-4 py-1 text-center text-sm text-white'>
-                      {listing?.kitchen} Kitchen
-                    </div>
-
-                    <div className=' bg-primary-main rounded-[20px] border-[2px] px-4 py-1 text-center text-sm text-white'>
-                      {listing?.bathroom} bathroom
-                    </div>
-
-                    <div className=' bg-primary-main rounded-[20px] border-[2px] px-4 py-1 text-center text-sm text-white'>
-                      {listing?.costs?.negotiable}
-                    </div>
-                  </div>
-                </div>
-                <div>
-                  <Button variant='contained'>Request A Tour</Button>
-                </div>
-              </div>
+              <FlatSidebar listing={listing} />
             </div>
           </div>
 

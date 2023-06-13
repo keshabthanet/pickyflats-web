@@ -27,10 +27,9 @@ interface Iprop {
   data: Listing | null;
 }
 
-export const MyFlatListCard = (props: Iprop) => {
+export const MyFlatCard = (props: Iprop) => {
   const { data } = props;
 
-  const [deleteId, setDeleteId] = useState('');
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
 
   const [gallery, setGallery] = useState<Iroom[]>([]);
