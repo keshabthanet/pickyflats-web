@@ -6,6 +6,7 @@ import { timeAgo } from '@/lib/date';
 import { getCommentsByListingID } from '@/database/comment';
 
 import useListingStore from '@/store/useListingStore';
+import useSnackbarStore from '@/store/useSnackbarStore';
 
 import CommentBoxCard from '@/features/Comment/cards/CommentBoxCard';
 
@@ -14,6 +15,7 @@ export const Comment = ({ listingID }: { listingID?: string }) => {
   const [loading, setLoading] = useState(true);
 
   const { comments, setComments, refreshCount } = useListingStore();
+  const { openSnackbar } = useSnackbarStore();
 
   const fetchComments = async () => {
     try {
@@ -29,13 +31,22 @@ export const Comment = ({ listingID }: { listingID?: string }) => {
     fetchComments();
   }, [refreshCount]);
 
+  //!FUTURE
+  const futureUpdate = () => {
+    openSnackbar(`Feature is not available`, 'info');
+  };
+
   return (
     <div>
       <div className='flex w-full pb-5'>
         <div className='flex-grow text-2xl font-semibold'>Comments</div>
         <div className=' rounded-xl border'>
-          <Button className=' bg-slate-100 capitalize'>Recent</Button>
-          <Button className=' capitalize'>Popular</Button>
+          <Button className=' bg-slate-100 capitalize' onClick={futureUpdate}>
+            Recent
+          </Button>
+          <Button className=' capitalize' onClick={futureUpdate}>
+            Popular
+          </Button>
         </div>
         <Divider />
       </div>

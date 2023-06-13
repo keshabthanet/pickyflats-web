@@ -17,8 +17,8 @@ export type Listing = {
   flatStreet2: string;
   flatGeo: number[];
   userID: string;
-  liked_by: any[];
-  saved_by: any[];
+  liked_by: string[];
+  saved_by: string[];
   sellerContact: any;
   $id: string;
   $createdAt: string;

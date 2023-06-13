@@ -3,15 +3,20 @@ import create from 'zustand';
 
 import { Comment } from '@/database/comment';
 
+import { Iroom } from '@/store/flatStore';
+
 interface ListingStore {
-  comments: Comment[] | null;
-  setComments: (comments: Comment[] | null) => void;
+  gallery: Iroom[];
+  comments: Comment[];
+  setComments: (comments: Comment[]) => void;
+  setGallery: (gallery: Iroom[]) => void;
   //
   refreshCount: number;
   refresh: () => void;
 }
 
 const useListingStoreBase = create<ListingStore>((set) => ({
+  gallery: [],
   comments: [],
   setComments: (comments) => set(() => ({ comments })),
   //
@@ -19,6 +24,8 @@ const useListingStoreBase = create<ListingStore>((set) => ({
   refresh: () => {
     set((state) => ({ refreshCount: state.refreshCount + 1 }));
   },
+
+  setGallery: (gallery: Iroom[]) => set({ gallery: [...gallery] }),
 }));
 
 const useListingStore = createSelectorHooks(useListingStoreBase);
