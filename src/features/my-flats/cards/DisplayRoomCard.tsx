@@ -44,8 +44,8 @@ export const DisplayRoomCard = (props: Iprop) => {
         Title='Are You Sure ?'
         SubTitle='You will not be able to revert this action.'
       />
-      <div className='relative flex h-[250px] w-[200px]  flex-col items-center justify-center rounded-md bg-slate-100 p-3 align-middle'>
-        <div className='relative z-50 h-full w-full rounded-lg'>
+      <div className='relative z-[50] flex h-[250px] w-[200px] flex-col  items-center justify-center overflow-hidden rounded-md bg-slate-100 p-3 align-middle'>
+        <div className='relative  z-10 h-full w-full overflow-hidden rounded-lg '>
           <ImageCard fileID={data.photos[0]} />
           {/* <Image src='/images/1.jpg' alt='room ' fill className='rounded-md' /> */}
         </div>
