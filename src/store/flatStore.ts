@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import create from 'zustand';
 // import { persist,  } from 'zustand/middleware'
+import { persist } from 'zustand/middleware';
 
 export interface Iamenities {
   id: number;
@@ -112,59 +113,81 @@ type Actions = {
 
   setSteps: (steps: number) => void;
   setOpenAppModal: (open: boolean) => void;
+  reset: () => void;
 };
 
 export const useFlatStore = create<Store & Actions>()(
-  // persist(
-  (set) => ({
-    purpose: 'rent',
-    flatTypes: [1],
-    buildingAmenities: [],
-    flatAmenities: [],
-    flatPolicies: [],
-    gallery: [],
+  persist(
+    (set) => ({
+      purpose: 'rent',
+      flatTypes: [1],
+      buildingAmenities: [],
+      flatAmenities: [],
+      flatPolicies: [],
+      gallery: [],
 
-    costs: { currency: '$' },
-    basics: { room: 0, bathroom: 0, kitchen: 0 },
+      costs: { currency: '$' },
+      basics: { room: 0, bathroom: 0, kitchen: 0 },
 
-    contactAndLocation: {
-      sellerCountry: '',
-      sellerCity: '',
-      sellerEmail: '',
-      sellerContact: '',
-      flatCountry: '',
-      flatCity: '',
-      flatStreet1: '',
-      flatStreet2: '',
-      flatGeo: [],
-    },
+      contactAndLocation: {
+        sellerCountry: '',
+        sellerCity: '',
+        sellerEmail: '',
+        sellerContact: '',
+        flatCountry: '',
+        flatCity: '',
+        flatStreet1: '',
+        flatStreet2: '',
+        flatGeo: [],
+      },
 
-    steps: 1,
-    openAppModal: false,
+      steps: 1,
+      openAppModal: false,
 
-    setPurpose: (purpose: 'sell' | 'rent') => set({ purpose }),
-    setFlatTypes: (flatTypes: number[]) => set({ flatTypes }),
-    setBuildingAmenities: (amenities: Array<Iamenities>) =>
-      set({ buildingAmenities: [...amenities] }),
-    setFlatAmenities: (amenities: Array<Iamenities>) =>
-      set({ flatAmenities: [...amenities] }),
+      setPurpose: (purpose: 'sell' | 'rent') => set({ purpose }),
+      setFlatTypes: (flatTypes: number[]) => set({ flatTypes }),
+      setBuildingAmenities: (amenities: Array<Iamenities>) =>
+        set({ buildingAmenities: [...amenities] }),
+      setFlatAmenities: (amenities: Array<Iamenities>) =>
+        set({ flatAmenities: [...amenities] }),
 
-    setGallery: (gallery: Array<Iroom>) => set({ gallery: [...gallery] }),
+      setGallery: (gallery: Array<Iroom>) => set({ gallery: [...gallery] }),
 
-    setFlatPolicies: (policies: Array<Ipolicies>) =>
-      set({ flatPolicies: [...policies] }),
+      setFlatPolicies: (policies: Array<Ipolicies>) =>
+        set({ flatPolicies: [...policies] }),
 
-    setCosts: (costs: Icosts) => set({ costs }),
-    setBasic: (basic: Ibasic) => set({ basics: basic }),
+      setCosts: (costs: Icosts) => set({ costs }),
+      setBasic: (basic: Ibasic) => set({ basics: basic }),
 
-    setContactAndLocation: (ContactAndLocation: IcontactAndLocation) =>
-      set({ contactAndLocation: ContactAndLocation }),
+      setContactAndLocation: (ContactAndLocation: IcontactAndLocation) =>
+        set({ contactAndLocation: ContactAndLocation }),
 
-    setSteps: (steps: number) => set({ steps }),
-    setOpenAppModal: (openAppModal: boolean) => set({ openAppModal }),
-  })
-  //   {
-  //     name: 'flat-store',
-  //   }
-  // )
+      setSteps: (steps: number) => set({ steps }),
+      setOpenAppModal: (openAppModal: boolean) => set({ openAppModal }),
+      reset: () =>
+        set({
+          flatTypes: [1],
+          buildingAmenities: [],
+          flatAmenities: [],
+          flatPolicies: [],
+          gallery: [],
+          costs: { currency: 'NPR' },
+          basics: { room: 0, bathroom: 0, kitchen: 0 },
+          contactAndLocation: {
+            sellerCountry: '',
+            sellerCity: '',
+            sellerEmail: '',
+            sellerContact: '',
+            flatCountry: '',
+            flatCity: '',
+            flatStreet1: '',
+            flatStreet2: '',
+            flatGeo: [],
+          },
+        }),
+    }),
+    {
+      name: 'flat-store',
+    }
+  )
 );
