@@ -1,5 +1,6 @@
 import { Button, Divider, IconButton } from '@mui/material';
 import { Dialog } from '@mui/material';
+import { countries } from 'countries-list';
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -22,6 +23,13 @@ const GeoPickerModal = dynamic(
   () => import('@/features/my-flats/Modal/GEOPickerModal'),
   { ssr: false }
 );
+
+const countryData: { label: string; value: string }[] = Object.keys(
+  countries
+).map((code) => ({
+  value: code,
+  label: countries[code].name,
+}));
 
 export const AddLocationModal = () => {
   const [open, setOpen] = useState(false);
@@ -74,7 +82,7 @@ export const AddLocationModal = () => {
       >
         <div>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div className=' m-auto mt-5 h-auto w-[80%]'>
+            <div className=' m-auto mt-5 h-auto w-[80%] space-y-3'>
               <h3 className=' text-[18px] font-semibold '>
                 Your Contact Details
               </h3>
@@ -82,7 +90,7 @@ export const AddLocationModal = () => {
                 <div>
                   <ReactSelect
                     name='sellerCountry'
-                    options={[{ label: 'nepal', value: 'nepal' }]}
+                    options={countryData}
                     label='Your Country'
                     placeholder='country'
                     control={control}
@@ -117,7 +125,7 @@ export const AddLocationModal = () => {
                     placeholder='+977 98*******'
                     label='Phone Number'
                     control={control}
-                    name='phoneNumber'
+                    name='sellerContact'
                   />
                 </div>
                 <div>
@@ -149,7 +157,7 @@ export const AddLocationModal = () => {
                 <div>
                   <ReactSelect
                     name='flatCountry'
-                    options={[{ label: 'nepal', value: 'nepal' }]}
+                    options={countryData}
                     label='Country'
                     placeholder='country'
                     control={control}
@@ -219,7 +227,7 @@ export const AddLocationModal = () => {
                   </div>
                 )}
               </div>
-              <div className='py-5'>
+              <div className='pb-4'>
                 <Button
                   className='text-[18px] normal-case'
                   onClick={() => setGeoModal(true)}
@@ -228,7 +236,7 @@ export const AddLocationModal = () => {
                   Pin On Map
                 </Button>
               </div>
-              <div className='my-5 flex flex-row-reverse gap-5'>
+              <div className='my-5 flex flex-row-reverse gap-5 pb-4'>
                 <Button variant='contained' onClick={handleSubmit(onSubmit)}>
                   Save Details
                 </Button>

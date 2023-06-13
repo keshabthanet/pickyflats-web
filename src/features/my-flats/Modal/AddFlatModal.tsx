@@ -78,12 +78,13 @@ export const AddFlatModal = ({
     gallery,
     costs,
     basics,
+    reset,
   } = useFlatStore();
   const { openSnackbar } = useSnackbarStore();
   const { user } = useAuthStore();
 
   useEffect(() => {
-    // return () => setActiveStep(0);
+    return () => setActiveStep(0);
   }, [open]);
 
   const plusStep = () => {
@@ -150,6 +151,7 @@ export const AddFlatModal = ({
       });
       setOpen(false);
       onListingCreated?.();
+      reset();
     } catch (error) {
       openSnackbar('Failed to save Listing!', 'error', {
         horizontal: 'center',
