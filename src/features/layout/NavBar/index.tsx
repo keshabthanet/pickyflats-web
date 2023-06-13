@@ -7,6 +7,8 @@ import {
   MenuItem,
   MenuList,
   Popper,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -69,6 +71,9 @@ export const NavBar = () => {
 
   const isHomePage = pathname === '/';
 
+  const theme = useTheme();
+  const isMediumScreen = useMediaQuery(theme.breakpoints.down('md'));
+
   return (
     <>
       <div className='flex h-[50px] w-full border-b border-solid bg-white px-5 shadow-sm md:h-[70px]'>
@@ -79,13 +84,14 @@ export const NavBar = () => {
             </IconButton>
           </div>
         )}
-        <div className='flex-grow'>
+        <div>
           <Link href='/'>
             <div className='relative h-full  w-[150px] object-scale-down md:w-[200px]'>
               <Image src='/logo.svg' alt='logo' fill />
             </div>
           </Link>
         </div>
+        <div className='flex-grow'></div>
         <div className='flex h-full flex-shrink justify-center  gap-5 align-middle  '>
           {!isAuthenticated && (
             <>
@@ -126,7 +132,7 @@ export const NavBar = () => {
                 <div className='my-auto px-2 text-base'>
                   Hi,
                   <span className='text-primary-main pl-1 font-medium'>
-                    {user?.name}
+                    {isMediumScreen ? user?.name?.split(' ')?.[0] : user?.name}
                   </span>
                 </div>
               )}

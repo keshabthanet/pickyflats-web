@@ -13,10 +13,11 @@ const FeaturesAndPolicies = () => {
   const { buildingAmenities, setBuildingAmenities, flatTypes } = useFlatStore();
 
   const handleBuildingCheck = (am: Iamenities) => {
-    if (buildingAmenities.includes(am)) {
-      const newAm = buildingAmenities.filter((f) => {
-        return am != f;
-      });
+    const amIndex = buildingAmenities.findIndex((a) => a.id === am.id);
+    const isChecked = amIndex !== -1;
+    // if (buildingAmenities.includes(am)) {
+    if (isChecked) {
+      const newAm = buildingAmenities.filter((f) => am.id != f.id);
       setBuildingAmenities(newAm);
     } else {
       setBuildingAmenities([...buildingAmenities, am]);
@@ -26,10 +27,11 @@ const FeaturesAndPolicies = () => {
   const { flatAmenities, setFlatAmenities } = useFlatStore();
 
   const handleFlatCheck = (am: Iamenities) => {
-    if (flatAmenities.includes(am)) {
-      const newAm = flatAmenities.filter((f) => {
-        return am != f;
-      });
+    const itemIndex = flatAmenities.findIndex((item) => item.id === am.id);
+    const isItemChecked = itemIndex !== -1;
+
+    if (isItemChecked) {
+      const newAm = flatAmenities.filter((f) => am.id != f.id);
       setFlatAmenities(newAm);
     } else {
       setFlatAmenities([...flatAmenities, am]);
@@ -39,10 +41,10 @@ const FeaturesAndPolicies = () => {
   const { flatPolicies, setFlatPolicies, basics, setBasic } = useFlatStore();
 
   const handlePolicyCheck = (p: Ipolicies) => {
-    if (flatPolicies.includes(p)) {
-      const newP = flatPolicies.filter((f) => {
-        return p != f;
-      });
+    const itemIndex = flatPolicies.findIndex((item) => item.id === p.id);
+    const isItemChecked = itemIndex !== -1;
+    if (isItemChecked) {
+      const newP = flatPolicies.filter((f) => p.id != f.id);
       setFlatPolicies(newP);
     } else {
       setFlatPolicies([...flatPolicies, p]);
@@ -131,18 +133,21 @@ const FeaturesAndPolicies = () => {
           {AllBuildingAmenities.filter((am) => {
             return am.flatType.some((e) => flatTypes.includes(e));
           }).map((a: Iamenities) => {
-            const isChecked = buildingAmenities.includes(a);
+            const itemIndex = buildingAmenities.findIndex(
+              (am) => am.id === a.id
+            );
+            const isItemChecked = itemIndex !== -1;
             return (
               <div
                 key={a.id}
                 onClick={() => handleBuildingCheck(a)}
                 className={`flex min-w-[280px] cursor-pointer gap-5 rounded-md bg-slate-100 md:min-w-[300px] md:max-w-[300px] ${
-                  isChecked ? 'bg-slate-200' : 'bg-slate-100'
+                  isItemChecked ? 'bg-slate-200' : 'bg-slate-100'
                 } p-2 pt-5 `}
               >
                 <span className='relative top-[-8px]'>
                   <IconButton>
-                    {isChecked ? <ImCheckmark /> : <RiCheckboxBlankLine />}
+                    {isItemChecked ? <ImCheckmark /> : <RiCheckboxBlankLine />}
                   </IconButton>
                 </span>
                 {a.name}
@@ -159,18 +164,19 @@ const FeaturesAndPolicies = () => {
           {AllFlatAmenities.filter((am) => {
             return am.flatType.some((e) => flatTypes.includes(e));
           }).map((a: Iamenities) => {
-            const isChecked = flatAmenities.includes(a);
+            const itemIndex = flatAmenities.findIndex((am) => am.id === a.id);
+            const isItemChecked = itemIndex !== -1;
             return (
               <div
                 key={a.id}
                 onClick={() => handleFlatCheck(a)}
                 className={`flex min-w-[280px] cursor-pointer gap-5 rounded-md bg-slate-100 md:min-w-[300px] md:max-w-[300px] ${
-                  isChecked ? 'bg-slate-200' : 'bg-slate-100'
+                  isItemChecked ? 'bg-slate-200' : 'bg-slate-100'
                 } p-2 pt-5 `}
               >
                 <span className='relative top-[-8px]'>
                   <IconButton>
-                    {isChecked ? <ImCheckmark /> : <RiCheckboxBlankLine />}
+                    {isItemChecked ? <ImCheckmark /> : <RiCheckboxBlankLine />}
                   </IconButton>
                 </span>
                 {a.name}
@@ -187,19 +193,20 @@ const FeaturesAndPolicies = () => {
           {AllFlatPolicies.filter((am) => {
             return am.flatType.some((e) => flatTypes.includes(e));
           }).map((a: Ipolicies) => {
-            const isChecked = flatPolicies.includes(a);
+            const itemIndex = flatPolicies.findIndex((am) => am.id === a.id);
+            const isItemChecked = itemIndex !== -1;
 
             return (
               <div
                 key={a.id}
                 onClick={() => handlePolicyCheck(a)}
                 className={`flex min-w-[280px] cursor-pointer gap-5 rounded-md bg-slate-100 md:min-w-[300px] md:max-w-[300px] ${
-                  isChecked ? 'bg-slate-200' : 'bg-slate-100'
+                  isItemChecked ? 'bg-slate-200' : 'bg-slate-100'
                 } p-2 pt-5 `}
               >
                 <span className='relative top-[-8px]'>
                   <IconButton>
-                    {isChecked ? <ImCheckmark /> : <RiCheckboxBlankLine />}
+                    {isItemChecked ? <ImCheckmark /> : <RiCheckboxBlankLine />}
                   </IconButton>
                 </span>
                 {a.name}

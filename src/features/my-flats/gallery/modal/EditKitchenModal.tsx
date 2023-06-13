@@ -91,7 +91,7 @@ export const EditKitchenModal = (props: Iprop) => {
               ))}
             </div>
 
-            <div className='m-auto flex w-[80%] flex-row-reverse gap-5 text-right'>
+            <div className='m-auto flex w-[80%] flex-row-reverse gap-5 pb-4 text-right'>
               <Button variant='contained' onClick={() => editRoom()}>
                 Save Room
               </Button>

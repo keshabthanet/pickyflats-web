@@ -3,7 +3,7 @@ import React from 'react';
 
 import useDrawerStore from '@/store/useDrawerStore';
 
-import DashboardSidebar from '@/features/dashboard/Sidebar';
+import DashboardSidebar from '@/features/layout/Sidebar';
 
 import { NavBar } from '../../features/layout/NavBar';
 
@@ -26,7 +26,7 @@ function DashboardLayout(props: Props) {
   const sidebarOverflow = !isLargeScreen && isOpen;
   return (
     <div className='flex flex-col'>
-      <div>
+      <div className='fixed top-0 z-[401] w-full'>
         <div className=''>
           <NavBar />
         </div>
@@ -34,7 +34,7 @@ function DashboardLayout(props: Props) {
       </div>
 
       <div
-        className='relative flex flex-col'
+        className='relative flex flex-col pt-[50px] md:pt-[70px]'
         style={{
           marginLeft: !isMediumScreen && isOpen && native ? 240 : 0,
           height: isMediumScreen ? '100%' : 'calc(100vh - 70px)',

@@ -25,6 +25,10 @@ interface ListingsStore {
   setBedrooms: (type: number) => void;
   setBathrooms: (type: number) => void;
   setExtraFiilterActive: (active: boolean) => void;
+
+  //
+  refreshCount: number;
+  refresh: () => void;
 }
 
 const useListingsStoreBase = create<ListingsStore>((set) => ({
@@ -45,6 +49,13 @@ const useListingsStoreBase = create<ListingsStore>((set) => ({
   setBathrooms: (room) => set(() => ({ bathrooms: room })),
   extraFilterActive: false,
   setExtraFiilterActive: (active) => set(() => ({ extraFilterActive: active })),
+
+  //
+
+  refreshCount: 0,
+  refresh: () => {
+    set((state) => ({ refreshCount: state.refreshCount + 1 }));
+  },
 }));
 
 const useListingsStore = createSelectorHooks(useListingsStoreBase);
