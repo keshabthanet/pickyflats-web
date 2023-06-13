@@ -3,7 +3,7 @@ import React from 'react';
 
 import useDrawerStore from '@/store/useDrawerStore';
 
-import DashboardSidebar from '@/features/dashboard/Sidebar';
+import DashboardSidebar from '@/features/layout/Sidebar';
 
 import { NavBar } from '../../features/layout/NavBar';
 

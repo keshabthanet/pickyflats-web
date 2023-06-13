@@ -1,38 +1,183 @@
-import { IconButton } from '@mui/material';
+import { Divider, Drawer, useMediaQuery, useTheme } from '@mui/material';
+import Image from 'next/image';
 import Link from 'next/link';
-import { AiFillDashboard } from 'react-icons/ai';
-import { BsBuildingsFill } from 'react-icons/bs';
-import { BsFillBookmarkPlusFill } from 'react-icons/bs';
-import { TbInfoSquareRoundedFilled } from 'react-icons/tb';
+import { useRouter } from 'next/router';
+import React, { useEffect } from 'react';
+import { BsBuildingCheck, BsBuildings } from 'react-icons/bs';
+import { FiMessageCircle } from 'react-icons/fi';
+import { RxActivityLog, RxDashboard } from 'react-icons/rx';
+import { TbBuildingCarousel } from 'react-icons/tb';
 
-const menuList = [
-  { label: 'Dashboard', icon: <AiFillDashboard />, link: '/' },
-  { label: 'My Flats', icon: <BsBuildingsFill />, link: '/my-flats' },
-  { label: 'Saved List', icon: <BsFillBookmarkPlusFill />, link: '/saved' },
-  {
-    label: 'Tour Requests',
-    icon: <BsFillBookmarkPlusFill />,
-    link: 'tour-request',
-  },
+import useDrawerStore from '@/store/useDrawerStore';
 
-  { label: 'Explore', icon: <TbInfoSquareRoundedFilled />, link: '/explore' },
-];
+const drawerWidth = 240;
 
-export const Sidebar = () => {
+export default function DashboardSidebar() {
+  const { close, isOpen, open, native, setNative } = useDrawerStore();
+  const theme = useTheme();
+  const isMediumScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const isLargeScreen = useMediaQuery(theme.breakpoints.up('lg'));
+
+  const updateSidebarView = () => {
+    isMediumScreen && !isLargeScreen && close();
+    !native && close();
+  };
+  useEffect(() => {
+    updateSidebarView();
+    // update on route/screen change
+    return () => updateSidebarView();
+  }, [isMediumScreen]);
+
+  const updateForLargeScreen = () => {
+    isLargeScreen && native && open();
+    setNative(isLargeScreen);
+  };
+
+  useEffect(() => {
+    updateForLargeScreen();
+  }, [isLargeScreen]);
+
+  const offsetToNav = native ? '72px' : 0;
+
   return (
-    <>
-      <div className='h-[full] w-[300px] bg-gray-200'>
-        {menuList.map((menu) => {
-          return (
-            <div key={menu.label} className=' h-[30px] w-full bg-slate-500'>
-              <Link href={menu.link}>
-                <IconButton>{menu.icon}</IconButton>
-                <span>{menu.label}</span>
-              </Link>
-            </div>
-          );
-        })}
-      </div>
-    </>
+    <Drawer
+      sx={{
+        width: drawerWidth,
+        flexShrink: 0,
+        '& .MuiDrawer-paper': {
+          width: drawerWidth,
+          boxSizing: 'border-box',
+          position: 'absolute',
+          // marginTop: '60px',
+          marginTop: offsetToNav,
+          // height: `calc(100vh - ${isMediumScreen ? '50' : '100'}px)`,
+          height: `calc(100vh - ${offsetToNav})`,
+        },
+      }}
+      variant='persistent'
+      anchor='left'
+      open={isOpen}
+      onClose={close}
+      ModalProps={{
+        keepMounted: true, // Better open performance on mobile.
+      }}
+    >
+      <SidebarDrawerContainer native={native} />
+    </Drawer>
   );
-};
+}
+
+function SidebarDrawerContainer({ native }: { native }) {
+  const router = useRouter();
+  const currentRoute = router.pathname;
+  const isActiveRoute = (route) => route === currentRoute;
+  return (
+    <div className='w-full bg-white px-4 py-2'>
+      {!native && (
+        <>
+          <div className='mb-4'>
+            <Link href='/'>
+              <div className='relative h-[40px]  w-[150px] object-scale-down md:w-[200px]'>
+                <Image src='/logo.svg' alt='logo' fill />
+              </div>
+            </Link>
+          </div>
+          <Divider />
+        </>
+      )}
+
+      <ul className='w-full list-none space-y-2 p-0'>
+        <li>
+          <Link
+            href='/dashboard'
+            className={`flex items-center rounded-lg p-2 text-sm font-normal text-gray-500 no-underline hover:bg-[#F2F2FE] 
+                ${
+                  isActiveRoute('/dashboard')
+                    ? 'bg-[#F2F2FF] !font-medium text-[#6D67E4]'
+                    : ''
+                }
+            `}
+          >
+            <RxDashboard className='h-5 w-5' />
+            <span className='ml-3'>Dashboard</span>
+          </Link>
+        </li>{' '}
+        <li>
+          <Link
+            href='/my-flats'
+            className={`flex items-center rounded-lg p-2 text-sm font-normal text-gray-500 no-underline hover:bg-[#F2F2FE] 
+                ${
+                  isActiveRoute('/my-flats')
+                    ? 'bg-[#F2F2FF] !font-medium text-[#6D67E4]'
+                    : ''
+                }
+            `}
+          >
+            <BsBuildings className='h-5 w-5' />
+            <span className='ml-3'>My Flats</span>
+          </Link>
+        </li>
+        <li>
+          <Link
+            href='/activity'
+            className={`flex items-center rounded-lg p-2 text-sm font-normal text-gray-500 no-underline hover:bg-[#F2F2FE] 
+                ${
+                  isActiveRoute('/activity')
+                    ? 'bg-[#F2F2FF] !font-medium text-[#6D67E4]'
+                    : ''
+                }
+            `}
+          >
+            <RxActivityLog className='h-5 w-5' />
+            <span className='ml-3'>Activities</span>
+          </Link>
+        </li>
+        <li>
+          <Link
+            href='/saved-lists'
+            className={`flex items-center rounded-lg p-2 text-sm font-normal text-gray-500 no-underline hover:bg-[#F2F2FE] 
+                ${
+                  isActiveRoute('/saved-lists')
+                    ? 'bg-[#F2F2FF] !font-medium text-[#6D67E4]'
+                    : ''
+                }
+            `}
+          >
+            <BsBuildingCheck className='h-5 w-5' />
+            <span className='ml-3'>Saved List</span>
+          </Link>
+        </li>
+        <li>
+          <Link
+            href='/tour-requests'
+            className={`flex items-center rounded-lg p-2 text-sm font-normal text-gray-500 no-underline hover:bg-[#F2F2FE] 
+                ${
+                  isActiveRoute('/tour-requests')
+                    ? 'bg-[#F2F2FF] !font-medium text-[#6D67E4]'
+                    : ''
+                }
+            `}
+          >
+            <TbBuildingCarousel className='h-5 w-5' />
+            <span className='ml-3'>Tour Request</span>
+          </Link>
+        </li>
+        <li>
+          <Link
+            href='/messages'
+            className={`flex items-center rounded-lg p-2 text-sm font-normal text-gray-500 no-underline hover:bg-[#F2F2FE] 
+                ${
+                  isActiveRoute('/messages')
+                    ? 'bg-[#F2F2FF] !font-medium text-[#6D67E4]'
+                    : ''
+                }
+            `}
+          >
+            <FiMessageCircle className='h-5 w-5' />
+            <span className='ml-3'>Messages</span>
+          </Link>
+        </li>
+      </ul>
+    </div>
+  );
+}
