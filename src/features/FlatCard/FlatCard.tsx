@@ -29,7 +29,7 @@ export const FlatCardV1 = ({ item }: { item: Listing }) => {
   const [reserveModal, setReserveModal] = useState(false);
 
   React.useEffect(() => {
-    setInSavedList(item?.saved_by.includes(user?.$id));
+    setInSavedList(item?.saved_by.includes(user!.$id));
   }, [user]);
 
   const handleAddtoList = async () => {

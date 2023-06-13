@@ -3,16 +3,17 @@ import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { FaRegBookmark } from 'react-icons/fa';
-import { FcLikePlaceholder } from 'react-icons/fc';
+import { FaBookmark, FaRegBookmark } from 'react-icons/fa';
+import { FcLike, FcLikePlaceholder } from 'react-icons/fc';
 import { RiShareForwardFill } from 'react-icons/ri';
 
-import { fetchListingById } from '@/database/listing';
+import { fetchListingById, updateListingById } from '@/database/listing';
 import { AllFlatTypes } from '@/datas/flatTypes';
 
 import MainLayout from '@/components/layout/MainLayout';
 
-import { useFlatStore } from '@/store/flatStore';
+import { Iroom } from '@/store/flatStore';
+import useAuthStore from '@/store/useAuthStore';
 import useListingStore from '@/store/useListingStore';
 import useSnackbarStore from '@/store/useSnackbarStore';
 
@@ -39,14 +40,36 @@ export const DetailView = () => {
   const { openSnackbar } = useSnackbarStore();
   const [loading, setLoading] = useState(true);
   const [listing, setListing] = useState<Listing>();
-  const { gallery, buildingAmenities } = useFlatStore();
-  const { setComments } = useListingStore();
+  const { user } = useAuthStore();
+
+  const { setComments, gallery, setGallery } = useListingStore();
+
+  // like/saved list
+
+  const [inSavedList, setInSavedList] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
 
   const [bgImage, setBgImage] = useState('');
 
   const [imgType, setImgType] = useState<
     'room' | 'bathroom' | 'kitchen' | 'other' | ''
   >('');
+
+  useEffect(() => {
+    if (loading) return;
+    const decodeGallery = () => {
+      try {
+        const _gallery: Iroom[] = JSON.parse(listing!.gallery.toString());
+        setGallery(_gallery);
+      } catch (error) {
+        console.warn('Listing Gallery load failed');
+      }
+    };
+    decodeGallery();
+
+    setInSavedList(Boolean(listing?.saved_by.includes(user!.$id)));
+    setIsLiked(Boolean(listing?.liked_by.includes(user!.$id)));
+  }, [listing]);
 
   useEffect(() => {
     const changeBackgroundImage = () => {
@@ -80,9 +103,12 @@ export const DetailView = () => {
     fetchFlatData();
   }, [id]);
 
-  // cleanup for store data
   useEffect(() => {
-    return () => setComments(null);
+    // cleanup for store data
+    return () => {
+      setComments([]);
+      setGallery([]);
+    };
   }, []);
 
   const flatType = AllFlatTypes.find((i) => i.id === listing?.flatTypes[0]);
@@ -94,6 +120,36 @@ export const DetailView = () => {
       </div>
     );
   }
+
+  const handleLike = async () => {
+    if (!user) {
+      openSnackbar('Please login to like this listing!', 'info');
+      return;
+    }
+    const _isLiked = isLiked
+      ? listing?.liked_by.filter((a) => a !== user?.$id)
+      : [...listing!.liked_by, user!.$id];
+
+    await updateListingById(listing?.$id, { liked_by: _isLiked });
+    setIsLiked(!isLiked);
+  };
+
+  const handleAddtoList = async () => {
+    if (!user) {
+      openSnackbar('Please login to add to list!', 'info');
+      return;
+    }
+    const savedList = inSavedList
+      ? listing?.saved_by.filter((a) => a !== user?.$id)
+      : [...listing!.saved_by, user!.$id];
+    await updateListingById(listing?.$id, { saved_by: savedList });
+    openSnackbar(`Flat ${inSavedList ? 'Removed from ' : 'Added to '} My List`);
+    setInSavedList(!inSavedList);
+  };
+
+  const futureUpdate = () => {
+    openSnackbar(`Sharing for flatmate feature is not available`, 'info');
+  };
 
   return (
     <div className='h-auto w-full'>
@@ -114,14 +170,19 @@ export const DetailView = () => {
             </div>
 
             <div className='flex flex-row-reverse'>
-              <IconButton>
-                <FaRegBookmark className='  relative m-auto ' />
+              <IconButton onClick={handleAddtoList}>
+                {inSavedList ? (
+                  <FaBookmark />
+                ) : (
+                  <FaRegBookmark className='relative m-auto ' />
+                )}
               </IconButton>
-              <IconButton>
+              {/* !FUTUREUPDATE: flat re-sharing for roommates */}
+              <IconButton onClick={futureUpdate}>
                 <RiShareForwardFill />
               </IconButton>
-              <IconButton>
-                <FcLikePlaceholder />
+              <IconButton onClick={handleLike}>
+                {isLiked ? <FcLike /> : <FcLikePlaceholder />}
               </IconButton>
             </div>
           </div>
@@ -154,12 +215,14 @@ export const DetailView = () => {
               </div>
             </Link>
 
-            <Link href='#location'>
-              {' '}
-              <div className=' bg-primary-main hover:bg-secondary-main cursor-pointer rounded-sm p-1 px-3 text-left text-white'>
-                Location
-              </div>
-            </Link>
+            {listing?.flatGeo && (
+              <Link href='#location'>
+                {' '}
+                <div className=' bg-primary-main hover:bg-secondary-main cursor-pointer rounded-sm p-1 px-3 text-left text-white'>
+                  Location
+                </div>
+              </Link>
+            )}
 
             <Link href='#comment'>
               {' '}
@@ -238,11 +301,13 @@ export const DetailView = () => {
               <Policies flatPolicies={listing?.flatPolicies} />
             </section>
             <section id='costs'>
-              <Costs costs={listing?.costs} />
+              <Costs costs={listing?.costs as any} />
             </section>
-            <section className='relative z-0' id='location'>
-              <Map />
-            </section>
+            {listing?.flatGeo && (
+              <section className='relative z-0' id='location'>
+                <Map position={listing?.flatGeo} />
+              </section>
+            )}
             <section id='comment'>
               <Comment listingID={listing?.$id} />
             </section>

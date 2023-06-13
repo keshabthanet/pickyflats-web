@@ -7,7 +7,7 @@ import useAuthStore from '@/store/useAuthStore';
 import useListingStore from '@/store/useListingStore';
 import useSnackbarStore from '@/store/useSnackbarStore';
 
-const CommentBoxCard: React.FC = ({ listingID }: { listingID?: string }) => {
+const CommentBoxCard = ({ listingID }: { listingID?: string }) => {
   const { user } = useAuthStore();
   const [comment, setComment] = useState('');
   const { openSnackbar } = useSnackbarStore();

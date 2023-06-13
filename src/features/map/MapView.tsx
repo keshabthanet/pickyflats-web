@@ -18,6 +18,7 @@ export default function MapView({
 }: {
   position?;
 }) {
+  // const a = [27.7172, 85.324];
   return (
     <div className='relative my-9 h-auto w-full'>
       <MapContainer
@@ -31,6 +32,7 @@ export default function MapView({
           url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
         />
         <Marker position={position} icon={icon} />
+        {/* <Marker position={a} icon={icon} /> */}
       </MapContainer>
     </div>
   );
