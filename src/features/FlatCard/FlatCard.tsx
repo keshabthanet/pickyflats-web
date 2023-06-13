@@ -4,7 +4,6 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { FaRegBookmark } from 'react-icons/fa';
 import { FcLike, FcLikePlaceholder } from 'react-icons/fc';
-import { RiShareForwardFill } from 'react-icons/ri';
 
 import { timeAgo } from '@/lib/date';
 
@@ -172,18 +171,19 @@ export const FlatCardV1 = ({ data }: { data: Listing }) => {
             <IconButton onClick={handleLike}>
               {isLiked ? <FcLike /> : <FcLikePlaceholder />}
             </IconButton>
-            <IconButton>
+            {/* //!: FUTURE Update */}
+            {/* <IconButton>
               <RiShareForwardFill />
-            </IconButton>
+            </IconButton> */}
           </div>
           <div className='space-x-2'>
-            {/* <Button
+            <Button
               variant='contained'
               className='bg-secondary-main !text-whtie relative top-1 h-[30px]'
               onClick={handleReserveClick}
             >
               Reserve
-            </Button> */}
+            </Button>
             <Button
               variant='outlined'
               className='relative top-1 h-[30px]'

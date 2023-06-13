@@ -126,7 +126,8 @@ export default function withAuth<T extends WithAuthProps = WithAuthProps>(
             } else {
               router.replace(HOME_ROUTE);
             }
-            window.location.reload();
+            // window.location.href ='/'
+            // window.location.reload();
           }
         } else {
           // Prevent unauthenticated user from accessing protected pages
