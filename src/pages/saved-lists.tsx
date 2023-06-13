@@ -1,9 +1,9 @@
-import { Query } from 'appwrite';
 import React, { useEffect, useState } from 'react';
 
-import { DATABASE_ID, databases, LISTINGS_ID } from '@/lib/client';
+import { getSavedListingsByUserId } from '@/database/savedListing';
 
 import DashboardLayout from '@/components/layout/DashboardLayout';
+import Loader from '@/components/Loader';
 
 import useAuthStore from '@/store/useAuthStore';
 
@@ -16,15 +16,13 @@ export default function SavedPage() {
   const { user } = useAuthStore();
   const [savedListings, setSavedListings] = useState<Listing[]>([]);
   const [search, setSearch] = useState('');
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchSaved = async () => {
-      const _savedListings = await databases.listDocuments<Listing>(
-        DATABASE_ID,
-        LISTINGS_ID,
-        [Query.search('saved_by', user!.$id)]
-      );
-      setSavedListings(_savedListings.documents);
+      const _savedListings = await getSavedListingsByUserId(user!.$id);
+      setSavedListings(_savedListings);
+      setLoading(false);
     };
     fetchSaved();
   }, []);
@@ -55,13 +53,19 @@ export default function SavedPage() {
       </div>
 
       <div className=''>
+        {loading && <Loader />}
         <div className='mt-5 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3'>
           {savedListings
-            .filter((item) =>
-              item.flatStreet1?.toLowerCase().includes(search.toLowerCase())
+            .filter(
+              (item) =>
+                item.flatStreet1
+                  ?.toLowerCase()
+                  .includes(search.toLowerCase()) ||
+                item.flatCity?.toLowerCase().includes(search.toLowerCase()) ||
+                item.flatCountry?.toLowerCase().includes(search.toLowerCase())
             )
             .map((item, i) => (
-              <SavedFlatCard key={i} item={item} />
+              <SavedFlatCard key={i} data={item} />
             ))}
 
           {/* {SaveItems.filter((item) =>

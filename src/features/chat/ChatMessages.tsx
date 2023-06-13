@@ -4,11 +4,11 @@ import {
   client,
   CONVERSATIONS_ID,
   DATABASE_ID,
-  databases,
   MESSAGES_BUCKET,
-  MESSAGES_ID,
   storage,
 } from '@/lib/client';
+
+import { getMessageById } from '@/database/message';
 
 import MessageItem from '@/components/chat/MessageItem';
 
@@ -34,11 +34,7 @@ export default function ChatMessages({
         const newMessageId = chatPayload?.lastMessageID;
 
         const loadNewMessage = async () => {
-          const newMessage = await databases.getDocument(
-            DATABASE_ID,
-            MESSAGES_ID,
-            newMessageId
-          );
+          const newMessage = await getMessageById(newMessageId);
           onNewMessage(newMessage);
         };
         loadNewMessage();

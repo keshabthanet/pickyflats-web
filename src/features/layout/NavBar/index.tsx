@@ -28,8 +28,10 @@ const topSideControlMenuPages = [
   '/my-flats',
   '/saved-lists',
   '/tour-requests',
+  '/activity',
   '/messages',
   '/messages/[conversationId]',
+  '/bookings',
 ];
 
 export const NavBar = () => {

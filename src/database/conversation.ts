@@ -1,4 +1,4 @@
-import { Query } from 'appwrite';
+import { ID, Query } from 'appwrite';
 
 import {
   CONVERSATIONS_ID,
@@ -12,16 +12,36 @@ interface IProps {
   limit?: number;
 }
 
+export const createConversation = async (data) => {
+  const newConversation = await databases.createDocument(
+    DATABASE_ID,
+    CONVERSATIONS_ID,
+    ID.unique(),
+    data
+  );
+  return newConversation.$id;
+};
+
+export const getConversationByID = async (id) => {
+  return await databases.getDocument(DATABASE_ID, CONVERSATIONS_ID, id);
+};
+
 // fetch user conversations
 export const fetchConversationsForUser = async (userId, props?: IProps) => {
   const _listConversations = await databases.listDocuments(
     DATABASE_ID,
-    CONVERSATIONS_ID
+    CONVERSATIONS_ID,
     // [Query.equal('participants', [userId])]
-    // [Query.search('participants', userId)] // ! try on production
+    [
+      //!issue with local self hosted ! try on production
+      Query.search('participants', userId),
+    ]
   );
 
+  if (_listConversations.total < 1) return [];
+
   const _conversations = _listConversations.documents;
+
   // filters all participants from conversations for profile fetching
   const participantIds = [
     ...new Set(
@@ -35,7 +55,8 @@ export const fetchConversationsForUser = async (userId, props?: IProps) => {
 
   const _profiles = await databases.listDocuments(DATABASE_ID, PROFILES_ID, [
     Query.equal('$id', participantIds),
-    Query.select(['name', 'profile_img', 'profileVerified', 'lastActivity']),
+    //!FUTURE - fix select - issue using select on cloud
+    // Query.select(['name', 'profile_img', 'profileVerified', 'lastActivity']),
   ]);
 
   const lastMessageIds: string[] = [];
@@ -58,8 +79,11 @@ export const fetchConversationsForUser = async (userId, props?: IProps) => {
     DATABASE_ID,
     MESSAGES_ID,
     [
-      Query.equal('$id', lastMessageIds),
-      Query.select(['senderID', 'message', 'attachments']),
+      ...(lastMessageIds.length > 0
+        ? [Query.equal('$id', lastMessageIds)]
+        : []),
+      //!FUTURE - select issue using CLOUD, working fine on self hosted local
+      // Query.select(['senderID', 'message', 'attachments']),
     ]
   );
 
