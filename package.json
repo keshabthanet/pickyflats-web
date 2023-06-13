@@ -30,6 +30,7 @@
     "appwrite": "^11.0.0",
     "auto-zustand-selectors-hook": "^2.0.0",
     "clsx": "^1.2.1",
+    "countries-list": "^2.6.1",
     "date-fns": "^2.30.0",
     "immer": "9.0.15",
     "js-cookie": "^3.0.5",
