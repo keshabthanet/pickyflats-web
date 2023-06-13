@@ -35,6 +35,7 @@ export const Comment = ({ listingID }: { listingID?: string }) => {
   const futureUpdate = () => {
     openSnackbar(`Feature is not available`, 'info');
   };
+  console.log('comments ? ', comments);
 
   return (
     <div>

@@ -17,7 +17,7 @@ import useSnackbarStore from '@/store/useSnackbarStore';
 import { AddFlatModal } from '@/features/my-flats/Modal/AddFlatModal';
 // import VerificationRequestModal from '@/features/profileVerification/VerificationModal';
 import withAuth, { WithAuthProps } from '@/hoc/withAuth';
-import { MyFlatListCard } from '@/pageComponents/dashboard/cards/MyFlatListCard';
+import { MyFlatCard } from '@/pageComponents/dashboard/cards/MyFlatCard';
 
 import { Listing } from '@/types/listing';
 export default function MyFlats() {
@@ -98,7 +98,7 @@ export default function MyFlats() {
 
         <div className='flex flex-wrap gap-9 py-9'>
           {myFlats.map((item, i) => (
-            <MyFlatListCard data={item} key={i} />
+            <MyFlatCard data={item} key={i} />
           ))}
           {!loading && isEmptyArray(myFlats) && (
             <div className='flex flex-col'>

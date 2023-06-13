@@ -1,36 +1,70 @@
 import { Button, Divider, IconButton } from '@mui/material';
 import clsx from 'clsx';
-import Image from 'next/image';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaRegBookmark } from 'react-icons/fa';
-import { FcLike } from 'react-icons/fc';
+import { FcLike, FcLikePlaceholder } from 'react-icons/fc';
 import { RiShareForwardFill } from 'react-icons/ri';
 
-import { DATABASE_ID, databases, LISTINGS_ID } from '@/lib/client';
 import { timeAgo } from '@/lib/date';
+
+import { updateListingById } from '@/database/listing';
+import { AllFlatTypes } from '@/datas/flatTypes';
 
 import Modal from '@/components/Modal';
 
+import { Iroom } from '@/store/flatStore';
 import useAuthStore from '@/store/useAuthStore';
 import useSnackbarStore from '@/store/useSnackbarStore';
 
 import ReserveModal from '@/features/listings/ReserveModal';
+import { ImageCard } from '@/features/my-flats/cards/ImageCard';
 import RequestForTourModal from '@/features/tour-request/RequestForTourModal';
 
 import { Listing } from '@/types/listing';
 
-export const FlatCardV1 = ({ item }: { item: Listing }) => {
+export const FlatCardV1 = ({ data }: { data: Listing }) => {
   const { user } = useAuthStore();
   const { openSnackbar } = useSnackbarStore();
-  const [inSavedList, setInSavedList] = React.useState(false);
+  const [inSavedList, setInSavedList] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
 
-  const [tourModal, setTourModal] = React.useState(false);
+  const [tourModal, setTourModal] = useState(false);
   const [reserveModal, setReserveModal] = useState(false);
 
-  React.useEffect(() => {
-    setInSavedList(item?.saved_by.includes(user!.$id));
+  // ! FUTURE: carousel for gallery
+  const [gallery, setGallery] = useState<Iroom[]>([]);
+
+  useEffect(() => {
+    if (!user) return;
+    setInSavedList(data?.saved_by.includes(user?.$id));
+    setIsLiked(data?.liked_by.includes(user?.$id));
   }, [user]);
+
+  useEffect(() => {
+    const decodeGallery = () => {
+      try {
+        const _gallery: Iroom[] = JSON.parse(data!.gallery.toString());
+        setGallery(_gallery);
+      } catch (error) {
+        console.warn('Listing Gallery load failed');
+      }
+    };
+    decodeGallery();
+  }, [data]);
+
+  const handleLike = async () => {
+    if (!user) {
+      openSnackbar('Please login to like this listing!', 'info');
+      return;
+    }
+    const _isLiked = isLiked
+      ? data?.liked_by.filter((a) => a !== user?.$id)
+      : [...data!.liked_by, user!.$id];
+
+    await updateListingById(data?.$id, { liked_by: _isLiked });
+    setIsLiked(!isLiked);
+  };
 
   const handleAddtoList = async () => {
     if (!user) {
@@ -38,11 +72,10 @@ export const FlatCardV1 = ({ item }: { item: Listing }) => {
       return;
     }
     const savedList = inSavedList
-      ? item?.saved_by.filter((a) => a !== user?.$id)
-      : [...item!.saved_by, user!.$id];
-    await databases.updateDocument(DATABASE_ID, LISTINGS_ID, item?.$id, {
-      saved_by: savedList,
-    });
+      ? data?.saved_by.filter((a) => a !== user?.$id)
+      : [...data!.saved_by, user!.$id];
+
+    await updateListingById(data?.$id, { saved_by: savedList });
     openSnackbar(`Flat ${inSavedList ? 'Removed from ' : 'Added to '} My List`);
     setInSavedList(!inSavedList);
   };
@@ -63,21 +96,27 @@ export const FlatCardV1 = ({ item }: { item: Listing }) => {
     setReserveModal(true);
   };
 
+  const flatType = AllFlatTypes.find((i) => i.id === data?.flatTypes[0]);
+
+  const flatImageID =
+    gallery?.length > 0 && gallery[0].photos.length > 0
+      ? gallery[0].photos[0]
+      : '';
   return (
     <>
       <div className='  z-30 flex h-[400px] min-w-[200px] cursor-pointer flex-col overflow-hidden rounded-md shadow-md hover:border'>
-        <div className='relative h-[200px] w-full object-cover'>
-          <div>
-            <Image src='/images/1.jpg' alt='flat photo' fill />
+        <div className='relative w-full object-cover'>
+          <div className='h-[200px] overflow-hidden'>
+            <ImageCard fileID={flatImageID} />
           </div>
-          <div className='relative h-[150px] w-full p-3'>
+          <div className='absolute top-2 h-[150px] w-full p-3'>
             <div className='flex w-full'>
               <div className='flex-grow '>
                 <span className='text-primary-main rounded-[15px] bg-white bg-opacity-80 p-1 px-2 pt-1.5  text-lg font-medium'>
                   Buy
                   <span className=' text-primary-light font-normal'>
                     {' '}
-                    {item.costs?.currency} {item.costs?.monthlyCost}
+                    {data?.costs?.currency} {data?.costs?.monthlyCost}
                   </span>
                 </span>
               </div>
@@ -95,28 +134,30 @@ export const FlatCardV1 = ({ item }: { item: Listing }) => {
         </div>
         <div className='flex w-full p-2'>
           <h3 className='flex-grow text-lg font-medium text-blue-900'>
-            <Link href={`/flats/${item.$id}`}>{item?.flatStreet1}</Link>
+            <Link href={`/flats/${data.$id}`}>
+              {flatType?.label} Flat for sale in {data?.flatCity},{' '}
+              {data?.flatCountry}
+            </Link>
           </h3>
           <h4 className=' text-sm text-blue-600'>
-            {timeAgo(new Date(item.$createdAt), { suffix: true })}
+            {timeAgo(new Date(data.$createdAt), { suffix: true })}
           </h4>
         </div>
         <div className='m-auto w-[96%]'>
           <Divider />
         </div>
         <div className='flex flex-wrap gap-2 p-1 '>
-          {/* !TODO: fetch nearyby points using geo points */}
-
-          {item?.bathroom ? (
+          {/* //!FUTURE: fetch nearyby top points using geo */}
+          {data?.bathroom ? (
             <span className='hover:bg-primary-main rounded-full bg-black p-1.5 px-2 text-xs text-white'>
-              {item?.bathroom} Bathrooms
+              {data?.bathroom} Bathrooms
             </span>
           ) : (
             ''
           )}
-          {item?.room ? (
+          {data?.room ? (
             <span className='hover:bg-primary-main rounded-full bg-black p-1.5 px-2 text-xs text-white'>
-              {item?.room} Large rooms
+              {data?.room} Large rooms
             </span>
           ) : (
             ''
@@ -128,11 +169,8 @@ export const FlatCardV1 = ({ item }: { item: Listing }) => {
         <div className='flex-grow'></div>
         <div className='flex w-full p-2'>
           <div className='flex-grow'>
-            {/* <IconButton>
-            <BiLike />
-          </IconButton> */}
-            <IconButton>
-              <FcLike />
+            <IconButton onClick={handleLike}>
+              {isLiked ? <FcLike /> : <FcLikePlaceholder />}
             </IconButton>
             <IconButton>
               <RiShareForwardFill />
@@ -159,8 +197,8 @@ export const FlatCardV1 = ({ item }: { item: Listing }) => {
 
       <Modal isOpen={reserveModal} onClose={() => setReserveModal(false)}>
         <ReserveModal
-          listing={item}
-          listingID={item?.$id}
+          listing={data}
+          listingID={data?.$id}
           onClose={() => setTourModal(false)}
         />
       </Modal>
@@ -170,7 +208,7 @@ export const FlatCardV1 = ({ item }: { item: Listing }) => {
         onClose={() => setTourModal(false)}
       >
         <RequestForTourModal
-          listingID={item?.$id}
+          listingID={data?.$id}
           onClose={() => setTourModal(false)}
         />
       </Modal>

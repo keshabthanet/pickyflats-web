@@ -28,7 +28,7 @@ export default function MyBookings() {
 
   return (
     <div className='w-full p-5'>
-      <h3 className='text-3xl font-semibold'>My Bookings</h3>
+      <h3 className='text-primary-main text-3xl font-semibold'>My Bookings</h3>
 
       <div className='flex'>
         list out booked flats with payment status, booking status ..
