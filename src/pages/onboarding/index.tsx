@@ -72,7 +72,8 @@ const Onboarding = () => {
       instagram: false,
       twitter: false,
       country: '',
-      city: 'kathmandu',
+      // city: 'kathmandu',
+      city: '',
     },
   });
 

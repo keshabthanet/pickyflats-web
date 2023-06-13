@@ -10,12 +10,16 @@ import { RiShareForwardFill } from 'react-icons/ri';
 import { fetchListingById } from '@/database/listing';
 import { AllFlatTypes } from '@/datas/flatTypes';
 
+import MainLayout from '@/components/layout/MainLayout';
+
 import { useFlatStore } from '@/store/flatStore';
+import useListingStore from '@/store/useListingStore';
 import useSnackbarStore from '@/store/useSnackbarStore';
 
 import { Comment } from '@/features/Comment';
-import { NavBar } from '@/features/layout/NavBar';
+import FullListingSkeleton from '@/features/listings/FullListingSkeleton';
 import { ImageCard } from '@/features/my-flats/cards/ImageCard';
+import withAuth, { WithAuthProps } from '@/hoc/withAuth';
 import { AllAmenities } from '@/pageComponents/flats/AllAmenities';
 import { Costs } from '@/pageComponents/flats/Costs';
 import { GalleryModal } from '@/pageComponents/flats/GalleryModal';
@@ -36,6 +40,7 @@ export const DetailView = () => {
   const [loading, setLoading] = useState(true);
   const [listing, setListing] = useState<Listing>();
   const { gallery, buildingAmenities } = useFlatStore();
+  const { setComments } = useListingStore();
 
   const [bgImage, setBgImage] = useState('');
 
@@ -63,7 +68,6 @@ export const DetailView = () => {
       const flatData = await fetchListingById(id);
       setListing(flatData);
     } catch (error) {
-      console.log('?  erro ? ', error);
       openSnackbar('Failed to query for request flat', 'error');
       // push('/');
     } finally {
@@ -76,15 +80,25 @@ export const DetailView = () => {
     fetchFlatData();
   }, [id]);
 
+  // cleanup for store data
+  useEffect(() => {
+    return () => setComments(null);
+  }, []);
+
   const flatType = AllFlatTypes.find((i) => i.id === listing?.flatTypes[0]);
+
+  if (loading) {
+    return (
+      <div className='px-4'>
+        <FullListingSkeleton />
+      </div>
+    );
+  }
 
   return (
     <div className='h-auto w-full'>
-      <div>
-        <NavBar />
-      </div>
-      <div className=' relative h-[86vh] w-full overflow-y-scroll  px-3 md:px-9'>
-        <div className=' flex   '>
+      <div className=' relative h-[86vh] w-full overflow-y-scroll px-3 md:px-9'>
+        <div className=' flex '>
           <div className='hidden min-w-[350px] max-w-[350px] md:block'></div>
           <div className=' flex-grow py-5'>
             <h1 className=' text-primary-main text-xl font-semibold md:text-3xl'>
@@ -230,7 +244,7 @@ export const DetailView = () => {
               <Map />
             </section>
             <section id='comment'>
-              <Comment />
+              <Comment listingID={listing?.$id} />
             </section>
           </div>
         </div>
@@ -240,3 +254,15 @@ export const DetailView = () => {
 };
 
 export default DetailView;
+
+function LayoutWrapper(props: WithAuthProps) {
+  return <MainLayout>{props.page}</MainLayout>;
+}
+
+const PageWrapper: React.FC<{ page: React.ReactElement }> = withAuth(
+  LayoutWrapper,
+  'optional'
+);
+DetailView.getLayout = function getLayout(page: React.ReactElement) {
+  return <PageWrapper page={page} />;
+};
