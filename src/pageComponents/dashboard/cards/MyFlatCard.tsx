@@ -8,6 +8,7 @@ import { MdBathroom, MdBedroomParent, MdKitchen } from 'react-icons/md';
 
 import { CONTENT_BUCKET, storage } from '@/lib/client';
 import clsxm from '@/lib/clsxm';
+import logger from '@/lib/logger';
 
 import { deleteListing } from '@/database/listing';
 import { AllFlatTypes } from '@/datas/flatTypes';
@@ -62,7 +63,7 @@ export const MyFlatCard = (props: Iprop) => {
         const _gallery: Iroom[] = JSON.parse(data!.gallery.toString());
         setGallery(_gallery);
       } catch (error) {
-        console.warn('Listing Gallery load failed');
+        logger('Listing Gallery load failed');
       }
     };
     decodeGallery();

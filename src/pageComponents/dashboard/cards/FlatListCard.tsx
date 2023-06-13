@@ -19,8 +19,6 @@ interface Iprop {
 export const FlatListCard = (props: Iprop) => {
   const { data } = props;
 
-  console.log('ddd', data);
-
   const galleryPhoto = JSON.parse(data.gallery);
   console.log('gallery photo', galleryPhoto);
   const [deleteId, setDeleteId] = useState('');

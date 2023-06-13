@@ -12,8 +12,6 @@ function TextField<T extends FieldValues>(props: TextFieldProps<T>) {
   const { control, name, rules, required, helperText, ...otherProps } = props;
 
   // const { errors } = useFormState<T>({ control, name })
-
-  // console.log('errors from text field', errors)
   return (
     <Controller
       control={control}

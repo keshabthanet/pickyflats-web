@@ -6,6 +6,7 @@ import { FaRegBookmark } from 'react-icons/fa';
 import { FcLike, FcLikePlaceholder } from 'react-icons/fc';
 
 import { timeAgo } from '@/lib/date';
+import logger from '@/lib/logger';
 
 import { updateListingById } from '@/database/listing';
 import { AllFlatTypes } from '@/datas/flatTypes';
@@ -46,7 +47,7 @@ export const SavedFlatCard = ({ data }: { data: Listing }) => {
         const _gallery: Iroom[] = JSON.parse(data!.gallery.toString());
         setGallery(_gallery);
       } catch (error) {
-        console.warn('Listing Gallery load failed');
+        logger('Listing Gallery load failed');
       }
     };
     decodeGallery();

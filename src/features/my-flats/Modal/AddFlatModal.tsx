@@ -154,7 +154,6 @@ export const AddFlatModal = ({
       onListingCreated?.();
       reset();
     } catch (error) {
-      console.log('eee', error);
       openSnackbar('Failed to save Listing!', 'error', {
         horizontal: 'center',
         vertical: 'top',

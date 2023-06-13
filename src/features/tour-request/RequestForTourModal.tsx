@@ -18,7 +18,7 @@ interface FormDataType {
 interface ModalProps {
   // open?: boolean;
   onClose: () => void;
-  listingID: string;
+  listingID?: string;
   sellerID?: string;
 }
 
@@ -42,7 +42,7 @@ export default function RequestForTourModal({
       setLoading(true);
       const newTourID = await createRequestForTour({
         userID: user!.$id,
-        listingID,
+        listingID: listingID!,
         pickedDate: data.date,
         note: data.note,
         sellerID: sellerID,
