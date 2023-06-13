@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import MainLayout from '@/components/layout/MainLayout';
+import DashboardLayout from '@/components/layout/DashboardLayout';
 import Seo from '@/components/Seo';
 
 import DeleteAccount from '@/features/Profile/DeleteAccount';
@@ -34,7 +34,7 @@ export default function ProfilePage() {
 }
 
 function LayoutWrapper(props: WithAuthProps) {
-  return <MainLayout>{props.page}</MainLayout>;
+  return <DashboardLayout>{props.page}</DashboardLayout>;
 }
 
 const PageWrapper: React.FC<{ page: React.ReactElement }> = withAuth(

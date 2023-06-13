@@ -32,6 +32,7 @@ const topSideControlMenuPages = [
   '/messages',
   '/messages/[conversationId]',
   '/bookings',
+  '/profile',
 ];
 
 export const NavBar = () => {

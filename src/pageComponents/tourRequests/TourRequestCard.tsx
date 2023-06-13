@@ -1,38 +1,55 @@
 import { Button, IconButton } from '@mui/material';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React from 'react';
 import { IoTimeSharp } from 'react-icons/io5';
 import { TbMessageCircle2Filled } from 'react-icons/tb';
 
+import { functions } from '@/lib/client';
 import { timeAgo } from '@/lib/date';
 
 import { createConversation } from '@/database/conversation';
-import { TourRequest } from '@/database/tourRequests';
+import { TourRequest, updateTourRequestById } from '@/database/tourRequests';
 import { AllFlatTypes } from '@/datas/flatTypes';
+
+import useSnackbarStore from '@/store/useSnackbarStore';
 
 export default function TourRequestCard({ data }: { data: TourRequest }) {
   const flatType = AllFlatTypes.find(
     (i) => i.id === data?.listing.flatTypes[0]
   );
 
+  const { openSnackbar } = useSnackbarStore();
+  const { push } = useRouter();
+
   const handleMessage = async () => {
-    // message logic
-    // create conversation first... .
-    // then open message with conver
     const conversation = await createConversation({
       participants: [data.userID, data.sellerID],
       chatStarter: data.sellerID,
     });
-    console.log('conversation?', conversation);
-    // delete/update status of reqeust on message
+    push(`/messages/${conversation}`);
   };
 
-  const handleAcceptRequest = () => {
-    // accept login
+  const handleAcceptRequest = async () => {
+    await updateTourRequestById(data.$id, {
+      status: 'accepted',
+    });
+    // send email notification using cloud function
+
+    await functions.createExecution(
+      'tourAcceptNotification',
+      JSON.stringify({ tourID: data.$id })
+    );
+
+    openSnackbar(
+      'Tour request accepted. Please proceed with the scheduled tour.',
+      'success',
+      { horizontal: 'center', vertical: 'top' }
+    );
   };
 
   return (
-    <div className='flex min-h-[200px] w-[500px] flex-col rounded-md bg-slate-100 p-5 text-center shadow-md max-sm:w-full'>
+    <div className='flex min-h-[200px] flex-col rounded-md bg-slate-100 p-5 text-center shadow-md max-sm:w-full'>
       <div className='flex-grow'>
         <h2 className=' text-xl font-semibold'>
           {data.user.name} Has Requested For Tour
