@@ -2,6 +2,7 @@ import { Button, Divider } from '@mui/material';
 import Chip from '@mui/material/Chip';
 import IconButton from '@mui/material/IconButton';
 import Slider from '@mui/material/Slider';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { IoCloseOutline } from 'react-icons/io5';
 
@@ -14,48 +15,48 @@ interface Iprops {
   onClose: () => void;
 }
 
-const amenitiesOptions = [
-  {
-    label: 'WIFI',
-    value: 'WIFI',
-  },
-  {
-    label: 'TV',
-    value: 'TV',
-  },
-  {
-    label: 'AC',
-    value: 'AC',
-  },
-  {
-    label: 'KITCHEN',
-    value: 'KITCHEN',
-  },
-  {
-    label: 'PARKING',
-    value: 'PARKING',
-  },
-  {
-    label: 'ELEVATOR',
-    value: 'ELEVATOR',
-  },
-  {
-    label: 'BUSINESS CENTER',
-    value: 'BUSINESS CENTER',
-  },
-  {
-    label: 'PLAYGROUND',
-    value: 'PLAYGROUND',
-  },
-  {
-    label: 'MOVIE THEATRE',
-    value: 'MOVIE THEATRE',
-  },
-  {
-    label: 'PARTY ROOM',
-    value: 'PARTY ROOM',
-  },
-];
+// const amenitiesOptions = [
+//   {
+//     label: 'WIFI',
+//     value: 'WIFI',
+//   },
+//   {
+//     label: 'TV',
+//     value: 'TV',
+//   },
+//   {
+//     label: 'AC',
+//     value: 'AC',
+//   },
+//   {
+//     label: 'KITCHEN',
+//     value: 'KITCHEN',
+//   },
+//   {
+//     label: 'PARKING',
+//     value: 'PARKING',
+//   },
+//   {
+//     label: 'ELEVATOR',
+//     value: 'ELEVATOR',
+//   },
+//   {
+//     label: 'BUSINESS CENTER',
+//     value: 'BUSINESS CENTER',
+//   },
+//   {
+//     label: 'PLAYGROUND',
+//     value: 'PLAYGROUND',
+//   },
+//   {
+//     label: 'MOVIE THEATRE',
+//     value: 'MOVIE THEATRE',
+//   },
+//   {
+//     label: 'PARTY ROOM',
+//     value: 'PARTY ROOM',
+//   },
+// ];
 
 const bedroomOptions = [
   {
@@ -117,8 +118,13 @@ const FilterModal = (props: Iprops) => {
     maxPrice,
     bathrooms,
     bedrooms,
+    kitchen,
+    query,
+    purpose,
+    setPurpose,
     setBathrooms,
     setBedrooms,
+    setKitchen,
     setMinPrice,
     setMaxPrice,
     setExtraFiilterActive,
@@ -134,11 +140,18 @@ const FilterModal = (props: Iprops) => {
     setMaxPrice(0);
     setBathrooms(0);
     setBedrooms(0);
+    setKitchen(0);
+
     // setFlatType('');
     setExtraFiilterActive(false);
   };
 
+  const router = useRouter();
+
   const handleApply = () => {
+    router.push(
+      `/?query=${query}&min=${minPrice}&max=${maxPrice}&purpose=${purpose}&bedRoom=${bedrooms}&bathRoom=${bathrooms}&kitchen=${kitchen}`
+    );
     setExtraFiilterActive(true);
     onClose();
   };
@@ -161,13 +174,37 @@ const FilterModal = (props: Iprops) => {
         <Divider className='mt-4' />
         <div className='mt-2 flex flex-col gap-4 '>
           <div className='flex flex-col gap-2'>
-            <h1 className='text-primary-main text-sm font-medium'>Price</h1>
-            <span className='text-primary-main  text-sm font-medium'>
-              Min Price
-            </span>
+            <h2 className='text-primary-main text-sm font-medium'>
+              Price(USD)
+            </h2>
+            <div className='flex gap-5'>
+              <span
+                className={` px-3 py-1 text-white ${
+                  purpose == 'sell' ? 'bg-primary-main' : 'bg-black'
+                } cursor-pointer rounded-3xl`}
+                onClick={() => setPurpose('sell')}
+              >
+                Buy
+              </span>
+
+              <span
+                className={` px-3 py-1 text-white ${
+                  purpose == 'rent' ? 'bg-primary-main' : 'bg-black'
+                } cursor-pointer rounded-3xl`}
+                onClick={() => setPurpose('rent')}
+              >
+                Rent
+              </span>
+            </div>
+            <div>
+              <span className='text-primary-main  text-sm font-medium'>
+                Min Price
+              </span>
+            </div>
             <Slider
-              min={0}
-              max={1000}
+              min={1000}
+              max={100000}
+              defaultValue={Number(router.query.m)}
               onChange={(e, value) => setMinPrice(value as number)}
               value={minPrice}
               valueLabelDisplay='auto'
@@ -177,17 +214,17 @@ const FilterModal = (props: Iprops) => {
               Max Price
             </span>
             <Slider
-              min={0}
-              max={1000}
+              min={1000}
+              max={1000000}
               onChange={(e, value) => setMaxPrice(value as number)}
               value={maxPrice}
-              valueLabelDisplay='auto'
+              valueLabelDisplay='on'
             />{' '}
             <div className='flex gap-2'>
               <input
                 placeholder='Min'
                 value={minPrice}
-                onChange={(e) => setMinPrice(parseInt(e.target.value))}
+                onChange={(e) => setMinPrice(Number(e.target.value))}
                 className='border-primary-main rounded-md border-2 p-2'
               />
               <input
@@ -195,14 +232,14 @@ const FilterModal = (props: Iprops) => {
                 placeholder='Max'
                 className='border-primary-main rounded-md border-2 p-2'
                 value={maxPrice}
-                onChange={(e) => setMaxPrice(parseInt(e.target.value))}
+                onChange={(e) => setMaxPrice(Number(e.target.value))}
               />
             </div>
             <Divider className='mt-4' />
             <div className=' gap-2'>
-              <h1 className='text-primary-main text-sm font-normal'>
+              <h2 className='text-primary-main text-sm font-normal'>
                 Bedrooms
-              </h1>
+              </h2>
               <div className='mt-2'>
                 {bedroomOptions.map((item, index) => (
                   <Chip
@@ -221,9 +258,9 @@ const FilterModal = (props: Iprops) => {
             </div>
             <Divider className='mt-4' />
             <div className=' gap-2'>
-              <h1 className='text-primary-main text-sm font-normal'>
+              <h2 className='text-primary-main text-sm font-normal'>
                 Bathrooms
-              </h1>
+              </h2>
               <div className='mt-2'>
                 {bedroomOptions.map((item, index) => (
                   <Chip
@@ -233,6 +270,25 @@ const FilterModal = (props: Iprops) => {
                     variant='outlined'
                     className={`mx-2 px-2 py-1 ${
                       bathrooms === item.value
+                        ? 'bg-primary-main text-white'
+                        : 'text-primary-main bg-white'
+                    }`}
+                  />
+                ))}
+              </div>
+            </div>
+            <Divider className='mt-4' />
+            <div className=' gap-2'>
+              <h2 className='text-primary-main text-sm font-normal'>Kitchen</h2>
+              <div className='mt-2'>
+                {bedroomOptions.map((item, index) => (
+                  <Chip
+                    onClick={() => setKitchen(item.value)}
+                    key={index}
+                    label={item.label}
+                    variant='outlined'
+                    className={`mx-2 px-2 py-1 ${
+                      kitchen === item.value
                         ? 'bg-primary-main text-white'
                         : 'text-primary-main bg-white'
                     }`}
