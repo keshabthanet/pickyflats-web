@@ -84,6 +84,7 @@ export default function FlatSidebar({ listing }: { listing }) {
         onClose={() => setTourModal(false)}
       >
         <RequestForTourModal
+          sellerID={listing.userID}
           listingID={listing?.$id}
           onClose={() => setTourModal(false)}
         />

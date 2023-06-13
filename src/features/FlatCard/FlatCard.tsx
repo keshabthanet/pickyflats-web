@@ -208,6 +208,7 @@ export const FlatCardV1 = ({ data }: { data: Listing }) => {
         onClose={() => setTourModal(false)}
       >
         <RequestForTourModal
+          sellerID={data.userID}
           listingID={data?.$id}
           onClose={() => setTourModal(false)}
         />

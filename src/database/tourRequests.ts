@@ -38,6 +38,7 @@ export interface TourRequest {
   note: string;
   listing: Listing;
   user: User;
+  status: 'draft' | 'accepted';
 }
 
 export const getTourRequestsForSeller = async (sellerID) => {
@@ -91,4 +92,13 @@ export const getTourRequestsForSeller = async (sellerID) => {
     );
     return { ...request, user, listing };
   });
+};
+
+export const updateTourRequestById = async (tourRequestID, data) => {
+  await databases.updateDocument(
+    DATABASE_ID,
+    TOURREQUESTS_ID,
+    tourRequestID,
+    data
+  );
 };

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
+import { isEmptyArray } from '@/lib/helper';
+
 import { getTourRequestsForSeller, TourRequest } from '@/database/tourRequests';
 
 import DashboardLayout from '@/components/layout/DashboardLayout';
@@ -50,10 +52,21 @@ export default function TourRequestPage() {
         )}
 
         <div className='flex flex-wrap gap-4 py-4'>
-          {requests.map((item, i) => (
-            <TourRequestCard key={i} data={item} />
-          ))}
+          {requests
+            .filter((r) => r.status === 'draft')
+            .map((item, i) => {
+              return <TourRequestCard key={i} data={item} />;
+            })}
         </div>
+
+        {!loading && isEmptyArray(requests) && (
+          <div className='flex flex-col'>
+            <div className='text-secondary-main font-medium'>
+              No tour requests found. You don't have any pending tour requests
+              at the moment. Please check back later.
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

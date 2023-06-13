@@ -207,6 +207,7 @@ export const SavedFlatCard = ({ data }: { data: Listing }) => {
         onClose={() => setTourModal(false)}
       >
         <RequestForTourModal
+          sellerID={data.userID}
           listingID={data?.$id}
           onClose={() => setTourModal(false)}
         />

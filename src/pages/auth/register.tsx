@@ -73,6 +73,7 @@ const RegisterPage = () => {
       // save role to profiles data
       await databases.createDocument(DATABASE_ID, PROFILES_ID, user.$id, {
         name: fullName,
+        email: data.email, //!FUTURE - better approach - used for sending email notification
         role: 'user',
       });
 
