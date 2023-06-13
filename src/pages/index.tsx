@@ -132,9 +132,8 @@ HomePage.getLayout = function getLayout(page: React.ReactElement) {
 };
 
 export async function getServerSideProps() {
+  // !FUTURE UPDATE -ssr for seo optimization
   // Fetch data from external API
-
-  // const listings = await databases.listDocuments(DATABASE_ID, LISTINGS_ID);
   // console.log('getting data ... .', listings);
 
   // Pass data to the page via props

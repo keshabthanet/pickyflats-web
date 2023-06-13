@@ -1,4 +1,5 @@
 import { IconButton } from '@mui/material';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { AiFillDelete, AiFillEye } from 'react-icons/ai';
 import { BiComment } from 'react-icons/bi';
@@ -115,7 +116,9 @@ export const MyFlatListCard = (props: Iprop) => {
             {data?.costs?.currency} {data?.costs?.monthlyCost}
           </h3>
           <h3 className='line-clamp-1 p-1 text-lg font-bold text-blue-950'>
-            {flatType?.label} For Sale In {data?.flatCity}
+            <Link href={`/flats/${data?.$id}`}>
+              {flatType?.label} For Sale In {data?.flatCity}
+            </Link>
           </h3>
           <h3 className='line-clamp-1 p-1 text-sm font-bold text-black'>
             {data?.flatStreet1}, {data?.flatCountry}

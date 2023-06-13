@@ -107,12 +107,20 @@ export const FlatCardV1 = ({ item }: { item: Listing }) => {
         <div className='flex flex-wrap gap-2 p-1 '>
           {/* !TODO: fetch nearyby points using geo points */}
 
-          <span className='hover:bg-primary-main rounded-full bg-black p-1.5 px-2 text-xs text-white'>
-            {item?.bathroom} Bathrooms
-          </span>
-          <span className='hover:bg-primary-main rounded-full bg-black p-1.5 px-2 text-xs text-white'>
-            {item?.room} Large rooms
-          </span>
+          {item?.bathroom ? (
+            <span className='hover:bg-primary-main rounded-full bg-black p-1.5 px-2 text-xs text-white'>
+              {item?.bathroom} Bathrooms
+            </span>
+          ) : (
+            ''
+          )}
+          {item?.room ? (
+            <span className='hover:bg-primary-main rounded-full bg-black p-1.5 px-2 text-xs text-white'>
+              {item?.room} Large rooms
+            </span>
+          ) : (
+            ''
+          )}
           {/* <span className='hover:bg-primary-main rounded-full bg-black p-1.5 px-2 text-xs text-white'>
             Near By City Hospital
           </span> */}
