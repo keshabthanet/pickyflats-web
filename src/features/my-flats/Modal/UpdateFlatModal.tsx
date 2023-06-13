@@ -249,7 +249,7 @@ export const UpdateFlatModal = ({ data }: { data: Listing }) => {
     setGallery,
     setContactAndLocation,
     setCosts,
-    reset,
+    // reset,
   } = useFlatStore();
 
   const [editModal, setEditModal] = useState(false);
@@ -300,7 +300,7 @@ export const UpdateFlatModal = ({ data }: { data: Listing }) => {
 
   const handleClose = () => {
     setEditModal(false);
-    reset();
+    // reset();
   };
 
   return (

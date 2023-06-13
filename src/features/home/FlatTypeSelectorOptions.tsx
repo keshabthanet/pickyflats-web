@@ -36,7 +36,7 @@ export default function FlatTypeSelectorOptions() {
           );
         })}
       </div>
-      <div className='flex w-full flex-wrap justify-center gap-4 overflow-x-auto text-center'>
+      {/* <div className='flex w-full flex-wrap justify-center gap-4 overflow-x-auto text-center'>
         {flatTypes2.map((type, index) => {
           const isActiveFilter = activeTypeFilter?.label === type.label;
           return (
@@ -59,7 +59,7 @@ export default function FlatTypeSelectorOptions() {
             </div>
           );
         })}
-      </div>
+      </div> */}
     </div>
   );
 }

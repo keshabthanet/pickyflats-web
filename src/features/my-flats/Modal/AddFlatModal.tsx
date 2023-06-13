@@ -121,6 +121,7 @@ export const AddFlatModal = ({
   const { handleSubmit } = methods;
 
   const onSubmit: SubmitHandler<FormData> = async () => {
+    alert('fcd');
     try {
       setLoading(true);
       // recreate list with name field only
@@ -153,6 +154,7 @@ export const AddFlatModal = ({
       onListingCreated?.();
       reset();
     } catch (error) {
+      console.log('eee', error);
       openSnackbar('Failed to save Listing!', 'error', {
         horizontal: 'center',
         vertical: 'top',

@@ -101,9 +101,22 @@ export const DetailView = () => {
   };
 
   useEffect(() => {
+    const fetchFlatData = async () => {
+      try {
+        // con
+        const flatData = await fetchListingById(id);
+        setListing(flatData);
+      } catch (error) {
+        console.log('?  erro ? ', error);
+        openSnackbar('Failed to query for request flat', 'error');
+        // push('/');
+      } finally {
+        setLoading(false);
+      }
+    };
     if (!id) return;
     fetchFlatData();
-  }, [id]);
+  }, [id, openSnackbar]);
 
   useEffect(() => {
     // cleanup for store data
@@ -165,7 +178,10 @@ export const DetailView = () => {
             </h1>
 
             <div className='flex flex-grow font-semibold md:hidden'>
-              <span className='flex-grow'>$30,000</span>{' '}
+              <span className='flex-grow'>
+                {' '}
+                {listing?.costs?.currency} {listing?.costs?.monthlyCost}
+              </span>{' '}
               <span>
                 <Button>Request A Tour</Button>
               </span>
