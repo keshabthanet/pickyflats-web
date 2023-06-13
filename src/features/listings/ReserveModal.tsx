@@ -28,7 +28,7 @@ const stripePromise = loadStripe(
 
 interface ModalProps {
   listing: Listing;
-  listingID: string;
+  listingID?: string;
   onClose: () => void;
 }
 
@@ -82,11 +82,11 @@ export default function ReserveModal({
       push('/auth/login');
       return;
     }
-    //! TODO:
+
     // save reservation data and open payment screen
     const newReservationID = await createListingReservation({
       userID: user?.$id,
-      listingID,
+      listingID: listingID,
       totalPrice,
       reservationStatus: 'draft',
       startDate: selectedDateRange.startDate,

@@ -6,6 +6,7 @@ import { FaRegBookmark } from 'react-icons/fa';
 import { FcLike, FcLikePlaceholder } from 'react-icons/fc';
 
 import { timeAgo } from '@/lib/date';
+import logger from '@/lib/logger';
 
 import { updateListingById } from '@/database/listing';
 import { AllFlatTypes } from '@/datas/flatTypes';
@@ -46,7 +47,7 @@ export const FlatCardV1 = ({ data }: { data: Listing }) => {
         const _gallery: Iroom[] = JSON.parse(data!.gallery.toString());
         setGallery(_gallery);
       } catch (error) {
-        console.warn('Listing Gallery load failed');
+        logger('Listing Gallery load failed');
       }
     };
     decodeGallery();
@@ -177,13 +178,13 @@ export const FlatCardV1 = ({ data }: { data: Listing }) => {
             </IconButton> */}
           </div>
           <div className='space-x-2'>
-            <Button
+            {/* <Button
               variant='contained'
               className='bg-secondary-main !text-whtie relative top-1 h-[30px]'
               onClick={handleReserveClick}
             >
               Reserve
-            </Button>
+            </Button> */}
             <Button
               variant='outlined'
               className='relative top-1 h-[30px]'

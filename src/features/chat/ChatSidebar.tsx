@@ -48,9 +48,10 @@ export default function ChatSidebar() {
         const payload: any = update.payload;
         if (payload.updateType === 'Message') loadConversations();
 
-        if (payload.updateType === 'Notification') {
-          console.log('refresh notification.. ');
-        }
+        //! FUTUREUPDATE - push notification
+        // if (payload.updateType === 'Notification') {
+        //   logger('refresh notification.. ');
+        // }
       }
     );
 

@@ -11,6 +11,8 @@ export const getCommentsByListingID = async (listingID) => {
     Query.equal('listingID', listingID),
   ]);
 
+  if (comments.total < 1) return [];
+
   const userIds = comments.documents.map((res) => res.userID);
 
   const _profiles = await databases.listDocuments(DATABASE_ID, PROFILES_ID, [

@@ -72,8 +72,19 @@ export default function FlatSidebar({ listing }: { listing }) {
             </div>
           </div>
         </div>
-        <div>
-          <Button variant='contained' onClick={handleOpenTourModal}>
+        <div className='space-y-4'>
+          <Button
+            variant='contained'
+            className='bg-secondary-main !text-whtie relative top-1 h-[30px] w-full'
+            // onClick={handleReserveClick}
+          >
+            Reserve
+          </Button>
+          <Button
+            variant='contained'
+            onClick={handleOpenTourModal}
+            className='w-full'
+          >
             Request A Tour
           </Button>
         </div>

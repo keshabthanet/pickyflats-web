@@ -1,5 +1,6 @@
 import { Alert, AlertTitle, Button, IconButton } from '@mui/material';
 import React from 'react';
+import { IoInformationOutline } from 'react-icons/io5';
 
 import DashboardLayout from '@/components/layout/DashboardLayout';
 
@@ -7,11 +8,9 @@ import useAuthStore from '@/store/useAuthStore';
 
 import withAuth, { WithAuthProps } from '@/hoc/withAuth';
 import { SummaryCard } from '@/pageComponents/dashboard/cards/SummaryCards';
-import { IoInformationCircle, IoInformationOutline } from 'react-icons/io5';
 
 export default function DashboardPage() {
   const { user } = useAuthStore();
-  console.log(user);
   return (
     <div className='relative h-full w-full overflow-y-scroll p-5'>
       <div className=' '>
