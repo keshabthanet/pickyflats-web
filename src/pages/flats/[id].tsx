@@ -13,6 +13,7 @@ import { AllFlatTypes } from '@/datas/flatTypes';
 import MainLayout from '@/components/layout/MainLayout';
 
 import { useFlatStore } from '@/store/flatStore';
+import useListingStore from '@/store/useListingStore';
 import useSnackbarStore from '@/store/useSnackbarStore';
 
 import { Comment } from '@/features/Comment';
@@ -39,6 +40,7 @@ export const DetailView = () => {
   const [loading, setLoading] = useState(true);
   const [listing, setListing] = useState<Listing>();
   const { gallery, buildingAmenities } = useFlatStore();
+  const { setComments } = useListingStore();
 
   const [bgImage, setBgImage] = useState('');
 
@@ -66,7 +68,6 @@ export const DetailView = () => {
       const flatData = await fetchListingById(id);
       setListing(flatData);
     } catch (error) {
-      console.log('?  erro ? ', error);
       openSnackbar('Failed to query for request flat', 'error');
       // push('/');
     } finally {
@@ -78,6 +79,11 @@ export const DetailView = () => {
     if (!id) return;
     fetchFlatData();
   }, [id]);
+
+  // cleanup for store data
+  useEffect(() => {
+    return () => setComments(null);
+  }, []);
 
   const flatType = AllFlatTypes.find((i) => i.id === listing?.flatTypes[0]);
 
@@ -238,7 +244,7 @@ export const DetailView = () => {
               <Map />
             </section>
             <section id='comment'>
-              <Comment />
+              <Comment listingID={listing?.$id} />
             </section>
           </div>
         </div>

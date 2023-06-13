@@ -18,6 +18,10 @@ export const DATABASE_ID =
 //table IDs
 export const LISTINGS_ID =
   appwriteConfig[ENV_MODE].collections.LISTINGS_ID || 'listings';
+
+export const COMMENTS_ID =
+  appwriteConfig[ENV_MODE].collections.COMMENTS_ID || 'comments';
+
 export const LISTINGCOSTS_ID =
   appwriteConfig[ENV_MODE].collections.LISTINGCOSTS_ID || 'listingCosts';
 
