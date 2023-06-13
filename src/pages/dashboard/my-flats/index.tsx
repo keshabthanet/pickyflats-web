@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { AddFlatModal } from '@/features/my-flats/Modal/AddFlatModal';
-import { FlatListCard } from '@/pageComponents/dashboard/cards/FlatListCard';
+import { FlatListCard } from '@/pageComponents/dashboard/cards/MyFlatListCard';
 
 export default function MyFlats() {
   return (

@@ -58,6 +58,8 @@ export const fetchListingsByUserId = async (userID) => {
     // Query.search('userID', userID), // ! try on production
   ]);
 
+  if (_listings.total < 1) return [];
+
   const listingsIds = [
     ...new Set(_listings.documents.flatMap((res) => res.$id)),
   ];

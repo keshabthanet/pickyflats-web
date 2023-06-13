@@ -67,7 +67,7 @@ export const AddRoomModal = () => {
               />
               <Uploader onSuccess={(imgs) => setImages(imgs ?? [])} />
             </div>
-            <div className='m-auto flex w-[80%] flex-row-reverse gap-5 text-right'>
+            <div className='m-auto flex w-[80%] flex-row-reverse gap-5 pb-4 text-right'>
               <Button variant='contained' onClick={() => saveRoom()}>
                 Save Room
               </Button>

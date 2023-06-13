@@ -113,6 +113,7 @@ type Actions = {
 
   setSteps: (steps: number) => void;
   setOpenAppModal: (open: boolean) => void;
+  reset: () => void;
 };
 
 export const useFlatStore = create<Store & Actions>()(
@@ -163,6 +164,27 @@ export const useFlatStore = create<Store & Actions>()(
 
       setSteps: (steps: number) => set({ steps }),
       setOpenAppModal: (openAppModal: boolean) => set({ openAppModal }),
+      reset: () =>
+        set({
+          flatTypes: [1],
+          buildingAmenities: [],
+          flatAmenities: [],
+          flatPolicies: [],
+          gallery: [],
+          costs: { currency: 'NPR' },
+          basics: { room: 0, bathroom: 0, kitchen: 0 },
+          contactAndLocation: {
+            sellerCountry: '',
+            sellerCity: '',
+            sellerEmail: '',
+            sellerContact: '',
+            flatCountry: '',
+            flatCity: '',
+            flatStreet1: '',
+            flatStreet2: '',
+            flatGeo: [],
+          },
+        }),
     }),
     {
       name: 'flat-store',

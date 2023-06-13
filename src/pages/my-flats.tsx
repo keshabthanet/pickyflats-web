@@ -2,24 +2,32 @@ import { Alert, AlertTitle, Button } from '@mui/material';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 
+import { isEmptyArray } from '@/lib/helper';
+
 import { fetchListingsByUserId } from '@/database/listings';
 
 import DashboardLayout from '@/components/layout/DashboardLayout';
+import Loader from '@/components/Loader';
 import Modal from '@/components/Modal';
 
 import useAuthStore from '@/store/useAuthStore';
+import useListingsStore from '@/store/useListingsStore';
+import useSnackbarStore from '@/store/useSnackbarStore';
 
-import { MyFlatCard } from '@/features/FlatCard/MyFlatCard';
 import { AddFlatModal } from '@/features/my-flats/Modal/AddFlatModal';
 // import VerificationRequestModal from '@/features/profileVerification/VerificationModal';
 import withAuth, { WithAuthProps } from '@/hoc/withAuth';
+import { MyFlatListCard } from '@/pageComponents/dashboard/cards/MyFlatListCard';
 
 import { Listing } from '@/types/listing';
-import { FlatListCard } from '@/pageComponents/dashboard/cards/FlatListCard';
 export default function MyFlats() {
   const {
     query: { newListing },
   } = useRouter();
+
+  const { refreshCount } = useListingsStore();
+
+  const [loading, setLoading] = useState(true);
 
   const [open, setOpen] = useState(false);
   const handleClose = () => {
@@ -28,16 +36,23 @@ export default function MyFlats() {
 
   const { user } = useAuthStore();
   const [myFlats, setMyFlats] = useState<Listing[]>([]);
+  const { openSnackbar } = useSnackbarStore();
 
   const fetchMyListingsData = async () => {
-    const myFlats = await fetchListingsByUserId(user?.$id);
-    setMyFlats(myFlats);
+    try {
+      const myFlats = await fetchListingsByUserId(user?.$id);
+      setMyFlats(myFlats);
+    } catch (error) {
+      openSnackbar('Failed to fetch my listings', 'error');
+    } finally {
+      setLoading(false);
+    }
   };
+
   useEffect(() => {
     fetchMyListingsData();
-  }, []);
-  // const
-  // TODO: refresh fetched myflat data on listing created
+  }, [refreshCount]);
+
   return (
     <div className='w-full p-5'>
       <Alert severity='info' className='kdj'>
@@ -69,23 +84,34 @@ export default function MyFlats() {
         <div>
           <AddFlatModal
             openListingModal={Boolean(newListing)}
-            // onListingCreated={() => }
+            onListingCreated={fetchMyListingsData}
           />
         </div>
       </div>
 
       <div>
-        <div className='flex flex-wrap gap-9 py-9'>
-          <FlatListCard data={null} />
-          <FlatListCard data={null} />
+        {loading && (
+          <div className='py-4'>
+            <Loader />
+          </div>
+        )}
 
-          <FlatListCard data={null} />
+        <div className='flex flex-wrap gap-9 py-9'>
+          {myFlats.map((item, i) => (
+            <MyFlatListCard data={item} key={i} />
+          ))}
+          {!loading && isEmptyArray(myFlats) && (
+            <div className='flex flex-col'>
+              <h4 className=' text-secondary-main text-xl font-semibold'>
+                No Listings Found
+              </h4>
+              <div>
+                You have not posted any flat listings yet. Start by creating a
+                new listing to showcase your flats for rent.
+              </div>
+            </div>
+          )}
         </div>
-      </div>
-      <div className='mt-5 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3'>
-        {myFlats.map((item, i) => (
-          <MyFlatCard item={item} key={i} />
-        ))}
       </div>
     </div>
   );
