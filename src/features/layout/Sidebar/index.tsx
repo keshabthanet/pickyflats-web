@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
-import { BsBuildingCheck, BsBuildings } from 'react-icons/bs';
+import { BsBuildingCheck, BsBuildingLock, BsBuildings } from 'react-icons/bs';
 import { FiMessageCircle } from 'react-icons/fi';
 import { RxActivityLog, RxDashboard } from 'react-icons/rx';
 import { TbBuildingCarousel } from 'react-icons/tb';
@@ -37,7 +37,7 @@ export default function DashboardSidebar() {
     updateForLargeScreen();
   }, [isLargeScreen]);
 
-  const offsetToNav = native ? '72px' : 0;
+  const offsetToNav = native ? '72px' : '0px';
 
   return (
     <Drawer
@@ -130,6 +130,21 @@ function SidebarDrawerContainer({ native }: { native }) {
           >
             <RxActivityLog className='h-5 w-5' />
             <span className='ml-3'>Activities</span>
+          </Link>
+        </li>
+        <li>
+          <Link
+            href='/bookings'
+            className={`flex items-center rounded-lg p-2 text-sm font-normal text-gray-500 no-underline hover:bg-[#F2F2FE] 
+                ${
+                  isActiveRoute('/bookings')
+                    ? 'bg-[#F2F2FF] !font-medium text-[#6D67E4]'
+                    : ''
+                }
+            `}
+          >
+            <BsBuildingLock className='h-5 w-5' />
+            <span className='ml-3'>My Booking</span>
           </Link>
         </li>
         <li>

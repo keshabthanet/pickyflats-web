@@ -1,14 +1,10 @@
-import { AppwriteException, Query } from 'appwrite';
+import { AppwriteException } from 'appwrite';
 import { useRouter } from 'next/router';
 import React, { useEffect, useRef } from 'react';
 
-import {
-  CONVERSATIONS_ID,
-  DATABASE_ID,
-  databases,
-  MESSAGES_ID,
-  PROFILES_ID,
-} from '@/lib/client';
+import { getConversationByID } from '@/database/conversation';
+import { getMessagesByConversation } from '@/database/message';
+import { getUserProfileForChat } from '@/database/profile';
 
 import DashboardLayout from '@/components/layout/DashboardLayout';
 import LightboxModal from '@/components/LightboxModal';
@@ -24,8 +20,6 @@ import ChatMessages from '@/features/chat/ChatMessages';
 import ChatSidebar from '@/features/chat/ChatSidebar';
 import ChatInputMessage from '@/features/chat/InputMessage';
 import withAuth, { WithAuthProps } from '@/hoc/withAuth';
-
-import { Message } from '@/types/message';
 
 export default function UserMessagePage() {
   const {
@@ -51,11 +45,7 @@ export default function UserMessagePage() {
   } = useLightBoxStore();
 
   const fetchConversation = async () => {
-    const _conversation = await databases.getDocument(
-      DATABASE_ID,
-      CONVERSATIONS_ID,
-      conversationId!.toString()
-    );
+    const _conversation = await getConversationByID(conversationId!.toString());
     // push to messages if not exits
     if (!_conversation) {
       push('/messages');
@@ -69,22 +59,14 @@ export default function UserMessagePage() {
     }
 
     // fetch chat user
-    const _chatUser = await databases.getDocument(
-      DATABASE_ID,
-      PROFILES_ID,
-      _chatUserId,
-      [Query.select(['name', 'profile_img', 'listenerID', 'lastActivity'])]
-    );
+    const _chatUser = await getUserProfileForChat(_chatUserId);
+
     setChatUser(_chatUser);
     setLoading(false);
 
     // load messages only after fetching chat user
-    const _messages = await databases.listDocuments<Message>(
-      DATABASE_ID,
-      MESSAGES_ID,
-      [Query.equal('conversationID', conversationId)]
-    );
-    setMessages(_messages.documents);
+    const _messages = await getMessagesByConversation(conversationId);
+    setMessages(_messages);
   };
 
   useEffect(() => {

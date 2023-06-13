@@ -3,8 +3,6 @@ import { MobileDateTimePicker } from '@mui/x-date-pickers';
 import React, { useState } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 
-import { functions } from '@/lib/client';
-
 import { createRequestForTour } from '@/database/tourRequests';
 
 import useAuthStore from '@/store/useAuthStore';
@@ -19,9 +17,11 @@ interface ModalProps {
   // open?: boolean;
   onClose: () => void;
   listingID: string;
+  sellerID?: string;
 }
 
 export default function RequestForTourModal({
+  sellerID,
   listingID,
   onClose,
 }: ModalProps) {
@@ -43,11 +43,12 @@ export default function RequestForTourModal({
         listingID,
         pickedDate: data.date,
         note: data.note,
+        sellerID: sellerID,
       });
-      await functions.createExecution(
-        'tourNotification',
-        JSON.stringify({ tourID: newTourID })
-      );
+      // await functions.createExecution(
+      //   'tourNotification',
+      //   JSON.stringify({ tourID: newTourID })
+      // );
       onClose();
       openSnackbar('Your tour request has been sent successfully!');
     } catch (error) {

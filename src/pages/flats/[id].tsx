@@ -23,7 +23,7 @@ import { ImageCard } from '@/features/my-flats/cards/ImageCard';
 import withAuth, { WithAuthProps } from '@/hoc/withAuth';
 import { AllAmenities } from '@/pageComponents/flats/AllAmenities';
 import { Costs } from '@/pageComponents/flats/Costs';
-import FlatSidebar from '@/pageComponents/flats/flat/Sidebar';
+import FlatSidebar from '@/pageComponents/flats/flat/FlatSidebar';
 import { GalleryModal } from '@/pageComponents/flats/GalleryModal';
 import { Policies } from '@/pageComponents/flats/Policies';
 

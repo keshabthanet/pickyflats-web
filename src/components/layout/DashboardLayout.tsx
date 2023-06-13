@@ -37,7 +37,7 @@ function DashboardLayout(props: Props) {
         className='relative flex flex-col pt-[50px] md:pt-[70px]'
         style={{
           marginLeft: !isMediumScreen && isOpen && native ? 240 : 0,
-          height: isMediumScreen ? '100%' : 'calc(100vh - 70px)',
+          height: isMediumScreen ? '100%' : '100vh',
         }}
       >
         {children}
