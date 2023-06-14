@@ -2,6 +2,8 @@ import { AppwriteException } from 'appwrite';
 import { useRouter } from 'next/router';
 import React, { useEffect, useRef } from 'react';
 
+import useResponsive from '@/hooks/useResponsive';
+
 import { getConversationByID } from '@/database/conversation';
 import { getMessagesByConversation } from '@/database/message';
 import { getUserProfileForChat } from '@/database/profile';
@@ -94,10 +96,11 @@ export default function UserMessagePage() {
     }
   };
 
+  const isLargeScreen = useResponsive('up', 'lg');
   return (
     <>
-      <div className='flex h-full'>
-        <ChatSidebar />
+      <div className='flex h-[calc(100vh-70px)] max-md:h-[calc(100vh-50px)]'>
+        {isLargeScreen && <ChatSidebar />}
         <div className='relative flex w-full flex-col'>
           {chatUser && <ChatActiveHeader user={chatUser} />}
           <div

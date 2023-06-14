@@ -15,13 +15,15 @@ import MessageItem from '@/components/chat/MessageItem';
 import useChatStore from '@/store/useChatStore';
 import useLightBoxStore from '@/store/useLightBoxStore';
 
+import { UserProfile } from '@/types/user';
+
 export default function ChatMessages({
   conversationId,
   chatUser,
   cbOnNewMessage,
 }: {
   conversationId;
-  chatUser?;
+  chatUser?: UserProfile;
   cbOnNewMessage?: () => void;
 }) {
   const { messages, onNewMessage } = useChatStore();

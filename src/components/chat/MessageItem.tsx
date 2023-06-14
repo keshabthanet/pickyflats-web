@@ -18,10 +18,11 @@ import useSnackbarStore from '@/store/useSnackbarStore';
 import MessageAttachment from '@/features/chat/MessageAttachment';
 
 import { Message } from '@/types/message';
+import { UserProfile } from '@/types/user';
 
 interface IProps {
   index: number;
-  chatUser: any;
+  chatUser?: UserProfile;
   message: Message;
 }
 
@@ -34,7 +35,7 @@ export default function MessageItem({ index, chatUser, message }: IProps) {
 
   const chatUserAvatar = storage.getFilePreview(
     PROFILES_BUCKET,
-    chatUser?.profile_img
+    chatUser?.profile_img ?? ''
   );
 
   const { openSnackbar } = useSnackbarStore();
