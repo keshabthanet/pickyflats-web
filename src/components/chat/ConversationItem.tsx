@@ -6,18 +6,20 @@ import { timeAgo } from '@/lib/date';
 
 import useAuthStore from '@/store/useAuthStore';
 
-export default function ConversationItem({ item }: { item?: any }) {
+import { Conversation } from '@/types/conversation';
+
+export default function ConversationItem({ item }: { item?: Conversation }) {
   const { user } = useAuthStore();
   const avatar = storage.getFilePreview(
     PROFILES_BUCKET,
-    item?.participant?.profile_img
+    item?.participant?.profile_img ?? ''
   );
 
   const lastActivityDate = item?.participant?.lastActivity
     ? new Date(item?.participant.lastActivity)
     : null;
   const differenceInMinutes = lastActivityDate
-    ? (new Date().getTime() - lastActivityDate!.getTime()) / (1000 * 60)
+    ? (new Date().getTime() - lastActivityDate?.getTime()) / (1000 * 60)
     : null;
 
   const userActive =
@@ -50,7 +52,7 @@ export default function ConversationItem({ item }: { item?: any }) {
         </p>
       </div>
       <div className='ml-auto text-sm text-gray-500'>
-        {timeAgo(new Date(item?.lastUpdated || item?.$updatedAt))}
+        {timeAgo(new Date((item?.lastUpdated || item?.$updatedAt) ?? ''))}
       </div>
     </div>
   );

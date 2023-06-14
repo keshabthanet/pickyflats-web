@@ -1,7 +1,5 @@
 import { IconButton } from '@mui/material';
 import { AiTwotoneLike } from 'react-icons/ai';
-import { FcComments, FcLike } from 'react-icons/fc';
-import { GiScalpelStrike } from 'react-icons/gi';
 
 export const LikeActivityCard = () => {
   return (

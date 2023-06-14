@@ -75,7 +75,7 @@ export default function ChatSidebar() {
   }, [searchActive]);
 
   return (
-    <div className='flex w-1/4 flex-col border-r border-solid p-1'>
+    <div className='flex w-1/4 flex-col border-r border-solid p-1 max-md:w-full'>
       <div className='flex'>
         <div className='text-text-secondary-default px-2 text-xl font-medium'>
           Messages

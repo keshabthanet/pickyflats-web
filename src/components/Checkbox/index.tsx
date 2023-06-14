@@ -1,10 +1,10 @@
 import { Checkbox as MuiCheckbox, FormControlLabel } from '@mui/material';
 import React from 'react';
-import { Controller } from 'react-hook-form';
+import { Control, Controller } from 'react-hook-form';
 
 interface Iprops {
   name: string;
-  control: any;
+  control: Control;
   label: React.ReactElement | string;
 }
 

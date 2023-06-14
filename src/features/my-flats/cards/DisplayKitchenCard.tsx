@@ -1,5 +1,4 @@
 import { IconButton } from '@mui/material';
-import Image from 'next/image';
 import { useState } from 'react';
 import { AiFillDelete } from 'react-icons/ai';
 
@@ -7,8 +6,8 @@ import { Iroom } from '@/store/flatStore';
 import { useFlatStore } from '@/store/flatStore';
 
 import Dialog from '@/features/Dialog';
-import { EditKitchenModal } from '@/features/my-flats/gallery/modal/EditKitchenModal';
 import { ImageCard } from '@/features/my-flats/cards/ImageCard';
+import { EditKitchenModal } from '@/features/my-flats/gallery/modal/EditKitchenModal';
 
 interface Iprop {
   data: Iroom;

@@ -1,4 +1,4 @@
-import { Divider, Drawer, useMediaQuery, useTheme } from '@mui/material';
+import { Divider, Drawer, useTheme } from '@mui/material';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -8,6 +8,8 @@ import { FiMessageCircle } from 'react-icons/fi';
 import { RxActivityLog, RxDashboard } from 'react-icons/rx';
 import { TbBuildingCarousel } from 'react-icons/tb';
 
+import useResponsive from '@/hooks/useResponsive';
+
 import useDrawerStore from '@/store/useDrawerStore';
 
 const drawerWidth = 240;
@@ -15,8 +17,8 @@ const drawerWidth = 240;
 export default function DashboardSidebar() {
   const { close, isOpen, open, native, setNative } = useDrawerStore();
   const theme = useTheme();
-  const isMediumScreen = useMediaQuery(theme.breakpoints.down('md'));
-  const isLargeScreen = useMediaQuery(theme.breakpoints.up('lg'));
+  const isLargeScreen = useResponsive('up', 'lg');
+  const isMediumScreen = useResponsive('down', 'md');
 
   const updateSidebarView = () => {
     isMediumScreen && !isLargeScreen && close();
@@ -30,7 +32,7 @@ export default function DashboardSidebar() {
 
   const updateForLargeScreen = () => {
     isLargeScreen && native && open();
-    setNative(isLargeScreen);
+    setNative(Boolean(isLargeScreen));
   };
 
   useEffect(() => {

@@ -1,5 +1,7 @@
 import React from 'react';
 
+import useResponsive from '@/hooks/useResponsive';
+
 import DashboardLayout from '@/components/layout/DashboardLayout';
 
 import ChatSidebar from '@/features/chat/ChatSidebar';
@@ -16,16 +18,20 @@ export default function MessagesPage() {
     }
   };
 
+  const isLargeScreen = useResponsive('up', 'lg');
+
   return (
-    <div className='flex h-full'>
+    <div className='flex h-[calc(100vh-70px)] max-md:h-[calc(100vh-50px)]'>
       <ChatSidebar />
-      <div className='relative flex w-full flex-col'>
-        <div className='flex flex-1 flex-col space-y-4 overflow-y-auto px-4'>
-          <div className='m-auto text-2xl font-medium'>
-            Find Your Perfect Home, Chat with Confidence
+      {isLargeScreen && (
+        <div className='relative flex w-full flex-col max-md:hidden'>
+          <div className='flex flex-1 flex-col space-y-4 overflow-y-auto px-4'>
+            <div className='m-auto text-2xl font-medium'>
+              Find Your Perfect Home, Chat with Confidence
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

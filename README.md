@@ -1,8 +1,6 @@
 # PickyFlats - Flat/Apartments Rental web app
 
-
 ## Features
-
 
 ## Tech Stacks
 
