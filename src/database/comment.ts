@@ -3,7 +3,13 @@ import { ID, Query } from 'appwrite';
 import { COMMENTS_ID, DATABASE_ID, databases, PROFILES_ID } from '@/lib/client';
 
 export const postComment = async (data) => {
-  await databases.createDocument(DATABASE_ID, COMMENTS_ID, ID.unique(), data);
+  const newComment = await databases.createDocument(
+    DATABASE_ID,
+    COMMENTS_ID,
+    ID.unique(),
+    data
+  );
+  return newComment.$id;
 };
 
 export const getCommentsByListingID = async (listingID) => {

@@ -306,7 +306,7 @@ export const DetailView = () => {
                 </section>
               )}
               <section id='comment'>
-                <Comment listingID={listing?.$id} />
+                <Comment listingID={listing?.$id} sellerID={listing?.userID} />
               </section>
             </div>
           </div>

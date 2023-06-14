@@ -10,7 +10,13 @@ import useSnackbarStore from '@/store/useSnackbarStore';
 
 import CommentBoxCard from '@/features/Comment/cards/CommentBoxCard';
 
-export const Comment = ({ listingID }: { listingID?: string }) => {
+export const Comment = ({
+  listingID,
+  sellerID,
+}: {
+  listingID?: string;
+  sellerID?: string;
+}) => {
   const [showReplyBox, setShowReplyBox] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -103,7 +109,7 @@ export const Comment = ({ listingID }: { listingID?: string }) => {
         })}
       </div>
       <div className='my-9'>
-        <CommentBoxCard listingID={listingID} />
+        <CommentBoxCard listingID={listingID} sellerID={sellerID} />
       </div>
     </div>
   );
