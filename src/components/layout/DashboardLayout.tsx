@@ -25,27 +25,31 @@ function DashboardLayout(props: Props) {
   const sidebarOverflow = !isLargeScreen && isOpen;
   return (
     <div className='flex flex-col'>
-      <div className='fixed top-0 z-[401] w-full'>
+      <div className='fixed top-0 z-[401] h-[90px] w-full'>
         <NavBar />
       </div>
-      <DashboardSidebar />
+      <div className='h-[90vh] w-full'>
+        <div className=' z-50'>
+          <DashboardSidebar />
+        </div>
 
-      <div
-        className='relative flex flex-col pt-[50px] md:pt-[70px]'
-        style={{
-          marginLeft: !isMediumScreen && isOpen && native ? 240 : 0,
-          height: isMediumScreen ? '100%' : '100vh',
-        }}
-      >
-        {children}
-        {sidebarOverflow && (
-          <div
-            onClick={close}
-            className='fixed inset-0 z-[402] bg-gray-900 bg-opacity-50'
-          ></div>
-        )}
+        <div
+          className='relative flex flex-col overflow-y-scroll pt-[50px] md:pt-[70px]'
+          style={{
+            marginLeft: !isMediumScreen && isOpen && native ? 240 : 0,
+            height: isMediumScreen ? '100%' : '100vh',
+          }}
+        >
+          {children}
+          {sidebarOverflow && (
+            <div
+              onClick={close}
+              className='fixed inset-0 z-[402] bg-gray-900 bg-opacity-50'
+            ></div>
+          )}
+        </div>
       </div>
-      {props.footer && <div>footer</div>}
+      {/* {props.footer && <div>footer</div>} */}
     </div>
   );
 }
