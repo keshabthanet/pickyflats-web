@@ -184,8 +184,20 @@ export const DetailView = () => {
     openSnackbar(`Sharing for flatmate feature is not available`, 'info');
   };
 
-  const handleReserveClick = () => setReserveModal(true);
-  const handleOpenTourModal = () => setTourModal(true);
+  const handleReserveClick = () => {
+    if (!user) {
+      openSnackbar('Please login to use this feature!', 'info');
+      return;
+    }
+    setReserveModal(true);
+  };
+  const handleOpenTourModal = () => {
+    if (!user) {
+      openSnackbar('Please login to use this feature!', 'info');
+      return;
+    }
+    setTourModal(true);
+  };
 
   return (
     <>
@@ -202,6 +214,7 @@ export const DetailView = () => {
               <div className='flex flex-grow font-semibold md:hidden'>
                 <span className='flex-grow'>
                   {' '}
+                  {/* //!FUTURE: priorite cost with available type */}
                   {listing?.costs?.currency} {listing?.costs?.monthlyCost}
                 </span>{' '}
                 <div className='space-x-2'>

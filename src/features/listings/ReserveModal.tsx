@@ -65,9 +65,14 @@ export default function ReserveModal({
 
       if (dayCount && listing.costs?.monthlyCost) {
         //TODO: count same day rate?
-        setTotalPrice((dayCount + 1) * listing.costs.monthlyCost);
+        const _totalPrice = (dayCount + 1) * listing.costs.monthlyCost;
+        setTotalPrice((_totalPrice * 10) / 100);
       } else {
-        setTotalPrice(listing.costs?.monthlyCost || 0);
+        setTotalPrice(
+          listing.costs?.monthlyCost
+            ? (listing.costs?.monthlyCost * 10) / 100
+            : 0
+        );
       }
     }
   }, [selectedDateRange]);

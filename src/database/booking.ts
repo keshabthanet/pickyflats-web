@@ -31,7 +31,7 @@ export const getReservedListingsForUser = async (userID) => {
   const listingsIds = [
     ...new Set(reservations.documents.flatMap((res) => res.listingID)),
   ];
-  // console.log("reservations? ", reservations)
+
   // find all the reserved listings
   const listings = await databases.listDocuments(DATABASE_ID, LISTINGS_ID, [
     Query.equal('$id', listingsIds),
@@ -55,5 +55,13 @@ export const updateReservationById = async (reservationID, data) => {
     RESERVATIONS_ID,
     reservationID,
     data
+  );
+};
+
+export const getReservationById = async (reservationID) => {
+  return await databases.getDocument(
+    DATABASE_ID,
+    RESERVATIONS_ID,
+    reservationID
   );
 };

@@ -1,13 +1,16 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Button } from '@mui/material';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 
-import { updateReservationById } from '@/database/booking';
+import { getReservationById, updateReservationById } from '@/database/booking';
+import { updateListingById } from '@/database/listing';
 
 import Loader from '@/components/Loader';
 import Modal from '@/components/Modal';
 
 import useAuthStore from '@/store/useAuthStore';
+import useSnackbarStore from '@/store/useSnackbarStore';
 
 export default function ReservationEssential() {
   const [open, setOpen] = useState(false);
@@ -18,6 +21,8 @@ export default function ReservationEssential() {
     query: { reserved, reservationID, payment_intent, redirect_status },
     push,
   } = useRouter();
+
+  const { openSnackbar } = useSnackbarStore();
 
   //
   const handlePostReservation = async () => {
@@ -33,11 +38,15 @@ export default function ReservationEssential() {
 
       // hide reserved flat from listing
       if (isReserved) {
-        //
+        // get listing using reservationID and update listing - isListed
+        const reservation = await getReservationById(reservationID);
+        await updateListingById(reservation.listingID, { isListed: false });
         setReservationSucceed(true);
       }
+      //
     } catch {
       // con
+      openSnackbar('Reservation failed', 'error');
     } finally {
       setLoading(false);
     }
@@ -47,7 +56,7 @@ export default function ReservationEssential() {
     if (!reserved) return;
     setOpen(true);
     if (reserved) handlePostReservation();
-  }, [handlePostReservation, reserved]);
+  }, [reserved]);
 
   if (!isAuthenticated) return <></>;
 

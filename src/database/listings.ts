@@ -16,6 +16,7 @@ interface ListingFetchProps {
 //! TODO: fetch by recent & flat type
 export const fetchListings = async (props?: ListingFetchProps) => {
   const _listings = await databases.listDocuments(DATABASE_ID, LISTINGS_ID, [
+    Query.equal('isListed', true),
     // Query.equal('userID', [userID]),
     // ...(props?.byFlatType
     //   ? [Query.equal('flatTypes', props.byFlatType as any)]
