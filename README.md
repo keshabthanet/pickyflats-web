@@ -1,10 +1,11 @@
 # PickyFlats - Flat/Apartments Rental web app
 
-## Features
+- PickyFlats is a web-based rental platform connecting renters with flats and apartments.
 
 ## Tech Stacks
 
 - ⚡️ Next.js 13
 - ⚛️ React 18
 - ✨ TypeScript
-- 💨 Tailwind CSS 3
+- 💨 Tailwind CSS / MUI - (Material UI)
+- ⚡️ Appwrite Cloud
