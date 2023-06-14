@@ -78,6 +78,8 @@ export interface IcontactAndLocation {
 type Store = {
   purpose: 'sell' | 'rent';
   flatTypes: number[];
+  flatGeo: GLfloat[];
+  flatMapLocation: string;
 
   buildingAmenities: Array<Iamenities>;
   flatAmenities: Array<Iamenities>;
@@ -98,6 +100,8 @@ type Store = {
 type Actions = {
   setPurpose: (purpose: 'sell' | 'rent') => void;
   setFlatTypes: (flatIds: number[]) => void;
+  setFlatGeo: (flatgeo: GLfloat[]) => void;
+  setFlatMapLocation: (type: string) => void;
 
   setBuildingAmenities: (amenities: Array<Iamenities>) => void;
   setFlatAmenities: (amenities: Array<Iamenities>) => void;
@@ -121,10 +125,13 @@ export const useFlatStore = create<Store & Actions>()(
     (set) => ({
       purpose: 'rent',
       flatTypes: [1],
+      flatGeo: [0.0, 0.0],
       buildingAmenities: [],
       flatAmenities: [],
       flatPolicies: [],
       gallery: [],
+
+      flatMapLocation: '',
 
       costs: { currency: '$' },
       basics: { room: 0, bathroom: 0, kitchen: 0 },
@@ -146,6 +153,10 @@ export const useFlatStore = create<Store & Actions>()(
 
       setPurpose: (purpose: 'sell' | 'rent') => set({ purpose }),
       setFlatTypes: (flatTypes: number[]) => set({ flatTypes }),
+      setFlatGeo: (flatgeo: GLfloat[]) => set({ flatGeo: flatgeo }),
+
+      setFlatMapLocation: (l: string) => set({ flatMapLocation: l }),
+
       setBuildingAmenities: (amenities: Array<Iamenities>) =>
         set({ buildingAmenities: [...amenities] }),
       setFlatAmenities: (amenities: Array<Iamenities>) =>

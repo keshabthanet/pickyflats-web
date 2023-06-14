@@ -21,7 +21,7 @@ const ContactAndLocation = () => {
     },
   });
 
-  const { contactAndLocation } = useFlatStore();
+  const { contactAndLocation, flatMapLocation } = useFlatStore();
 
   return (
     <>
@@ -104,8 +104,8 @@ const ContactAndLocation = () => {
 
             {contactAndLocation.flatStreet2 && (
               <div className='flex'>
-                <IconButton className=' '>
-                  <FaStreetView className='' />
+                <IconButton>
+                  <FaStreetView />
                 </IconButton>
                 <span className='relative top-[10px] text-base font-semibold capitalize text-black opacity-80 '>
                   {contactAndLocation.flatStreet2}
@@ -113,16 +113,17 @@ const ContactAndLocation = () => {
               </div>
             )}
             <Divider />
-            {contactAndLocation.flatGeo && (
-              <div className='flex items-center'>
+            {
+              <div className='my-3 flex items-center'>
                 <IconButton className=' '>
                   <FaMapMarker className='text-sm' />
                 </IconButton>
                 <span className='relative text-base font-semibold capitalize text-black opacity-80 '>
-                  {contactAndLocation.flatGeo?.join(',')}
+                  {/* {contactAndLocation.flatGeo?.join(',')} */}
+                  {String(flatMapLocation)}
                 </span>
               </div>
-            )}
+            }
           </div>
         </div>
       </div>

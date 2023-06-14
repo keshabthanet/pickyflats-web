@@ -18,7 +18,7 @@ const negotiabilityOptions = [
 export const AddPricing = () => {
   const [open, setOpen] = useState(false);
 
-  const { costs, setCosts } = useFlatStore();
+  const { costs, setCosts, purpose } = useFlatStore();
 
   const {
     handleSubmit,
@@ -138,33 +138,39 @@ export const AddPricing = () => {
                 />
               </div>
 
-              <div>
-                <TextField
-                  name='purchaseCost'
-                  type='number'
-                  placeholder=' Purchase Cost'
-                  control={control}
-                  label='Purchase Cost'
-                />
-              </div>
-              <div>
-                <TextField
-                  name='monthlyCost'
-                  type='number'
-                  placeholder=' Monthly Rent'
-                  control={control}
-                  label='Monthly Rent'
-                />
-              </div>
-              <div>
-                <TextField
-                  name='yearlyCost'
-                  type='number'
-                  placeholder=' Yearly Cost'
-                  control={control}
-                  label='Yearly Cost'
-                />
-              </div>
+              {purpose == 'sell' && (
+                <div>
+                  <TextField
+                    name='purchaseCost'
+                    type='number'
+                    placeholder=' Purchase Cost'
+                    control={control}
+                    label='Purchase Cost'
+                  />
+                </div>
+              )}
+              {purpose == 'rent' && (
+                <div>
+                  <TextField
+                    name='monthlyCost'
+                    type='number'
+                    placeholder=' Monthly Rent'
+                    control={control}
+                    label='Monthly Rent'
+                  />
+                </div>
+              )}
+              {purpose == 'rent' && (
+                <div>
+                  <TextField
+                    name='yearlyCost'
+                    type='number'
+                    placeholder=' Yearly Rent'
+                    control={control}
+                    label='Yearly Cost'
+                  />
+                </div>
+              )}
               <div>
                 <TextField
                   name='utilityCost'
