@@ -6,18 +6,30 @@ import Modal from '@/components/Modal';
 import useAuthStore from '@/store/useAuthStore';
 import useSnackbarStore from '@/store/useSnackbarStore';
 
+import ReserveModal from '@/features/listings/ReserveModal';
 import RequestForTourModal from '@/features/tour-request/RequestForTourModal';
 
 export default function FlatSidebar({ listing }: { listing }) {
   const { user } = useAuthStore();
   const { openSnackbar } = useSnackbarStore();
   const [tourModal, setTourModal] = useState(false);
+  const [reserveModal, setReserveModal] = useState(false);
+
   const handleOpenTourModal = () => {
     if (!user) {
       openSnackbar('Please login to use this feature!', 'info');
       return;
     }
     setTourModal(true);
+  };
+
+  const handleReserveClick = () => {
+    //! TODO:- reservation without login
+    if (!user) {
+      openSnackbar('Please login to use this feature!', 'info');
+      return;
+    }
+    setReserveModal(true);
   };
 
   return (
@@ -76,7 +88,7 @@ export default function FlatSidebar({ listing }: { listing }) {
           <Button
             variant='contained'
             className='bg-secondary-main !text-whtie relative top-1 h-[30px] w-full'
-            // onClick={handleReserveClick}
+            onClick={handleReserveClick}
           >
             Reserve
           </Button>
@@ -89,6 +101,15 @@ export default function FlatSidebar({ listing }: { listing }) {
           </Button>
         </div>
       </div>
+
+      <Modal isOpen={reserveModal} onClose={() => setReserveModal(false)}>
+        <ReserveModal
+          listing={listing}
+          listingID={listing?.$id}
+          onClose={() => setTourModal(false)}
+        />
+      </Modal>
+
       <Modal
         isOpen={tourModal}
         className=''
