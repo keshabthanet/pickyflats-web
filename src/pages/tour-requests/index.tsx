@@ -51,7 +51,7 @@ export default function TourRequestPage() {
           </div>
         )}
 
-        <div className='flex flex-wrap gap-4 py-4'>
+        <div className='grid grid-cols-4 flex-wrap gap-4 py-4 max-md:grid-cols-2 max-sm:grid-cols-1'>
           {requests
             .filter((r) => r.status === 'draft')
             .map((item, i) => {
