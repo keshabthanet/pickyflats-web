@@ -11,7 +11,7 @@ export default function FlatTypeSelectorOptions() {
 
   // TODO: scroll horizontally for flat types on small devices
   return (
-    <div className='space-y-4'>
+    <div className='mx-auto space-y-4'>
       <div className='flex w-full flex-wrap justify-center gap-4 overflow-x-auto text-center'>
         {flatTypes1.map((type, index) => {
           const isActiveFilter = activeTypeFilter?.label === type.label;
