@@ -147,6 +147,7 @@ export const MyFlatCard = (props: Iprop) => {
             </span> */}
           </div>
           <div className='mt-1 flex flex-row-reverse space-x-1'>
+            <Link href={`/flats/` + data?.$id}></Link>
             <IconButton>
               <AiFillEye />
             </IconButton>

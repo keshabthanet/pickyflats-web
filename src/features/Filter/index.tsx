@@ -1,4 +1,4 @@
-import { Button, Divider } from '@mui/material';
+import { Button, Dialog, Divider } from '@mui/material';
 import Chip from '@mui/material/Chip';
 import IconButton from '@mui/material/IconButton';
 import Slider from '@mui/material/Slider';
@@ -161,8 +161,14 @@ const FilterModal = (props: Iprops) => {
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} className='rounded-xl p-2'>
-      <div className=''>
+    <Dialog
+      open={isOpen}
+      onClose={onClose}
+      className='rounded-xl p-2'
+      fullWidth
+      maxWidth='md'
+    >
+      <div className='p-9'>
         <div className=''>
           <IconButton onClick={onClose} className='absolute left-1 top-1'>
             <IoCloseOutline className='text-[25px] ' />
@@ -180,7 +186,7 @@ const FilterModal = (props: Iprops) => {
             <div className='flex gap-5'>
               <span
                 className={` px-3 py-1 text-white ${
-                  purpose == 'sell' ? 'bg-primary-main' : 'bg-black'
+                  purpose == 'sell' ? 'bg-primary-main' : 'bg-secondary-main'
                 } cursor-pointer rounded-3xl`}
                 onClick={() => setPurpose('sell')}
               >
@@ -189,7 +195,7 @@ const FilterModal = (props: Iprops) => {
 
               <span
                 className={` px-3 py-1 text-white ${
-                  purpose == 'rent' ? 'bg-primary-main' : 'bg-black'
+                  purpose == 'rent' ? 'bg-primary-main' : 'bg-secondary-main'
                 } cursor-pointer rounded-3xl`}
                 onClick={() => setPurpose('rent')}
               >
@@ -220,7 +226,7 @@ const FilterModal = (props: Iprops) => {
               value={maxPrice}
               valueLabelDisplay='on'
             />{' '}
-            <div className='flex gap-2'>
+            <div className='flex flex-wrap gap-2'>
               <input
                 placeholder='Min'
                 value={minPrice}
@@ -364,7 +370,7 @@ const FilterModal = (props: Iprops) => {
           </div>
         </div>
       </div>
-    </Modal>
+    </Dialog>
   );
 };
 

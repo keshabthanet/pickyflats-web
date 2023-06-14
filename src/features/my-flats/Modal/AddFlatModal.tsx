@@ -121,7 +121,6 @@ export const AddFlatModal = ({
   const { handleSubmit } = methods;
 
   const onSubmit: SubmitHandler<FormData> = async () => {
-    alert('fcd');
     try {
       setLoading(true);
       // recreate list with name field only
