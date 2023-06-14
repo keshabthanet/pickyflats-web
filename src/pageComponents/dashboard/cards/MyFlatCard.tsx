@@ -152,7 +152,7 @@ export const MyFlatCard = (props: Iprop) => {
               <AiFillEye />
             </IconButton>
             <IconButton className='items flex'>
-              <span className=' relative pr-1 text-lg'>12</span>
+              {/* <span className=' relative pr-1 text-lg'>12</span> */}
               <BiComment />
             </IconButton>
 

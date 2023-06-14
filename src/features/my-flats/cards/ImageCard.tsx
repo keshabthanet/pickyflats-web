@@ -10,10 +10,6 @@ export const ImageCard = (props: Iprops) => {
 
   const file = storage.getFilePreview(CONTENT_BUCKET, fileID);
 
-  // const deleteImg=()=> {
-  //   alert('deel')
-  // }
-
   return (
     <div className='relative h-full w-full'>
       <img

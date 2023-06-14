@@ -53,6 +53,11 @@ export default function MyFlats() {
     fetchMyListingsData();
   }, [refreshCount, user?.$id]);
 
+  const handleVerificationModal = () => {
+    openSnackbar('Feature not implemented!', 'info');
+    // setOpen(true);
+  };
+
   return (
     <div className='w-full p-5'>
       <Alert severity='info' className='kdj'>
@@ -63,7 +68,7 @@ export default function MyFlats() {
             the public only after profile verification.
           </div>
           <div className='my-auto flex md:justify-end'>
-            <Button variant='contained' onClick={() => setOpen(true)}>
+            <Button variant='contained' onClick={handleVerificationModal}>
               Start Verification
             </Button>
           </div>

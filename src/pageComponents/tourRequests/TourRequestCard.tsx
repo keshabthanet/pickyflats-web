@@ -1,7 +1,7 @@
 import { Button, IconButton } from '@mui/material';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useState } from 'react';
 import { IoTimeSharp } from 'react-icons/io5';
 import { TbMessageCircle2Filled } from 'react-icons/tb';
 
@@ -21,8 +21,10 @@ export default function TourRequestCard({ data }: { data: TourRequest }) {
 
   const { openSnackbar } = useSnackbarStore();
   const { push } = useRouter();
+  const [processingTour, setProcessingTour] = useState(false);
 
   const handleMessage = async () => {
+    //!FUTURE - no new creation if conv already exits
     const conversation = await createConversation({
       participants: [data.userID, data.sellerID],
       chatStarter: data.sellerID,
@@ -31,6 +33,7 @@ export default function TourRequestCard({ data }: { data: TourRequest }) {
   };
 
   const handleAcceptRequest = async () => {
+    setProcessingTour(true);
     await updateTourRequestById(data.$id, {
       status: 'accepted',
     });
@@ -99,7 +102,9 @@ export default function TourRequestCard({ data }: { data: TourRequest }) {
             Message
           </Button>
         </div>
-        <Button onClick={handleAcceptRequest}>Accept Request</Button>
+        <Button disabled={processingTour} onClick={handleAcceptRequest}>
+          Accept Request
+        </Button>
       </div>
     </div>
   );

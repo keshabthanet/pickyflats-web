@@ -147,8 +147,29 @@ export const UpdateFlatModalContents = ({
       });
 
       await updateListingCost(listingCostsID, {
-        ...costs,
+        // ...costs, // !either clear default meta fields provied by appwrite
         negotiable: 'Negotiable',
+        cleaningFee: costs.cleaningFee,
+        communalFacilityFee: costs.communalFacilityFee,
+        currency: costs.currency,
+        furnitureAppliances: costs.furnitureAppliances,
+        homeImprovement: costs.homeImprovement,
+        homeOfficeSetup: costs.homeOfficeSetup,
+        insuranceCost: costs.insuranceCost,
+        internetCost: costs.internetCost,
+        legalFees: costs.legalFees,
+        maintenanceRepairs: costs.maintenanceRepairs,
+        monthlyCost: costs.monthlyCost,
+        mortgagePayments: costs.mortgagePayments,
+        movingCost: costs.movingCost,
+        otherCost: costs.otherCost,
+        parkingFee: costs.parkingFee,
+        petFee: costs.petFee,
+        propertyTax: costs.propertyTax,
+        purchaseCost: costs.purchaseCost,
+        securitySystem: costs.securitySystem,
+        utilityCost: costs.utilityCost,
+        yearlyCost: costs.yearlyCost,
       });
 
       openSnackbar('Listing data updated successfully', 'success', {
