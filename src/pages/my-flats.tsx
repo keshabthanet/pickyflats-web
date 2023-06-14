@@ -55,7 +55,7 @@ export default function MyFlats() {
       setMyFlats(myFlats);
     };
     fetchMyListingsData();
-  }, [refreshCount]);
+  }, [refreshCount, user?.$id]);
 
   return (
     <div className='w-full p-5'>
