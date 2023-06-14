@@ -50,10 +50,6 @@ export default function MyFlats() {
   };
 
   useEffect(() => {
-    const fetchMyListingsData = async () => {
-      const myFlats = await fetchListingsByUserId(user?.$id);
-      setMyFlats(myFlats);
-    };
     fetchMyListingsData();
   }, [refreshCount]);
 
