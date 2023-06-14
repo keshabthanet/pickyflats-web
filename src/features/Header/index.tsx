@@ -1,6 +1,6 @@
 import InputBase from '@mui/material/InputBase';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FiSearch } from 'react-icons/fi';
 import { MdOutlineTune } from 'react-icons/md';
 
@@ -26,6 +26,28 @@ export const Header = () => {
       );
     }
   };
+
+  useEffect(() => {
+    //call search api here if possible with pagination/ through intersection observer
+    const query = router.query.query ?? undefined;
+    const minPrice = router.query.min ?? undefined;
+    const maxPrice = router.query.max ?? undefined;
+    const purpose = router.query.purpose ?? undefined;
+    const bedRoom = router.query.bedRoom ?? undefined;
+    const bathRoom = router.query.bathRoom ?? undefined;
+    const kitchen = router.query.kitchen ?? undefined;
+
+    console.log(
+      'queries',
+      query,
+      minPrice,
+      maxPrice,
+      purpose,
+      bedRoom,
+      bathRoom,
+      kitchen
+    );
+  });
   // comment
   return (
     <div className=' flex h-[85vh] w-full flex-col text-center'>

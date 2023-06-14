@@ -7,8 +7,6 @@ import { useForm } from 'react-hook-form';
 import { FaMapMarker } from 'react-icons/fa';
 import { SiAddthis } from 'react-icons/si';
 
-import { isEmptyArray } from '@/lib/helper';
-
 import Modal from '@/components/Modal';
 
 import { IcontactAndLocation } from '@/store/flatStore';
@@ -35,6 +33,8 @@ export const AddLocationModal = () => {
   const [open, setOpen] = useState(false);
   const { user } = useAuthStore();
   const [geoModal, setGeoModal] = useState(false);
+
+  const { flatGeo, flatMapLocation } = useFlatStore();
 
   const { contactAndLocation, setContactAndLocation } = useFlatStore();
   const {
@@ -214,27 +214,21 @@ export const AddLocationModal = () => {
                     error={!!errors.flatStreet2}
                   />
                 </div>
-
-                {!isEmptyArray(getValues('flatGeo')) && (
-                  <div className='flex items-center'>
-                    <IconButton className='my-auto'>
-                      <FaMapMarker className='text-sm' />
-                    </IconButton>
-                    <span className='capitalizeopacity-80 relative  text-base max-md:flex max-md:flex-col '>
-                      <span>{getValues('flatGeo')?.[0]},</span>
-                      <span>{getValues('flatGeo')?.[1]}</span>
-                    </span>
-                  </div>
-                )}
               </div>
-              <div className='pb-4'>
-                <Button
-                  className='text-[18px] normal-case'
-                  onClick={() => setGeoModal(true)}
-                  size='small'
-                >
-                  Pin On Map
-                </Button>
+              <div className='flex w-full items-center'>
+                <IconButton className='my-auto'>
+                  <FaMapMarker className='text-sm' />
+                </IconButton>
+                <span className='capitalizeopacity-80 relative  text-base max-md:flex max-md:flex-col '>
+                  {String(flatMapLocation)}
+                </span>
+              </div>
+              <div className='w-full pb-4'>
+                <h3 className=' text-primary-main text-lg font-semibold'>
+                  Flat Location
+                </h3>
+                <Divider className=' mb-5' />
+                <GeoPickerModal />
               </div>
               <div className='my-5 flex flex-row-reverse gap-5 pb-4'>
                 <Button variant='contained' onClick={handleSubmit(onSubmit)}>

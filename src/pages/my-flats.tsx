@@ -51,7 +51,7 @@ export default function MyFlats() {
 
   useEffect(() => {
     fetchMyListingsData();
-  }, [refreshCount]);
+  }, [refreshCount, user?.$id]);
 
   const handleVerificationModal = () => {
     openSnackbar('Feature not implemented!', 'info');
