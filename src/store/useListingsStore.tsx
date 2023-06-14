@@ -2,7 +2,6 @@ import { createSelectorHooks } from 'auto-zustand-selectors-hook';
 import create from 'zustand';
 
 import { Listing } from '@/types/listing';
-import { useRouter } from 'next/router';
 
 interface ActiveFilter {
   label: string;

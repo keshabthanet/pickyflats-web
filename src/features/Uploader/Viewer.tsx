@@ -1,6 +1,3 @@
-import { IconButton } from '@mui/material';
-import Image from 'next/image';
-
 /* eslint-disable @next/next/no-img-element */
 interface Iprops {
   fileID: string;
@@ -12,10 +9,6 @@ export const Viewer = (props: Iprops) => {
   const { fileID } = props;
 
   const file = storage.getFilePreview(CONTENT_BUCKET, fileID);
-
-  // const deleteImg=()=> {
-  //   alert('deel')
-  // }
 
   return (
     <div className='relative h-[200px] w-full'>

@@ -1,11 +1,11 @@
-import { Controller, FieldValues, Control, FieldPath } from 'react-hook-form';
 import {
   FormControl,
+  FormControlLabel,
   Radio,
   RadioGroup as MUIRadioGroup,
   RadioGroupProps,
-  FormControlLabel,
 } from '@mui/material';
+import { Control, Controller, FieldPath, FieldValues } from 'react-hook-form';
 
 interface obj {
   value: string;

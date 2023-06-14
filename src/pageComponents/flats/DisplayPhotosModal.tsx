@@ -1,10 +1,8 @@
 import { Dialog, IconButton } from '@mui/material';
 import { useState } from 'react';
-import { FcCancel } from 'react-icons/fc';
+import { CgClose } from 'react-icons/cg';
 
 import { ImageCard } from '@/features/my-flats/cards/ImageCard';
-import { GiCancel } from 'react-icons/gi';
-import { CgClose } from 'react-icons/cg';
 
 interface Iprops {
   photos: string[];
