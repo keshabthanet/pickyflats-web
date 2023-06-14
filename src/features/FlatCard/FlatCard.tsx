@@ -9,6 +9,7 @@ import { timeAgo } from '@/lib/date';
 import logger from '@/lib/logger';
 
 import { updateListingById } from '@/database/listing';
+import { createListingLikeNotification } from '@/database/notification';
 import { AllFlatTypes } from '@/datas/flatTypes';
 
 import Modal from '@/components/Modal';
@@ -64,6 +65,12 @@ export const FlatCardV1 = ({ data }: { data: Listing }) => {
 
     await updateListingById(data?.$id, { liked_by: _isLiked });
     setIsLiked(!isLiked);
+
+    // create notification on liked
+    if (isLiked) {
+      await createListingLikeNotification(data.$id, user.$id, data.userID);
+      //!FEATURE - email for notification update
+    }
   };
 
   const handleAddtoList = async () => {

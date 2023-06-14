@@ -10,6 +10,7 @@ import { RiShareForwardFill } from 'react-icons/ri';
 import logger from '@/lib/logger';
 
 import { fetchListingById, updateListingById } from '@/database/listing';
+import { createListingLikeNotification } from '@/database/notification';
 import { AllFlatTypes } from '@/datas/flatTypes';
 
 import MainLayout from '@/components/layout/MainLayout';
@@ -154,6 +155,16 @@ export const DetailView = () => {
 
     await updateListingById(listing?.$id, { liked_by: _isLiked });
     setIsLiked(!isLiked);
+
+    // create notification on liked
+    if (isLiked) {
+      await createListingLikeNotification(
+        listing?.$id,
+        user.$id,
+        listing?.userID
+      );
+      //!FEATURE - email for notification update
+    }
   };
 
   const handleAddtoList = async () => {
@@ -306,7 +317,7 @@ export const DetailView = () => {
                 </section>
               )}
               <section id='comment'>
-                <Comment listingID={listing?.$id} />
+                <Comment listingID={listing?.$id} sellerID={listing?.userID} />
               </section>
             </div>
           </div>

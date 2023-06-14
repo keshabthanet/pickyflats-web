@@ -2,12 +2,19 @@ import { Button, TextField } from '@mui/material';
 import React, { useState } from 'react';
 
 import { postComment } from '@/database/comment';
+import { createListingCommentNotification } from '@/database/notification';
 
 import useAuthStore from '@/store/useAuthStore';
 import useListingStore from '@/store/useListingStore';
 import useSnackbarStore from '@/store/useSnackbarStore';
 
-const CommentBoxCard = ({ listingID }: { listingID?: string }) => {
+const CommentBoxCard = ({
+  listingID,
+  sellerID,
+}: {
+  listingID?: string;
+  sellerID?: string;
+}) => {
   const { user } = useAuthStore();
   const [comment, setComment] = useState('');
   const { openSnackbar } = useSnackbarStore();
@@ -31,7 +38,15 @@ const CommentBoxCard = ({ listingID }: { listingID?: string }) => {
 
     setLoading(true);
     try {
-      await postComment({ listingID, userID: user?.$id, comment });
+      const newCommentID = await postComment({
+        listingID,
+        userID: user?.$id,
+        comment,
+      });
+
+      // create comment notification
+      await createListingCommentNotification(listingID, sellerID, newCommentID);
+
       setComment('');
       refresh();
     } catch (e) {

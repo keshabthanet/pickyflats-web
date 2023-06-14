@@ -39,7 +39,7 @@ export const PROFILES_ID =
 export const VERIFICATIONS_ID =
   appwriteConfig[ENV_MODE].collections.LISTENERS_ID || 'verificationRequests';
 export const NOTIFICATIONS_ID =
-  appwriteConfig[ENV_MODE].collections.LISTENERS_ID || 'notifications';
+  appwriteConfig[ENV_MODE].collections.NOTIFICATIONS_ID || 'notifications';
 export const TOURREQUESTS_ID =
   appwriteConfig[ENV_MODE].collections.TOURREQUESTS_ID || 'tourRequests';
 export const RESERVATIONS_ID =
