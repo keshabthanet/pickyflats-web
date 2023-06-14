@@ -1,9 +1,9 @@
 import { createSelectorHooks } from 'auto-zustand-selectors-hook';
 import create from 'zustand';
 
-import { Comment } from '@/database/comment';
-
 import { Iroom } from '@/store/flatStore';
+
+import { Comment } from '@/types/comment';
 
 interface ListingStore {
   gallery: Iroom[];

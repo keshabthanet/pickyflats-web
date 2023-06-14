@@ -61,7 +61,7 @@ export const FlatCardV1 = ({ data }: { data: Listing }) => {
     }
     const _isLiked = isLiked
       ? data?.liked_by.filter((a) => a !== user?.$id)
-      : [...data!.liked_by, user!.$id];
+      : [...data.liked_by, user?.$id];
 
     await updateListingById(data?.$id, { liked_by: _isLiked });
     setIsLiked(!isLiked);
@@ -80,7 +80,7 @@ export const FlatCardV1 = ({ data }: { data: Listing }) => {
     }
     const savedList = inSavedList
       ? data?.saved_by.filter((a) => a !== user?.$id)
-      : [...data!.saved_by, user!.$id];
+      : [...data.saved_by, user?.$id];
 
     await updateListingById(data?.$id, { saved_by: savedList });
     openSnackbar(`Flat ${inSavedList ? 'Removed from ' : 'Added to '} My List`);
