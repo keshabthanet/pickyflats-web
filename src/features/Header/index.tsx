@@ -57,7 +57,7 @@ export const Header = () => {
           {/* <form className=' m-auto flex h-[50px] w-[80%] gap-2 md:w-[50%] '> */}
           <InputBase
             type='text'
-            placeholder='Search Your dream'
+            placeholder='Search Your dream home'
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             startAdornment={

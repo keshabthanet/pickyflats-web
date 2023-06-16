@@ -12,7 +12,7 @@ import { AppProps } from 'next/app';
 import React from 'react';
 import { ReactElement, ReactNode } from 'react';
 
-import '../styles/global1.css';
+import '../styles/global.css';
 
 import useSnackbarStore from '@/store/useSnackbarStore';
 

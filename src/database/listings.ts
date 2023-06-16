@@ -25,10 +25,14 @@ export const fetchListings = async (props?: ListingFetchProps) => {
     // Query.equal('flatTypes', 8), // ! try on production
     // Query.equal('flatTypes', [8]), // ! try on production
     // Query.equal('flatTypes', activeTypeFilter)
-    // Query.greaterThan()
 
-    ...(props?.bedrooms ? [Query.equal('room', props.bedrooms)] : []),
-    ...(props?.bathrooms ? [Query.equal('bathrooms', props.bathrooms)] : []),
+    // TODO: !query on listingsCosts
+    // ...(props?.minPrice && props.maxPrice
+    //   ? [Query.between('monthlyCost', props.minPrice, props.maxPrice)]
+    //   : []),
+
+    // ...(props?.bedrooms ? [Query.equal('room', props.bedrooms)] : []),
+    // ...(props?.bathrooms ? [Query.equal('bathrooms', props.bathrooms)] : []),
   ]);
 
   const listingsIds = [

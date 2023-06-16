@@ -7,8 +7,6 @@ import { useForm } from 'react-hook-form';
 import { FaMapMarker } from 'react-icons/fa';
 import { SiAddthis } from 'react-icons/si';
 
-import Modal from '@/components/Modal';
-
 import { IcontactAndLocation } from '@/store/flatStore';
 import { useFlatStore } from '@/store/flatStore';
 import useAuthStore from '@/store/useAuthStore';
@@ -228,7 +226,9 @@ export const AddLocationModal = () => {
                   Flat Location
                 </h3>
                 <Divider className=' mb-5' />
-                <GeoPickerModal />
+                <GeoPickerModal
+                  onLocationChoose={(geo) => setValue('flatGeo', geo)}
+                />
               </div>
               <div className='my-5 flex flex-row-reverse gap-5 pb-4'>
                 <Button variant='contained' onClick={handleSubmit(onSubmit)}>
@@ -243,7 +243,7 @@ export const AddLocationModal = () => {
           </form>
         </div>
       </Dialog>
-      {geoModal && (
+      {/* {geoModal && (
         <Modal
           isOpen={open}
           className='max-sm:w-screen max-sm:rounded-none'
@@ -251,10 +251,13 @@ export const AddLocationModal = () => {
         >
           <GeoPickerModal
             onClose={() => setGeoModal(false)}
-            onLocationChoose={(geo) => setValue('flatGeo', geo)}
+            onLocationChoose={(geo) => {
+              console.log('geo value ? ', geo);
+              setValue('flatGeo', geo);
+            }}
           />
         </Modal>
-      )}
+      )} */}
     </div>
   );
 };

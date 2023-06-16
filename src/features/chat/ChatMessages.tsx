@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
 
 import {
@@ -38,6 +39,8 @@ export default function ChatMessages({
         const loadNewMessage = async () => {
           const newMessage = await getMessageById(newMessageId);
           onNewMessage(newMessage);
+
+          //TODO: ! same msg push render issue
         };
         loadNewMessage();
         // cb for on new message
@@ -61,13 +64,14 @@ export default function ChatMessages({
         _attachments.push(...__attachments);
       });
     setImages(_attachments);
-  }, [messages.allIds, messages.byId]);
+  }, [messages]);
 
   return (
     <>
       <div className='flex flex-col space-y-4'>
         {messages.allIds.map((messageID, index) => {
           const message = messages.byId[messageID];
+          if (!message) return <></>;
           return (
             <MessageItem
               key={index}
