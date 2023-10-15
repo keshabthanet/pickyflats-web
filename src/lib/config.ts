@@ -1,9 +1,9 @@
-export type APPWRITE_ENV_MODE = 'CLOUD' | 'LOCAL';
+export type APPWRITE_ENV_MODE = 'LOCAL';
 export const appwriteConfig = {
   CLOUD: {
-    API_ENDPOINT: process.env.NEXT_PUBLIC_APPWRITE_API_ENDPOINT,
-    PROJECT_ID: process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID,
-    DATABASE_ID: process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
+    API_ENDPOINT: 'https://cloud.appwrite.io/v1',
+    PROJECT_ID: 'pickyflats-dev',
+    DATABASE_ID: 'pickyflats_web',
     collections: {
       PROFILES_ID: '647c063d490ee20fd175',
       LISTINGS_ID: 'listings',
